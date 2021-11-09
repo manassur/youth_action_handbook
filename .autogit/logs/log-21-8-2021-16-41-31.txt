@@ -1,0 +1,15 @@
+-------------------- Auto-Git Log --------------------
+		Tue Sep 21 2021 16:41:31 GMT+0300 (East Africa Time)
+------------------------------------------------------
+
+Modified files:
+* lib/screens/home.dart
+
+
+Created files:
+
+
+Deleted files:
+
+
+Renamed files:

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "159523956565",
+    "project_id": "youth-action-handbook",
+    "storage_bucket": "youth-action-handbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159523956565:android:201cd5c67c61596d8cb1dc",
+        "android_client_info": {
+          "package_name": "ug.rtl.youth_action_handbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159523956565-qt7ug10084cn59uc1erndvh22oee0i2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ug.rtl.youth_action_handbook",
+            "certificate_hash": "d2b0e06438e8c1d5de4842b1d9ac14a6030649ab"
+          }
+        },
+        {
+          "client_id": "159523956565-pqgm8n31eno8mql8l18qg2l7ddg992mi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArx0Zd1Wbrqod44K6Xo2GYiRRsuWZC_Ww"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159523956565-pqgm8n31eno8mql8l18qg2l7ddg992mi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
