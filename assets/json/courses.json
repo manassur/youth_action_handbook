@@ -1,0 +1,43 @@
+{
+  "error": false,
+  "courses": [
+    {
+      "id": "1",
+      "title": "Headache",
+      "description": "Headache",
+      "overview": "",
+      "objectives": "",
+      "approach": "",
+      "references": "",
+      "image": "https://images.pexels.com/photos/3760043/pexels-photo-3760043.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      "lessons": [
+        {
+          "id": "1",
+          "title": "Headache",
+          "lesson": "Headache",
+          "duration": ""
+        },
+        {
+          "id": "1",
+          "title": "Headache",
+          "lesson": "Headache",
+          "duration": ""
+        }
+      ],
+      "quiz": [
+        {
+          "id": "1",
+          "question": "Headache",
+          "a": "Headache",
+          "b": "Headache",
+          "c": "Headache",
+          "d": "Headache",
+          "answer": "Headache",
+          "type": "multiple_choice",
+          "hint": "some hint after answering",
+          "mark": 5
+        }
+      ]
+    }
+  ]
+}
