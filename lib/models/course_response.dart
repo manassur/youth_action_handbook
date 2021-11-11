@@ -118,6 +118,38 @@ class Lessons {
 
 class Quiz {
   String? id;
+  String? title;
+  String? duration;
+  List<Questions>? questions;
+
+  Quiz({this.id, this.title, this.duration, this.questions});
+
+  Quiz.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    duration = json['duration'];
+    if (json['questions'] != null) {
+      questions = <Questions>[];
+      json['questions'].forEach((v) {
+        questions!.add(new Questions.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['duration'] = this.duration;
+    if (this.questions != null) {
+      data['questions'] = this.questions!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Questions {
+  String? id;
   String? question;
   String? a;
   String? b;
@@ -128,7 +160,7 @@ class Quiz {
   String? hint;
   int? mark;
 
-  Quiz(
+  Questions(
       {this.id,
         this.question,
         this.a,
@@ -140,7 +172,7 @@ class Quiz {
         this.hint,
         this.mark});
 
-  Quiz.fromJson(Map<String, dynamic> json) {
+  Questions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     question = json['question'];
     a = json['a'];

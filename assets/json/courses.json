@@ -27,15 +27,22 @@
       "quiz": [
         {
           "id": "1",
-          "question": "Headache",
-          "a": "Headache",
-          "b": "Headache",
-          "c": "Headache",
-          "d": "Headache",
-          "answer": "Headache",
-          "type": "multiple_choice",
-          "hint": "some hint after answering",
-          "mark": 5
+          "title": "Headache",
+          "duration": "Headache",
+          "questions": [
+            {
+              "id": "1",
+              "question": "Headache",
+              "a": "Headache",
+              "b": "Headache",
+              "c": "Headache",
+              "d": "Headache",
+              "answer": "Headache",
+              "type": "multiple_choice",
+              "hint": "some hint after answering",
+              "mark": 5
+            }
+          ]
         }
       ]
     }
