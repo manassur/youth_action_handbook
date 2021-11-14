@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:youth_action_handbook/bloc/courses/courses_bloc.dart';
+import 'package:youth_action_handbook/bloc/courses/courses_event.dart';
+import 'package:youth_action_handbook/bloc/courses/courses_state.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/user.dart';
@@ -19,6 +23,13 @@ class HomeFragment extends StatefulWidget {
 }
 
 class _HomeFragmentState extends State<HomeFragment> {
+  CoursesBloc? coursesBloc;
+  @override
+  void initState() {
+    coursesBloc= BlocProvider.of<CoursesBloc>(context);
+    coursesBloc!.add(FetchCoursesEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,40 +112,61 @@ class _HomeFragmentState extends State<HomeFragment> {
                       child: SvgPicture.asset('assets/slider_03.svg'))
                 ],
               ),
-              SizedBox(height: 25,),
+            const  SizedBox(height: 25,),
               Text("Open Training courses",style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary),),
-              SizedBox(height: 10,),
-             SizedBox(
-                height: 300,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: AppTexts.trainingItems.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (ctx,pos){
-                    return OpenTrainingCard(
-                      color:AppTexts.trainingItems[pos].color ,
-                      icon: AppTexts.trainingItems[pos].icon,
-                      textCount: AppTexts.trainingItems[pos].textCount,
-                      textHeader: AppTexts.trainingItems[pos].textHeader,
-                    );
+             const SizedBox(height: 10,),
+              BlocListener<CoursesBloc, CoursesState>(
+                listener: (context, state){
+                  if ( state is CoursesLoadedState && state.message != null ) {
+                      }
+                  else if ( state is CoursesLoadFailureState ) {
+                    Scaffold.of ( context ).showSnackBar ( const SnackBar (
+                      content: Text ( "Could not load courses  at this time" ) , ) );
+                  }
+                },
+                child: BlocBuilder<CoursesBloc, CoursesState>(
+                  builder: (context, state) {
+                    if ( state is CoursesInitialState ) {
+                      return buildLoading ( );
+                    } else if ( state is CoursesLoadingState ) {
+                      return buildLoading ( );
+                    } else if ( state is CoursesLoadedState ) {
+                      return
+                        SizedBox(
+                          height: 300,
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: state.courses!.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (ctx,pos){
+                                return OpenTrainingCard(courseModel:state.courses![pos]);
+                              }),
+                        );
+                    } else if ( state is CoursesLoadFailureState ) {
+                      return buildErrorUi ("chnage this erroe message" );
                     }
-                    ),
+                    else {
+                      return buildErrorUi ( "Something went wrong!" );
+                    }
+                  },
+                ),
               ),
-              SizedBox(height: 25,),
+
+             const SizedBox(height: 25,),
               Text("Popular topics",style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary),),
-              SizedBox(height: 10,),
+             const SizedBox(height: 10,),
               GridView.builder(
                 itemBuilder: (ctx,pos){
                   return PopularItemCard(popularcategoryModel: AppTexts.popularCategoryItems[pos]);
                 },
-                padding: EdgeInsets.all(10.0),
-                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(10.0),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15.0,
-                  mainAxisSpacing: 15.0,
-                  childAspectRatio: 2.5
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15.0,
+                    mainAxisSpacing: 15.0,
+                    childAspectRatio: 2.5
                 ),
                 itemCount: AppTexts.popularCategoryItems.length,
 
@@ -144,20 +176,19 @@ class _HomeFragmentState extends State<HomeFragment> {
               const SizedBox(height: 10,),
               ListView.separated(
                   separatorBuilder: (ctx,pos){
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    return const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Divider(),
                     );
                   },
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: AppTexts.updateItems.length,
                   itemBuilder: (ctx,pos){
                     return UpdatesCard(updatesModel:AppTexts.updateItems[pos] ,
                     );
                   }
               ),
-
             ],
           ),
         ),
@@ -165,4 +196,16 @@ class _HomeFragmentState extends State<HomeFragment> {
 
     );
   }
+  Widget buildLoading ( ) {
+    return const Center (
+      child: CircularProgressIndicator ( ) ,
+    );
+  }
+  Widget buildErrorUi ( String message ) {
+    return Center (
+      child: Text ( message , style: const  TextStyle ( color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20 ) ,
+      ) ,
+    );
+  }
+
 }

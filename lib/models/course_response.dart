@@ -33,6 +33,7 @@ class Courses {
   String? approach;
   String? references;
   String? image;
+  int? color;
   List<Lessons>? lessons;
   List<Quiz>? quiz;
 
@@ -46,6 +47,7 @@ class Courses {
         this.references,
         this.image,
         this.lessons,
+        this.color,
         this.quiz});
 
   Courses.fromJson(Map<String, dynamic> json) {
@@ -57,6 +59,7 @@ class Courses {
     approach = json['approach'];
     references = json['references'];
     image = json['image'];
+    color = int.parse(json['color']) ;
     if (json['lessons'] != null) {
       lessons = <Lessons>[];
       json['lessons'].forEach((v) {
@@ -81,6 +84,7 @@ class Courses {
     data['approach'] = this.approach;
     data['references'] = this.references;
     data['image'] = this.image;
+    data['color'] = this.color;
     if (this.lessons != null) {
       data['lessons'] = this.lessons!.map((v) => v.toJson()).toList();
     }

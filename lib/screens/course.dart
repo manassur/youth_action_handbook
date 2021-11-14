@@ -188,13 +188,13 @@ class _CourseFragmentState extends State<CourseFragment> {
                             MaterialPageRoute(builder: (context) => Test()),
                           );
                         },
-                        child: OpenTrainingCard(
-                          color: AppTexts.trainingItems[pos].color,
-                          icon: AppTexts.trainingItems[pos].icon,
-                          textCount: AppTexts.trainingItems[pos].textCount,
-                          textHeader: AppTexts.trainingItems[pos]
-                              .textHeader,
-                        ),
+                        // child: OpenTrainingCard(
+                        //   color: AppTexts.trainingItems[pos].color,
+                        //   icon: AppTexts.trainingItems[pos].icon,
+                        //   textCount: AppTexts.trainingItems[pos].textCount,
+                        //   textHeader: AppTexts.trainingItems[pos]
+                        //       .textHeader,
+                        // ),
                       );
                     }
                 ),

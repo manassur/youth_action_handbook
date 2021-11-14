@@ -8,6 +8,10 @@ import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/edit_profile.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
+
 
 class AboutFragment extends StatefulWidget {
   @override
@@ -16,7 +20,25 @@ class AboutFragment extends StatefulWidget {
 
 class _AboutFragmentState extends State<AboutFragment> {
 
+  _launchhURL() async {
+    const url = 'https://punchng.com/advertise-with-us';
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: false,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
+  launchAdvertise(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   //PROJECT COLUMN
   List projectItems = [
@@ -26,7 +48,6 @@ class _AboutFragmentState extends State<AboutFragment> {
       "trailing_icon": Icons.keyboard_arrow_down_sharp,
       "page": AboutFragment(),
     },
-
     {
       "leading_icon": Icons.notifications_none,
       "title": "Project",
@@ -39,7 +60,6 @@ class _AboutFragmentState extends State<AboutFragment> {
       "trailing_icon": Icons.keyboard_arrow_down_sharp,
       "page": AboutFragment(),
     },
-
     {
       "leading_icon": Icons.check_circle,
       "title": "Partners",
@@ -62,7 +82,7 @@ class _AboutFragmentState extends State<AboutFragment> {
       "leading_icon": Icons.check_circle,
       "title": "Privacy Policy",
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
-      "page": AboutFragment(),
+      // "page":  launchAdvertise(),
     },
     {
       "leading_icon": Icons.info_outline,
@@ -99,7 +119,6 @@ class _AboutFragmentState extends State<AboutFragment> {
       },
     ];
 
-  
   
     return Scaffold(
       appBar: AppBar(

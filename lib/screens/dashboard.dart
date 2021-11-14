@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:youth_action_handbook/bloc/courses/courses_bloc.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/screens/course.dart';
 import 'package:youth_action_handbook/screens/forum.dart';
+import 'package:youth_action_handbook/services/api_service.dart';
 import 'package:youth_action_handbook/widgets/custom_bottom_nav_item.dart';
 
 import 'about.dart';
@@ -18,7 +21,12 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int currentIndex= 0;
   List<Widget> screen = [
-    HomeFragment(),
+
+    BlocProvider<CoursesBloc>(
+      create: (context) =>
+      CoursesBloc(apiService: ApiService()),
+        child: HomeFragment()
+    ),
     CourseFragment(),
     ForumFragment(),
     AboutFragment(),
