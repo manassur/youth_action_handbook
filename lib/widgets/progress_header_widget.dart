@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:youth_action_handbook/models/course_response.dart';
 
-class ProgressHeaderWidget extends StatelessWidget {
-  const ProgressHeaderWidget({Key? key}) : super(key: key);
+class ProgressHeaderWidget extends StatefulWidget {
+  final Courses? courses;
+  const ProgressHeaderWidget({Key? key, required this.courses}) : super(key: key);
 
+  @override
+  State<ProgressHeaderWidget> createState() => _ProgressHeaderWidgetState();
+}
+
+class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -12,22 +19,22 @@ class ProgressHeaderWidget extends StatelessWidget {
       children: [
         RichText(
           text: TextSpan(
-              text: 'Peace',
+            text: widget.courses!.title!,
               style: TextStyle(
                   color: AppColors.colorBluePrimary,
                   fontSize: 25,
                   fontWeight: FontWeight.w900),
               children: const <TextSpan>[]),
         ),
-        RichText(
-          text: TextSpan(
-              text: 'Education',
-              style: TextStyle(
-                  color: AppColors.colorBluePrimary,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w900),
-              children: const <TextSpan>[]),
-        ),
+        // RichText(
+        //   text: TextSpan(
+        //       text: 'Education',
+        //       style: TextStyle(
+        //           color: AppColors.colorBluePrimary,
+        //           fontSize: 25,
+        //           fontWeight: FontWeight.w900),
+        //       children: const <TextSpan>[]),
+        // ),
         Row(
           children: [
             RichText(

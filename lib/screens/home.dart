@@ -148,7 +148,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                                 return InkWell(
                                   onTap: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                     IndividualCourseScreen()));
+                                     IndividualCourseScreen(courses: state.courses![pos],)));
                                   },
                                     child: OpenTrainingCard(courseModel:state.courses![pos]));
                               });

@@ -182,12 +182,12 @@ class _CourseFragmentState extends State<CourseFragment> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (ctx, pos) {
                       return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Test()),
-                          );
-                        },
+                        // onTap: () {
+                        //   Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => Test()),
+                        //   );
+                        // },
                         // child: OpenTrainingCard(
                         //   color: AppTexts.trainingItems[pos].color,
                         //   icon: AppTexts.trainingItems[pos].icon,

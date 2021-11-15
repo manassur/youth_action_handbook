@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
+import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/widgets/custom_tab.dart';
 
 import 'induvidual_course_about.dart';
@@ -7,6 +8,9 @@ import 'induvidual_course_evaluation.dart';
 
 class IndividualCourseScreen extends StatefulWidget {
 
+  final Courses? courses;
+
+  const IndividualCourseScreen({Key? key, required this.courses,}) : super(key: key);
   @override
   _IndividualCourseScreenState createState() => _IndividualCourseScreenState();
 }
@@ -107,9 +111,9 @@ class _IndividualCourseScreenState extends State<IndividualCourseScreen>  with T
         body: TabBarView(
             controller: tabController,
             children: [
-              IndividualCourseAbout(),
               Container(),
-              IndividualCourseEvaluation(),
+               IndividualCourseAbout( courses: widget.courses!,),
+              IndividualCourseEvaluation(courses: widget.courses!),
             ]),
       ),
     );

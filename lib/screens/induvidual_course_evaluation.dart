@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
+import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/widgets/evaluation_card.dart';
 import 'package:youth_action_handbook/widgets/progress_header_widget.dart';
 import 'package:youth_action_handbook/widgets/quiz_card.dart';
@@ -8,7 +9,8 @@ import 'package:youth_action_handbook/widgets/title_body_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class IndividualCourseEvaluation extends StatefulWidget {
-  const IndividualCourseEvaluation({Key? key}) : super(key: key);
+  final Courses? courses;
+  const IndividualCourseEvaluation({Key? key, required this.courses}) : super(key: key);
 
   @override
   _IndividualCourseEvaluationState createState() => _IndividualCourseEvaluationState();
@@ -23,7 +25,7 @@ class _IndividualCourseEvaluationState extends State<IndividualCourseEvaluation>
         child: Column(
           crossAxisAlignment:CrossAxisAlignment.start ,
           children: [
-            ProgressHeaderWidget(),
+            ProgressHeaderWidget(courses:widget.courses!,),
             SizedBox(height: 20,),
             RichText(
               text: TextSpan(

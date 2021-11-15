@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
+import 'package:youth_action_handbook/models/course_response.dart';
 
 class TitleBodyWidget extends StatelessWidget {
   final String? title;
-  const TitleBodyWidget({Key? key,this.title}) : super(key: key);
+  final String? courses;
+  const TitleBodyWidget({Key? key,this.title, required this.courses}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class TitleBodyWidget extends StatelessWidget {
         SizedBox(height: 15,),
         RichText(
           text: TextSpan(
-              text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.',
+              text: courses,
               style: TextStyle(
                   color: Colors.grey.shade600,
                   fontSize: 12,

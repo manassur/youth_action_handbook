@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
+import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/widgets/progress_header_widget.dart';
 import 'package:youth_action_handbook/widgets/title_body_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class IndividualCourseAbout extends StatefulWidget {
-  const IndividualCourseAbout({Key? key}) : super(key: key);
+  // final Courses courses;
+  final Courses? courses;
+  const IndividualCourseAbout({Key? key, required this.courses}) : super(key: key);
 
   @override
   _IndividualCourseAboutState createState() => _IndividualCourseAboutState();
@@ -21,15 +24,15 @@ class _IndividualCourseAboutState extends State<IndividualCourseAbout> {
         child: Column(
           crossAxisAlignment:CrossAxisAlignment.start ,
           children: [
-            ProgressHeaderWidget(),
+            ProgressHeaderWidget(courses:widget.courses!,),
             SizedBox(height: 20,),
-            TitleBodyWidget(title: "Overview",),
+            TitleBodyWidget(title: "Overview", courses: widget.courses!.overview,),
             SizedBox(height: 20,),
-            TitleBodyWidget(title: "Objectives",),
+            TitleBodyWidget(title: "Objectives",courses: widget.courses!.objectives),
             SizedBox(height: 20,),
-            TitleBodyWidget(title: "Approach",),
+            TitleBodyWidget(title: "Approach",courses: widget.courses!.approach),
             SizedBox(height: 20,),
-            TitleBodyWidget(title: "References",),
+            TitleBodyWidget(title: "References",courses: widget.courses!.references),
             SizedBox(height: 20,),
             RichText(
               text: TextSpan(
