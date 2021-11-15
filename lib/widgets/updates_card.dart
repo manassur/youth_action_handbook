@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/models/popular_category_model.dart';
-import 'package:youth_action_handbook/models/updates_model.dart';
+import 'package:youth_action_handbook/models/news_response.dart';
 
 class UpdatesCard extends StatelessWidget {
-  final UpdatesModel? updatesModel;
-  const UpdatesCard({Key? key, this.updatesModel}) : super(key: key);
+  final News? newsUpdate;
+  const UpdatesCard({Key? key, this.newsUpdate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
-      padding: EdgeInsets.only(left: 10),
+      height: 80,
+      padding: const EdgeInsets.only(left: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: Image.asset(
-              updatesModel!.icon!,
+            child: Image.network(
+              newsUpdate!.image!,
               height: 80,
               width: 80,
+              fit: BoxFit.cover,
             ),
           ),
-          SizedBox(
+         const SizedBox(
             width: 10,
           ),
           Expanded(
@@ -31,22 +31,22 @@ class UpdatesCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(updatesModel!.textHeader!,
+                Text(newsUpdate!.title!,
                     style: TextStyle(
                       color: AppColors.colorBluePrimary, fontSize: 12,
                       fontWeight: FontWeight.bold,
                       // fontFamily: 'Gilroy',
                     )),
-                Container(
-                  child: Text(
-                    'Lorem ipsum dolor sit ameta cursh qqoe or qsome othe tews to bw set for now us telit a Pellentesque mollis',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w300),
-                  ),
+                 Text(
+                  newsUpdate!.blurb!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  style:  const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w300),
                 ),
-                SizedBox(
+               const SizedBox(
                   height: 10,
                 ),
                 Text(

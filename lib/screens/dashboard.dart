@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youth_action_handbook/bloc/courses/courses_bloc.dart';
+import 'package:youth_action_handbook/bloc/news/news_bloc.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/screens/course.dart';
 import 'package:youth_action_handbook/screens/forum.dart';
@@ -25,8 +26,13 @@ class _DashboardState extends State<Dashboard> {
     BlocProvider<CoursesBloc>(
       create: (context) =>
       CoursesBloc(apiService: ApiService()),
-        child: HomeFragment()
+        child: BlocProvider<NewsBloc>(
+            create: (context) =>
+                NewsBloc(apiService: ApiService()),
+            child: HomeFragment()
+        )
     ),
+
     CourseFragment(),
     ForumFragment(),
     AboutFragment(),

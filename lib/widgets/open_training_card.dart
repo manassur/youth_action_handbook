@@ -35,8 +35,10 @@ class _OpenTrainingCardState extends State<OpenTrainingCard> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left:20),
-                  child: Image.network(widget.courseModel!.image!,width: 200,height: 200,)),
+                margin: const EdgeInsets.symmetric(horizontal:20),
+                  // uncomment to use network image
+                  // child: Image.network(widget.courseModel!.image!,width: 200,height: 200,)),
+                 child: Image.asset('assets/saly1.png',width: 200,height: 200,)),
             ],
           ),
          const SizedBox(height: 10,),
