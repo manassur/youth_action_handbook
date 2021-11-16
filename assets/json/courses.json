@@ -61,20 +61,8 @@
               "question": "What is fundamental principles??",
               "a": "option aaa fundamentals",
               "b": "option bbb fundamentals",
-              "c": "option ccc fundamentals",
-              "d": "option ddd fundamentals",
-              "answer": "Headache",
-              "type": "multiple_choice",
-              "hint": "some hint after answering",
-              "mark": 5
-            },
-            {
-              "id": "4",
-              "question": "What is fundamental principles??",
-              "a": "option aaa fundamentals",
-              "b": "option bbb fundamentals",
-              "c": "option ccc fundamentals",
-              "d": "option ddd fundamentals",
+              "c": "Headache",
+              "d": "Headache",
               "answer": "Headache",
               "type": "multiple_choice",
               "hint": "some hint after answering",
@@ -103,7 +91,7 @@
           ]
         },
         {
-          "id": "3",
+          "id": "2",
           "title": "Management Principles",
           "duration": "Headache",
           "quiz_type": "Quiz C",
@@ -221,3 +209,6 @@
 
   ]
 }
+
+
+

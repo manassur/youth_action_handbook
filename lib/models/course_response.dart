@@ -207,3 +207,29 @@ class Questions {
     return data;
   }
 }
+
+
+// class Options {
+//   String? a;
+//   String? b;
+//   String? c;
+//   String? d;
+//
+//   Options({this.a, this.b, this.c, this.d});
+//
+//   Options.fromJson(Map<String, dynamic> json) {
+//     a = json['a'];
+//     b = json['b'];
+//     c = json['c'];
+//     d = json['d'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['a'] = this.a;
+//     data['b'] = this.b;
+//     data['c'] = this.c;
+//     data['d'] = this.d;
+//     return data;
+//   }
+// }

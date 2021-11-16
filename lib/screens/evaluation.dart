@@ -10,8 +10,10 @@ class EvaluationScreen extends StatefulWidget {
   final Courses? courses;
   final Quiz? quiz;
   final Questions? question;
+  final SingleChoiceModel? singleChoiceModel;
+  final bool? isTicked;
 
-  const EvaluationScreen({Key? key, this.courses, this.quiz, this.question}) : super(key: key);
+  const EvaluationScreen({Key? key,this.isTicked, this.singleChoiceModel, this.courses, this.quiz, this.question}) : super(key: key);
 
   @override
   _EvaluationScreenState createState() => _EvaluationScreenState();
@@ -20,8 +22,8 @@ class EvaluationScreen extends StatefulWidget {
 class _EvaluationScreenState extends State<EvaluationScreen> {
     int selectedPos=-1;
     List<SingleChoiceModel> options = [
-    SingleChoiceModel(answer: 'Answer 1',),
-    SingleChoiceModel(answer: 'Answer 2',),
+    SingleChoiceModel(answer: 'Answer 1'),
+    SingleChoiceModel(answer: 'Answer 2'),
     SingleChoiceModel(answer: 'Answer 3'),
   ];
   @override
@@ -108,26 +110,54 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                           instruction:'Type your answer in the text box below'),
 
                       SizedBox(height: 25,),
-                      ListView.separated(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: options.length,
-                          itemBuilder: (ctx,pos){
-                            return GestureDetector(
-                              onTap: (){
-                                setState(() {
-                                  selectedPos=pos;
-                                });
-                              },
-                              child: MultipleChoiceItem(
-                                singleChoiceModel: options[pos],
-                                isTicked: selectedPos == pos,
 
-                              ),
-                            );
-                          }, separatorBuilder: (ctx,pos){
-                        return Divider();
-                      }, ),
+                      MultipleChoiceItem(
+                        // singleChoiceModel: options[pos],
+                        answer: "Answer 1",
+                        options: widget.quiz!.questions![pos].a!,
+                        isTicked: selectedPos == pos,
+                      ),
+
+                      MultipleChoiceItem(
+                        // singleChoiceModel: options[pos],
+                        answer: "Answer 2",
+                        options: widget.quiz!.questions![pos].b!,
+                        isTicked: selectedPos == pos,
+                      ),
+
+                      MultipleChoiceItem(
+                        // singleChoiceModel: options[pos],
+                        answer: "Answer 3",
+                        options: widget.quiz!.questions![pos].c!,
+                        isTicked: selectedPos == pos,
+                      ),
+
+                      MultipleChoiceItem(
+                        // singleChoiceModel: options[pos],
+                        answer: "Answer 4",
+                        options: widget.quiz!.questions![pos].d!,
+                        isTicked: selectedPos == pos,
+                      ),
+
+                      // ListView.separated(
+                      //     shrinkWrap: true,
+                      //     physics: NeverScrollableScrollPhysics(),
+                      //     itemCount: options.length,
+                      //     itemBuilder: (ctx,pos){
+                      //       return GestureDetector(
+                      //         onTap: (){
+                      //           setState(() {
+                      //             selectedPos=pos;
+                      //           });
+                      //         },
+                      //         child: MultipleChoiceItem(
+                      //           singleChoiceModel: options[pos],
+                      //           isTicked: selectedPos == pos,
+                      //         ),
+                      //       );
+                      //     }, separatorBuilder: (ctx,pos){
+                      //   return Divider();
+                      // }, ),
                       SizedBox(height: 25,),
                     ],
                   );
