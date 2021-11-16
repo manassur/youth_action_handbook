@@ -124,14 +124,16 @@ class Quiz {
   String? id;
   String? title;
   String? duration;
+  String? quizType;
   List<Questions>? questions;
 
-  Quiz({this.id, this.title, this.duration, this.questions});
+  Quiz({this.id, this.title, this.duration, this.questions, this.quizType});
 
   Quiz.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     duration = json['duration'];
+    quizType = json['quiz_type'];
     if (json['questions'] != null) {
       questions = <Questions>[];
       json['questions'].forEach((v) {
@@ -145,6 +147,7 @@ class Quiz {
     data['id'] = this.id;
     data['title'] = this.title;
     data['duration'] = this.duration;
+    data['quiz_type'] = this.quizType;
     if (this.questions != null) {
       data['questions'] = this.questions!.map((v) => v.toJson()).toList();
     }

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 
-class QuestionWidget extends StatelessWidget {
-  final int? number;
+class QuestionWidget extends StatefulWidget {
+  final String? number;
   final String? question,instruction;
   const QuestionWidget({Key? key,this.number,this.question,this.instruction}) : super(key: key);
 
+  @override
+  State<QuestionWidget> createState() => _QuestionWidgetState();
+}
+
+class _QuestionWidgetState extends State<QuestionWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -20,7 +25,8 @@ class QuestionWidget extends StatelessWidget {
             ),
             SizedBox(
                 width: 240,
-                child: Text('$number. $question',
+                child:
+                Text('${widget.number}. ${widget.question}',
                     style: TextStyle(
                         color: AppColors.colorBluePrimary,
                         fontSize: 14,
@@ -29,7 +35,7 @@ class QuestionWidget extends StatelessWidget {
               height: 5,
             ),
             Text(
-              '$instruction',
+              '${widget.instruction}',
               style: TextStyle(
                   color: AppColors.colorBluePrimary,
                   fontSize: 12,

@@ -22,7 +22,8 @@ class MultipleChoiceItem extends StatelessWidget {
               ),
               SizedBox(
                   width: 240,
-                  child: Text(singleChoiceModel!.answer!,
+                  child:
+                  Text(singleChoiceModel!.answer!,
                       style: TextStyle(
                           color: AppColors.colorBluePrimary,
                           fontSize: 14,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 
 class QuizzCard extends StatelessWidget {
-  final String? title,subtitle,score;
+  final String? title,subtitle,score, quizType;
   final bool? isDone,isAvailable;
-  const QuizzCard({Key? key,this.title,this.subtitle,this.score,this.isDone,this.isAvailable}) : super(key: key);
+  const QuizzCard({Key? key,this.title,this.subtitle,this.score,this.isDone,this.isAvailable, this.quizType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +45,8 @@ class QuizzCard extends StatelessWidget {
               Text("score",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12,color:isDone!?Colors.black87: Colors.white),),
             ],
           ),
+
+
          isDone!? CircleAvatar(
             radius:12 ,
             backgroundColor: Color(0xff4CD964),

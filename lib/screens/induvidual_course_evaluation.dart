@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
+import 'package:youth_action_handbook/screens/evaluation.dart';
 import 'package:youth_action_handbook/widgets/evaluation_card.dart';
 import 'package:youth_action_handbook/widgets/progress_header_widget.dart';
+import 'package:youth_action_handbook/widgets/question_widget.dart';
 import 'package:youth_action_handbook/widgets/quiz_card.dart';
 import 'package:youth_action_handbook/widgets/title_body_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -47,14 +49,26 @@ class _IndividualCourseEvaluationState extends State<IndividualCourseEvaluation>
                   children: const <TextSpan>[]),
             ),
 
-            ListView(
+            ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              children: const [
-                QuizzCard(title: 'Fundamental Principles',subtitle: 'Quiz A',isDone:true,isAvailable:true,score: '5.0',),
-                QuizzCard(title: 'What is peace Education',subtitle: 'Quiz B',isDone:false,isAvailable:true,score: 'N/A',),
-                QuizzCard(title: 'What is peace Education',subtitle: 'Quiz B',isDone:false,isAvailable:true,score: 'N/A',),
-              ],
+              itemCount: widget.courses!.quiz!.length,
+              itemBuilder: (context, pos){
+                return InkWell(
+                  onTap: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context)=>
+                            EvaluationScreen(quiz: widget.courses!.quiz![pos],)));
+                  },
+                  child: QuizzCard(
+                    title: widget.courses!.quiz![pos].title,
+                    subtitle: widget.courses!.quiz![pos].quizType,
+                    score: '5.0',
+                    isDone:true,
+                    isAvailable:true,
+                    ),
+                );
+              },
             ),
             SizedBox(height: 20,),
             RichText(

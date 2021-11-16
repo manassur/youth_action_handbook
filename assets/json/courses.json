@@ -28,8 +28,85 @@
       "quiz": [
         {
           "id": "1",
-          "title": "Headache",
+          "title": "Fundamental Principles",
           "duration": "Headache",
+          "quiz_type": "Quiz A",
+          "questions": [
+            {
+              "id": "1",
+              "question": "What is fundamental principles?",
+              "a": "option a fundamentals",
+              "b": "option b fundamentals",
+              "c": "option c fundamentals",
+              "d": "option d fundamentals",
+              "answer": "Headache",
+              "type": "multiple_choice",
+              "hint": "some hint after answering",
+              "mark": 5
+            },
+            {
+              "id": "2",
+              "question": "What is fundamental principles??",
+              "a": "option aa fundamentals",
+              "b": "option bb fundamentals",
+              "c": "option cc fundamentals",
+              "d": "option dd fundamentals",
+              "answer": "Headache",
+              "type": "multiple_choice",
+              "hint": "some hint after answering",
+              "mark": 5
+            },
+            {
+              "id": "3",
+              "question": "What is fundamental principles??",
+              "a": "option aaa fundamentals",
+              "b": "option bbb fundamentals",
+              "c": "option ccc fundamentals",
+              "d": "option ddd fundamentals",
+              "answer": "Headache",
+              "type": "multiple_choice",
+              "hint": "some hint after answering",
+              "mark": 5
+            },
+            {
+              "id": "4",
+              "question": "What is fundamental principles??",
+              "a": "option aaa fundamentals",
+              "b": "option bbb fundamentals",
+              "c": "option ccc fundamentals",
+              "d": "option ddd fundamentals",
+              "answer": "Headache",
+              "type": "multiple_choice",
+              "hint": "some hint after answering",
+              "mark": 5
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Peace Principles",
+          "duration": "Headache",
+          "quiz_type": "Quiz B",
+          "questions": [
+            {
+              "id": "1",
+              "question": "Headache",
+              "a": "Headache",
+              "b": "Headache",
+              "c": "Headache",
+              "d": "Headache",
+              "answer": "Headache",
+              "type": "multiple_choice",
+              "hint": "some hint after answering",
+              "mark": 5
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "title": "Management Principles",
+          "duration": "Headache",
+          "quiz_type": "Quiz C",
           "questions": [
             {
               "id": "1",

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
+import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/single_choice_model.dart';
 import 'package:youth_action_handbook/widgets/multiple_choice_item.dart';
 import 'package:youth_action_handbook/widgets/question_widget.dart';
 import 'package:youth_action_handbook/widgets/type_answer_widget.dart';
 
 class EvaluationScreen extends StatefulWidget {
-  const EvaluationScreen({Key? key}) : super(key: key);
+  final Courses? courses;
+  final Quiz? quiz;
+  final Questions? question;
+
+  const EvaluationScreen({Key? key, this.courses, this.quiz, this.question}) : super(key: key);
 
   @override
   _EvaluationScreenState createState() => _EvaluationScreenState();
@@ -37,36 +40,23 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding:  EdgeInsets.all(30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                            text: 'Peace',
-                            style: TextStyle(
-                                color: AppColors.colorBluePrimary,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w900),
-                            children: const <TextSpan>[]),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                            text: 'Education',
-                            style: TextStyle(
-                                color: AppColors.colorBluePrimary,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w900),
-                            children: const <TextSpan>[]),
-                      ),
-                    ],
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        text: widget.quiz!.title!,
+                          style: TextStyle(
+                              color: AppColors.colorBluePrimary,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w900),
+                          children:  <TextSpan>[]),
+                    ),
                   ),
-                  Spacer(),
                   Column(
                     children: [
                       Icon(Icons.share,color:AppColors.colorBluePrimary,size: 35,),
@@ -95,33 +85,55 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                     children: const <TextSpan>[]),
               ),
               SizedBox(height: 25,),
-              QuestionWidget(number:1,question:'What is Peace Education',instruction:'Type your answer in the text box below'),
+
+              QuestionWidget(
+                // number:widget.quiz!.questions!,
+                  number: "1",
+                  question:'What is Peace Education',
+                  instruction:'Type your answer in the text box below'
+              ),
               TypeAnswerWidget(),
               SizedBox(height: 25,),
-              QuestionWidget(number:2,question:'What is Peace Education',instruction:'Type your answer in the text box below'),
-              SizedBox(height: 25,),
-              ListView.separated(
+
+              ListView.builder(
                 shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (ctx,pos){
-                    return GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          selectedPos=pos;
-                        });
-                      },
-                      child: MultipleChoiceItem(
-                        singleChoiceModel: options[pos],
-                        isTicked: selectedPos == pos,
+                itemCount: widget.quiz!.questions!.length,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, pos){
+                  return Column(
+                    children: [
+                      QuestionWidget(
+                          number:widget.quiz!.questions![pos].id,
+                          question:widget.quiz!.questions![pos].question,
+                          instruction:'Type your answer in the text box below'),
 
-                      ),
-                    );
-                  }, separatorBuilder: (ctx,pos){
-                    return Divider();
-              }, itemCount: options.length)
+                      SizedBox(height: 25,),
+                      ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: options.length,
+                          itemBuilder: (ctx,pos){
+                            return GestureDetector(
+                              onTap: (){
+                                setState(() {
+                                  selectedPos=pos;
+                                });
+                              },
+                              child: MultipleChoiceItem(
+                                singleChoiceModel: options[pos],
+                                isTicked: selectedPos == pos,
 
+                              ),
+                            );
+                          }, separatorBuilder: (ctx,pos){
+                        return Divider();
+                      }, ),
+                      SizedBox(height: 25,),
+                    ],
+                  );
+                },
 
-
+              ),
             ],
           ),
         ),
