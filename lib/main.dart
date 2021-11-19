@@ -1,15 +1,14 @@
-import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/dashboard.dart';
 import 'package:youth_action_handbook/screens/edit_login.dart';
 import 'package:youth_action_handbook/screens/initial_screen.dart';
 import 'package:youth_action_handbook/screens/login.dart';
 import 'package:provider/provider.dart';
+import 'package:youth_action_handbook/screens/partners.dart';
 import 'package:youth_action_handbook/screens/reset_password.dart';
 import 'package:youth_action_handbook/screens/edit_profile.dart';
 import 'package:youth_action_handbook/screens/sign_up.dart';
@@ -67,6 +66,7 @@ class AppWrapper extends StatelessWidget {
               RouteNames.dashboard: (context) => const Dashboard(),
               RouteNames.editProfile: (context) => EditProfileScreen(),
               RouteNames.editLogin: (context) => EditLoginScreen(),
+              RouteNames.partners: (context) => PartnersScreen(),
               RouteNames.launch : (context) => (user != null)? const Dashboard() : const InitialScreen(),
         
             },
@@ -87,6 +87,7 @@ class RouteNames{
   static const editProfile = '/EditProfile'; 
   static const editLogin = '/EditLogin'; 
   static const launch = '/launch';
+  static const partners = '/partners';
 
 
 }

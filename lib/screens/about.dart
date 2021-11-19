@@ -5,12 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/user.dart';
-import 'package:youth_action_handbook/screens/edit_profile.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-
 
 
 class AboutFragment extends StatefulWidget {
@@ -19,26 +16,6 @@ class AboutFragment extends StatefulWidget {
 }
 
 class _AboutFragmentState extends State<AboutFragment> {
-
-  _launchhURL() async {
-    const url = 'https://punchng.com/advertise-with-us';
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: false,
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  launchAdvertise(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url, forceWebView: true);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   //PROJECT COLUMN
   List projectItems = [
@@ -64,7 +41,7 @@ class _AboutFragmentState extends State<AboutFragment> {
       "leading_icon": Icons.check_circle,
       "title": "Partners",
       "trailing_icon": Icons.keyboard_arrow_down_sharp,
-      "page": AboutFragment(),
+      "page": RouteNames.partners,
     },
     {
       "leading_icon": Icons.info_outline,
@@ -192,7 +169,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                             settingItems[index]['title'],
                           ),
                           trailing: Icon(
-                            settingItems[index]['trailing_icon'],color: Colors.black87, size: 18,
+                            settingItems[index]['trailing_icon'],color: Colors.black87, size: 27,
                           ),
                           onTap: (){
                             Navigator.pushNamed(context, settingItems[index]['page']);
@@ -209,8 +186,6 @@ class _AboutFragmentState extends State<AboutFragment> {
             ],
           ),
 
-
-       
             //PROJECT COLUMN
             Column(
               children: [
@@ -219,7 +194,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                       width: MediaQuery.of(context).size.width,
                       height: 30,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 35.0),
+                        padding:  EdgeInsets.only(left: 35.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text("THE PROJECT",
@@ -247,7 +222,12 @@ class _AboutFragmentState extends State<AboutFragment> {
                           Icon(
                             projectItems[index]['trailing_icon'], color: Colors.black, size: 27,
                           )
-                              :Text(projectItems[index]['app_version'])
+                              :Text(projectItems[index]['app_version']),
+
+
+                            onTap: (){
+                              Navigator.pushNamed(context, projectItems[index]['page']);
+                            }
                         ),
                       );
                     },
@@ -264,11 +244,12 @@ class _AboutFragmentState extends State<AboutFragment> {
             Column(
               children: [
                 Container(
+                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
                     color: AppColors.colorBlueSecondary,
                     width: MediaQuery.of(context).size.width,
                     height: 30,
                     child: const Padding(
-                      padding: EdgeInsets.only(left: 35.0),
+                      padding: EdgeInsets.only(left: 20.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text("OTHER",
@@ -277,32 +258,99 @@ class _AboutFragmentState extends State<AboutFragment> {
                     )),
 
                 Padding(
-                  padding: const EdgeInsets.only(left:15.0, right: 15.0),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: otherItems.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 50,
-                        child: ListTile(
-                          leading: Icon(
-                            otherItems[index]['leading_icon'], color: AppColors.colorPurple,
-                          ),
-                          title: Text(
-                            otherItems[index]['title'],
-                          ),
-                          trailing: Icon(
-                            otherItems[index]['trailing_icon'],color: Colors.black, size: 27,
-                          ),
-                        ),
-                      );
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: ListTile(
+                    onTap: () {
+                      launchPolicy() async {
+                        const url = 'https://studio.rtl.ug/yah-provacy-policy';
+                        if (await canLaunch(url)) {
+                          await launch(url, forceWebView: true, forceSafariVC: true, );
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      }
+                      launchPolicy();
                     },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,);
-                    },
+                    leading: Icon(Icons.check_circle, color: AppColors.colorPurple),
+                    title: Text("Privacy Policy"),
+                    trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
                   ),
                 ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: ListTile(
+                    onTap: () {
+                      launchTerms() async {
+                        const url = 'https://studio.rtl.ug/yah-terms-conditions';
+                        if (await canLaunch(url)) {
+                          await launch(url, forceWebView: true, forceSafariVC: true, );
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      }
+                      launchTerms();
+                    },
+                    leading: Icon(Icons.info_outline, color: AppColors.colorPurple),
+                    title: Text("Terms and conditions"),
+                    trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: ListTile(
+                    onTap: () {
+
+                    },
+                    leading: Icon(Icons.login_outlined, color: AppColors.colorPurple),
+                    title: Text("Sign Out"),
+                    trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,),
+                ),
+
+
+                // Padding(
+                //   padding: const EdgeInsets.only(left:15.0, right: 15.0),
+                //   child: ListView.separated(
+                //     shrinkWrap: true,
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     itemCount: otherItems.length,
+                //     itemBuilder: (BuildContext context, int index) {
+                //       return SizedBox(
+                //         height: 50,
+                //         child: ListTile(
+                //           leading: Icon(
+                //             otherItems[index]['leading_icon'], color: AppColors.colorPurple,
+                //           ),
+                //           title: Text(
+                //             otherItems[index]['title'],
+                //           ),
+                //           trailing: Icon(
+                //             otherItems[index]['trailing_icon'],color: Colors.black, size: 27,
+                //           ),
+                //         ),
+                //       );
+                //     },
+                //     separatorBuilder: (BuildContext context, int index) {
+                //       return Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,);
+                //     },
+                //   ),
+                // ),
 
               ],
             ),
