@@ -6,6 +6,7 @@ final storageRef = FirebaseStorage.instance.ref();
 final  userDataCollection =_firestore.collection('userData');
 
 final postsRef = _firestore.collection('posts');
+final replyRef = _firestore.collection('replies');
 final topicsRef = _firestore.collection('topics');
 final followersRef = _firestore.collection('followers');
 final followingRef = _firestore.collection('following');

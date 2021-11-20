@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:youth_action_handbook/models/firestore_models/comment_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
@@ -71,7 +72,7 @@ class DatabaseService {
 
    Future<void> createPost(Post post) async {
 
-     DocumentReference<Map<String, dynamic>> doc= await  postsRef.doc(post.authorId).collection('userPosts').add({
+    postsRef.doc(post.authorId).collection('userPosts').add({
         'topicId': post.topicId,
         'caption': post.caption,
         'description':post.description,
@@ -82,30 +83,21 @@ class DatabaseService {
         'authorImg':post.authorImg,
         'timestamp': post.timestamp,
         'commentsAllowed':true,
-      }).whenComplete(() => () async{
-       DocumentReference<Map<String, dynamic>> topicDoc = await topicsRef.doc(post.topicId).collection('topicPosts').add({
-         'topicId': post.topicId,
-         'caption': post.caption,
-         'description':post.description,
-         'likeCount': post.likeCount,
-         'replyCount':post.replyCount,
-         'authorId': post.authorId,
-         'authorName':post.authorName,
-         'authorImg':post.authorImg,
-         'timestamp': post.timestamp,
-         'commentsAllowed':true,
-       });
-       print('user id of the topic doc '+ topicDoc.id);
+      }).then((doc){
 
-     }).catchError((e){
-       print('failedd to create post for user '+e.toString());
-     });
+      topicsRef.doc(post.topicId).collection('topicPosts').doc(doc.id).set({
+        'authorId': post.authorId,
+        'postId': doc.id,
+        'timestamp': post.timestamp,
+      });
+      //show the id of the post that just got saved
+      print('post id of the new post '+ doc.id);
+      print('user id of the new post '+ post.authorId!);
+
+    });
 
 
 
-     //show the id of the post that just got saved
-     print('post id of the new post '+ doc.id);
-     print('user id of the new post '+ post.authorId!);
 
      // update the post count for the topic
       DocumentReference topicRef = topicsRef.doc(post.topicId);
@@ -115,6 +107,38 @@ class DatabaseService {
         );
   }
 
+  Future<void> addComment(Comment post) async {
+
+    replyRef.add({
+      'parentId': post.parentId,
+      'parentAuthorId':post.parentAuthorId,
+      'caption': post.caption,
+      'replyCount':post.replyCount,
+      'authorId': post.authorId,
+      'authorName':post.authorName,
+      'authorImg':post.authorImg,
+      'timestamp': post.timestamp,
+      'isParentComment':post.isParentComment,
+    }).then((doc){
+      // update the post count for the post only when it is a parent comment
+      if(post.isParentComment==true) {
+        DocumentReference postRef = postsRef
+            .doc(post.parentAuthorId)
+            .collection('userPosts')
+            .doc(post.parentId);
+        postRef.get().then((doc) {
+          int postCount = doc['replyCount'];
+          postRef.update({'replyCount': postCount + 1});
+        }
+        );
+      }
+    });
+
+
+
+
+
+  }
 
   void createTopic(String topic) {
 
@@ -172,7 +196,7 @@ class DatabaseService {
       print('doc data '+doc.data().toString());
       if(doc.exists){
         print('doc exists while trying to like'+doc.data().toString());
-        int likeCount = doc!['likeCount'];
+        int likeCount = doc['likeCount'];
       postRef.update({'likeCount': likeCount + 1});
       likesRef
           .doc(post.id)
@@ -251,33 +275,55 @@ class DatabaseService {
   }
 
   Future<List<Post>> getTrendingPosts() async {
+    List<Post> posts =[];
     // get the most trending topic
     QuerySnapshot topicSnapshot = await topicsRef
         .orderBy('postCount', descending: true)
         . limit(1)
         .get();
-    print(topicSnapshot.docs[0].data());
+    if(topicSnapshot.docs.isNotEmpty) {
+      print(topicSnapshot.docs[0].data());
 
-    List<Topic> topics =
-    topicSnapshot.docs.map((doc) => Topic.fromDoc(doc)).toList();
-    // use the trending topic to get the most trending post
+      List<Topic> topics =
+      topicSnapshot.docs.map((doc) => Topic.fromDoc(doc)).toList();
+      // use the trending topic to get the most trending post
 
-    // use this to reset data manually
-     print ('the trending topic '+topics[0].id!);
-   //  topicsRef.doc(topics[0].id!).delete();
-    QuerySnapshot topicPostSnapshot = await topicsRef
-        .doc(topics[0].id!)
-        .collection('topicPosts')
-        .orderBy('replyCount', descending: true)
-        .limit(10)
-        .get();
+      // use this to reset data manually
+      print('the trending topic ' + topics[0].id!);
+      //  topicsRef.doc(topics[0].id!).delete();
 
-     print(topicPostSnapshot.docs[0].data());
+      /* get the 10 latest trending post */
+      QuerySnapshot topicPostSnapshot = await topicsRef
+          .doc(topics[0].id!)
+          .collection('topicPosts')
+          .orderBy('timestamp',descending: true)
+          .limit(10)
+          .get();
 
-    List<Post> posts =
-    topicPostSnapshot.docs.map((doc) => Post.fromDoc(doc)).toList();
+      // use each of the author id and post id to fetch the post
+     for(DocumentSnapshot element  in topicPostSnapshot.docs){
+        Post userPost = await  getSingleUserPost(element['authorId'], element['postId']);
+       // add the post to the list
+       posts.add(userPost);
+     }
+    }
     return posts;
+
   }
+  Future<List<Comment>> getPostComments(String postId) async {
+    List<Comment> posts =[];
+    QuerySnapshot replySnapshot = await replyRef
+        .where('parentId',isEqualTo: postId)
+        .limit(20)
+        .get();
+    if(replySnapshot.docs.isNotEmpty) {
+      posts =
+      replySnapshot.docs.map((doc) => Comment.fromDoc(doc)).toList();
+    }
+    return posts;
+
+  }
+
 
   Future<List<Topic>> getTopics() async {
     QuerySnapshot topicSnapshot = await topicsRef
@@ -288,5 +334,14 @@ class DatabaseService {
     topicSnapshot.docs.map((doc) => Topic.fromDoc(doc)).toList();
     return topics;
   }
-  
+
+
+  Future<Post> getSingleUserPost(String authorId,String postId) async{
+    DocumentSnapshot<Map<String, dynamic>> userPostSnapshot = await postsRef
+        .doc(authorId)
+        .collection('userPosts')
+        .doc(postId)
+        .get();
+    return Post.fromDoc(userPostSnapshot);
+  }
 }
