@@ -1,3 +1,5 @@
+
+
 class CourseResponse {
   bool? error;
   List<Courses>? courses;
@@ -9,13 +11,13 @@ class CourseResponse {
     if (json['courses'] != null) {
       courses = <Courses>[];
       json['courses'].forEach((v) {
-        courses!.add(new Courses.fromJson(v));
+        courses!.add(Courses.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data =  Map<String, dynamic>();
     data['error'] = this.error;
     if (this.courses != null) {
       data['courses'] = this.courses!.map((v) => v.toJson()).toList();
@@ -32,8 +34,8 @@ class Courses {
   String? objectives;
   String? approach;
   String? references;
-  String? image;
   int? color;
+  String? image;
   List<Lessons>? lessons;
   List<Quiz>? quiz;
 
@@ -45,9 +47,9 @@ class Courses {
         this.objectives,
         this.approach,
         this.references,
+        this.color,
         this.image,
         this.lessons,
-        this.color,
         this.quiz});
 
   Courses.fromJson(Map<String, dynamic> json) {
@@ -58,8 +60,8 @@ class Courses {
     objectives = json['objectives'];
     approach = json['approach'];
     references = json['references'];
-    image = json['image'];
     color = int.parse(json['color']) ;
+    image = json['image'];
     if (json['lessons'] != null) {
       lessons = <Lessons>[];
       json['lessons'].forEach((v) {
@@ -83,8 +85,8 @@ class Courses {
     data['objectives'] = this.objectives;
     data['approach'] = this.approach;
     data['references'] = this.references;
-    data['image'] = this.image;
     data['color'] = this.color;
+    data['image'] = this.image;
     if (this.lessons != null) {
       data['lessons'] = this.lessons!.map((v) => v.toJson()).toList();
     }
@@ -127,7 +129,7 @@ class Quiz {
   String? quizType;
   List<Questions>? questions;
 
-  Quiz({this.id, this.title, this.duration, this.questions, this.quizType});
+  Quiz({this.id, this.title, this.duration, this.quizType, this.questions});
 
   Quiz.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -158,78 +160,70 @@ class Quiz {
 class Questions {
   String? id;
   String? question;
-  String? a;
-  String? b;
-  String? c;
-  String? d;
-  String? answer;
   String? type;
   String? hint;
+  String? correctAnswerId;
+  String? selectedAnswerId;
   int? mark;
+  List<Answers>? answers;
 
   Questions(
       {this.id,
         this.question,
-        this.a,
-        this.b,
-        this.c,
-        this.d,
-        this.answer,
         this.type,
         this.hint,
-        this.mark});
+        this.correctAnswerId,
+        this.selectedAnswerId,
+        this.mark,
+        this.answers});
 
   Questions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     question = json['question'];
-    a = json['a'];
-    b = json['b'];
-    c = json['c'];
-    d = json['d'];
-    answer = json['answer'];
     type = json['type'];
     hint = json['hint'];
+    correctAnswerId = json['correct_answer_id'];
+    selectedAnswerId = json['selected_answer_id'];
     mark = json['mark'];
+    if (json['answers'] != null) {
+      answers = <Answers>[];
+      json['answers'].forEach((v) {
+        answers!.add(new Answers.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['question'] = this.question;
-    data['a'] = this.a;
-    data['b'] = this.b;
-    data['c'] = this.c;
-    data['d'] = this.d;
-    data['answer'] = this.answer;
     data['type'] = this.type;
     data['hint'] = this.hint;
+    data['correct_answer_id'] = this.correctAnswerId;
+    data['selected_answer_id'] = this.selectedAnswerId;
     data['mark'] = this.mark;
+    if (this.answers != null) {
+      data['answers'] = this.answers!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
 
+class Answers {
+  String? id;
+  String? option;
 
-// class Options {
-//   String? a;
-//   String? b;
-//   String? c;
-//   String? d;
-//
-//   Options({this.a, this.b, this.c, this.d});
-//
-//   Options.fromJson(Map<String, dynamic> json) {
-//     a = json['a'];
-//     b = json['b'];
-//     c = json['c'];
-//     d = json['d'];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['a'] = this.a;
-//     data['b'] = this.b;
-//     data['c'] = this.c;
-//     data['d'] = this.d;
-//     return data;
-//   }
-// }
+  Answers({this.id, this.option});
+
+  Answers.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    option = json['option'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['option'] = this.option;
+    return data;
+  }
+}

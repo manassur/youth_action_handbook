@@ -8,7 +8,6 @@ class MultipleChoiceItem extends StatefulWidget {
   final bool? isTicked;
   final Questions? question;
   final String? answer, options;
-  // final Options? options;
 
   const MultipleChoiceItem({Key? key,this.singleChoiceModel, this.options, this.answer, this.question, this.isTicked, }) : super(key: key);
 
@@ -17,13 +16,12 @@ class MultipleChoiceItem extends StatefulWidget {
 }
 
 class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
-  int selectedPos=-1;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Row(
+      child:   Row(
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -34,8 +32,7 @@ class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
                   width: 240,
                   child:
                   Text(
-                      // widget.singleChoiceModel!.answer!,
-                    widget.answer!,
+                      widget.singleChoiceModel!.answer!,
                       style: TextStyle(
                           color: AppColors.colorBluePrimary,
                           fontSize: 14,
@@ -43,11 +40,7 @@ class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
 
               SizedBox(height: 5),
               Text(
-                // 'Type out your answer in the box below',
-                // widget.singleChoiceModel!.options!,
                 widget.options!,
-                // widget.question!.a!,
-
                 style: TextStyle(
                     color: AppColors.colorBluePrimary,
                     fontSize: 12,
@@ -55,18 +48,20 @@ class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
               ),
             ],
           ),
-          Spacer(),
-         widget.isTicked==true? CircleAvatar(
+          const  Spacer(),
+          widget.isTicked==true?
+          const CircleAvatar(
             radius:15 ,
             backgroundColor: Color(0xff4CD964),
             child: Icon(Icons.done,color: Colors.white,),
-          ):CircleAvatar(
-           radius:15 ,
-           backgroundColor: Colors.grey.shade400,
-
-         )
+          )
+              :CircleAvatar(
+            radius:15 ,
+            backgroundColor: Colors.grey.shade400,
+          )
         ],
       ),
+
     );
   }
 }
