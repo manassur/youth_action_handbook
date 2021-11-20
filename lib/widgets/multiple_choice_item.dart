@@ -4,12 +4,9 @@ import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/single_choice_model.dart';
 
 class MultipleChoiceItem extends StatefulWidget {
-  final SingleChoiceModel? singleChoiceModel;
-  final bool? isTicked;
-  final Questions? question;
-  final String? answer, options;
-
-  const MultipleChoiceItem({Key? key,this.singleChoiceModel, this.options, this.answer, this.question, this.isTicked, }) : super(key: key);
+  final Answers? answer;
+  final String? selectedAnswer;
+  const MultipleChoiceItem({Key? key, this.answer,this.selectedAnswer }) : super(key: key);
 
   @override
   State<MultipleChoiceItem> createState() => _MultipleChoiceItemState();
@@ -32,7 +29,7 @@ class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
                   width: 240,
                   child:
                   Text(
-                      widget.singleChoiceModel!.answer!,
+                      'Answer',
                       style: TextStyle(
                           color: AppColors.colorBluePrimary,
                           fontSize: 14,
@@ -40,7 +37,7 @@ class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
 
               SizedBox(height: 5),
               Text(
-                widget.options!,
+                widget.answer!.option!,
                 style: TextStyle(
                     color: AppColors.colorBluePrimary,
                     fontSize: 12,
@@ -49,7 +46,7 @@ class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
             ],
           ),
           const  Spacer(),
-          widget.isTicked==true?
+          widget.selectedAnswer==widget.answer!.id?
           const CircleAvatar(
             radius:15 ,
             backgroundColor: Color(0xff4CD964),

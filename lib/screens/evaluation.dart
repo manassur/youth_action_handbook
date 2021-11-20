@@ -13,6 +13,7 @@ class EvaluationScreen extends StatefulWidget {
   // final SingleChoiceModel? singleChoiceModel;
   final bool? isTicked;
 
+
   const EvaluationScreen({Key? key,
     this.isTicked,
     // this.singleChoiceModel,
@@ -26,14 +27,7 @@ class EvaluationScreen extends StatefulWidget {
 }
 
 class _EvaluationScreenState extends State<EvaluationScreen> {
-    int selectedPos=-1;
-    List<SingleChoiceModel> options = [
-    SingleChoiceModel(answer: 'Answer 1'),
-    SingleChoiceModel(answer: 'Answer 2'),
-    SingleChoiceModel(answer: 'Answer 3'),
-    SingleChoiceModel(answer: 'Answer 4'),
 
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,6 +114,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
 
                       SizedBox(height: 25,),
 
+                      // list of options
                       ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -130,13 +125,12 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                             return GestureDetector(
                               onTap: (){
                                 setState(() {
-                                  selectedPos=pos;
+                                  question.selectedAnswerId=ans.id!;
                                 });
                               },
                               child: MultipleChoiceItem(
-                                singleChoiceModel: options[pos],
-                                options: ans.option!,
-                                isTicked: selectedPos == pos,
+                               answer:ans,
+                                selectedAnswer:question.selectedAnswerId
                               ),
                             );
                           }, separatorBuilder: (ctx,pos){
