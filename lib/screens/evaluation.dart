@@ -9,11 +9,17 @@ import 'package:youth_action_handbook/widgets/type_answer_widget.dart';
 class EvaluationScreen extends StatefulWidget {
   final Courses? courses;
   final Quiz? quiz;
-  final Questions? question;
-  final SingleChoiceModel? singleChoiceModel;
+  final Questions? ques;
+  // final SingleChoiceModel? singleChoiceModel;
   final bool? isTicked;
 
-  const EvaluationScreen({Key? key,this.isTicked, this.singleChoiceModel, this.courses, this.quiz, this.question}) : super(key: key);
+  const EvaluationScreen({Key? key,
+    this.isTicked,
+    // this.singleChoiceModel,
+    this.courses,
+    this.quiz,
+    this.ques,
+  }) : super(key: key);
 
   @override
   _EvaluationScreenState createState() => _EvaluationScreenState();
@@ -25,6 +31,8 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
     SingleChoiceModel(answer: 'Answer 1'),
     SingleChoiceModel(answer: 'Answer 2'),
     SingleChoiceModel(answer: 'Answer 3'),
+    SingleChoiceModel(answer: 'Answer 4'),
+
   ];
   @override
   Widget build(BuildContext context) {
@@ -76,7 +84,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                 ],
               ),
               Text('Evaluation 1',style: TextStyle(color: AppColors.colorBluePrimary),),
-              SizedBox(height: 15,),
+           const   SizedBox(height: 15,),
               RichText(
                 text: TextSpan(
                     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.',
@@ -88,7 +96,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
               ),
               SizedBox(height: 25,),
 
-              QuestionWidget(
+           const   QuestionWidget(
                 // number:widget.quiz!.questions!,
                   number: "1",
                   question:'What is Peace Education',
@@ -101,63 +109,39 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                 shrinkWrap: true,
                 itemCount: widget.quiz!.questions!.length,
                 physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, pos){
+                itemBuilder: (context, index){
+                  Questions question = widget.quiz!.questions![index];
                   return Column(
                     children: [
                       QuestionWidget(
-                          number:widget.quiz!.questions![pos].id,
-                          question:widget.quiz!.questions![pos].question,
+                          number:question.id,
+                          question:question.question,
                           instruction:'Type your answer in the text box below'),
 
                       SizedBox(height: 25,),
 
-                      MultipleChoiceItem(
-                        // singleChoiceModel: options[pos],
-                        answer: "Answer 1",
-                        options: widget.quiz!.questions![pos].a!,
-                        isTicked: selectedPos == pos,
-                      ),
+                      ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: question.answers!.length,
+                          itemBuilder: (ctx,pos){
+                            Answers ans = question.answers![pos];
 
-                      MultipleChoiceItem(
-                        // singleChoiceModel: options[pos],
-                        answer: "Answer 2",
-                        options: widget.quiz!.questions![pos].b!,
-                        isTicked: selectedPos == pos,
-                      ),
-
-                      MultipleChoiceItem(
-                        // singleChoiceModel: options[pos],
-                        answer: "Answer 3",
-                        options: widget.quiz!.questions![pos].c!,
-                        isTicked: selectedPos == pos,
-                      ),
-
-                      MultipleChoiceItem(
-                        // singleChoiceModel: options[pos],
-                        answer: "Answer 4",
-                        options: widget.quiz!.questions![pos].d!,
-                        isTicked: selectedPos == pos,
-                      ),
-
-                      // ListView.separated(
-                      //     shrinkWrap: true,
-                      //     physics: NeverScrollableScrollPhysics(),
-                      //     itemCount: options.length,
-                      //     itemBuilder: (ctx,pos){
-                      //       return GestureDetector(
-                      //         onTap: (){
-                      //           setState(() {
-                      //             selectedPos=pos;
-                      //           });
-                      //         },
-                      //         child: MultipleChoiceItem(
-                      //           singleChoiceModel: options[pos],
-                      //           isTicked: selectedPos == pos,
-                      //         ),
-                      //       );
-                      //     }, separatorBuilder: (ctx,pos){
-                      //   return Divider();
-                      // }, ),
+                            return GestureDetector(
+                              onTap: (){
+                                setState(() {
+                                  selectedPos=pos;
+                                });
+                              },
+                              child: MultipleChoiceItem(
+                                singleChoiceModel: options[pos],
+                                options: ans!.option!,
+                                isTicked: selectedPos == pos,
+                              ),
+                            );
+                          }, separatorBuilder: (ctx,pos){
+                        return Divider();
+                      }, ),
                       SizedBox(height: 25,),
                     ],
                   );
