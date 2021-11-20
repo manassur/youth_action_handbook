@@ -135,7 +135,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                               },
                               child: MultipleChoiceItem(
                                 singleChoiceModel: options[pos],
-                                options: ans!.option!,
+                                options: ans.option!,
                                 isTicked: selectedPos == pos,
                               ),
                             );
