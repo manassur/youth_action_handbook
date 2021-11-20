@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
+import 'package:youth_action_handbook/screens/individual_course_lesson.dart';
 import 'package:youth_action_handbook/widgets/custom_tab.dart';
 
 import 'induvidual_course_about.dart';
@@ -111,8 +112,8 @@ class _IndividualCourseScreenState extends State<IndividualCourseScreen>  with T
         body: TabBarView(
             controller: tabController,
             children: [
-              Container(),
-               IndividualCourseAbout( courses: widget.courses!,),
+              IndividualCourseLesson(courses: widget.courses!,),
+              IndividualCourseAbout( courses: widget.courses!,),
               IndividualCourseEvaluation(courses: widget.courses!),
             ]),
       ),
