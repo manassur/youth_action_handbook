@@ -2,15 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class Loading extends StatelessWidget {
+class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
 
+  @override
+  State<Loading> createState() => _LoadingState();
+}
+
+class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -41,6 +47,8 @@ class MenuForAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appUser = Provider.of<AppUser?>(context);
+
     void onSelected(BuildContext context, int item) async {
       switch (item) {
         case 0:
@@ -57,7 +65,11 @@ class MenuForAppBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: PopupMenuButton<int>(
-        child: const Avatar(url: "http://via.placeholder.com/350x150"),
+        child:   CircleAvatar(
+          backgroundColor: Colors.grey,
+          radius: 20,
+          backgroundImage:  NetworkImage(appUser!.profilePicture??''),
+        ),
         color: Colors.indigo,
         onSelected: (item) => onSelected(context, item),
         itemBuilder: (context) => [
@@ -70,7 +82,11 @@ class MenuForAppBar extends StatelessWidget {
                   'Edit Profile',
                   style: TextStyle(color: Colors.white),
                 ),
-                Avatar()
+                // CircleAvatar(
+                //   backgroundColor: Colors.black87,
+                //   radius: 20,
+                //   backgroundImage:  NetworkImage(appUser!.photoURL!),
+                // )
               ],
             ),
           ),

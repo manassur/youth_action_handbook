@@ -27,10 +27,7 @@ class _IndividualCourseLessonState extends State<IndividualCourseLesson> {
               itemCount: widget.courses!.lessons!.length,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, pos){
-                return LessonItemCard(
-                  title:widget.courses!.lessons![pos].title! ,
-                  duration: widget.courses!.lessons![pos].duration!,
-                );
+                return LessonItemCard(lesson:widget.courses!.lessons![pos],courseId:widget.courses!.id,courseName:widget.courses!.title,);
                 },
             ),
           ],

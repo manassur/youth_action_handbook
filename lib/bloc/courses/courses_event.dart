@@ -10,4 +10,11 @@ class FetchCoursesEvent extends CoursesEvent {
   List<Object> get props => [];
 }
 
+class FetchUserCoursesEvent extends CoursesEvent {
+  final  String? uid;
+  FetchUserCoursesEvent({required this.uid});
+
+  @override
+  List<Object> get props => [];
+}
 

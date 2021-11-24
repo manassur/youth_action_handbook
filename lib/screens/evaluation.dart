@@ -1,25 +1,25 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/single_choice_model.dart';
+import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/multiple_choice_item.dart';
 import 'package:youth_action_handbook/widgets/question_widget.dart';
 import 'package:youth_action_handbook/widgets/type_answer_widget.dart';
 
 class EvaluationScreen extends StatefulWidget {
-  final Courses? courses;
+  final String? courseId;
   final Quiz? quiz;
-  final Questions? ques;
-  // final SingleChoiceModel? singleChoiceModel;
   final bool? isTicked;
 
 
   const EvaluationScreen({Key? key,
     this.isTicked,
-    // this.singleChoiceModel,
-    this.courses,
+    this.courseId,
     this.quiz,
-    this.ques,
   }) : super(key: key);
 
   @override
@@ -27,6 +27,42 @@ class EvaluationScreen extends StatefulWidget {
 }
 
 class _EvaluationScreenState extends State<EvaluationScreen> {
+
+  AppUser? appUser;
+  double? _quizScore=-1;
+  bool? isDone=false;
+  String? _currentUserId;
+  DatabaseService? dbservice;
+  TextEditingController _captionController = TextEditingController();
+  bool _isLoading = false;
+
+  @override
+  initState() {
+    super.initState();
+    appUser = Provider.of<AppUser?>(context,listen:false);
+    _currentUserId = appUser!.uid;
+    dbservice = DatabaseService(uid: _currentUserId);
+  }
+
+
+  void calculateScoreAndSaveQuiz() {
+    widget.quiz!.questions!.forEach((element) {
+      if(element.selectedAnswerId==element.correctAnswerId){
+        // question passed, save user option and mark
+        dbservice!.addUserQuizRecord(widget.courseId!, widget.quiz!.id!, element.id!, element.selectedAnswerId!, element.mark!);
+      }else{
+        // question failed savae user option and award 0 mark
+        dbservice!.addUserQuizRecord(widget.courseId!, widget.quiz!.id!, element.id!, element.selectedAnswerId!, 0);
+      }
+    });
+    Flushbar(
+      title: "Quiz Saved",
+      message: "Great, you have taken this quiz",
+      backgroundColor: AppColors.colorYellow,
+      duration: Duration(seconds: 1),
+    ).show(context).then((value) => Navigator.of(context).pop());
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,14 +126,14 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
               ),
               SizedBox(height: 25,),
 
-           const   QuestionWidget(
-                // number:widget.quiz!.questions!,
-                  number: "1",
-                  question:'What is Peace Education',
-                  instruction:'Type your answer in the text box below'
-              ),
-              TypeAnswerWidget(),
-              SizedBox(height: 25,),
+           // const   QuestionWidget(
+           //      // number:widget.quiz!.questions!,
+           //        number: "1",
+           //        question:'What is Peace Education',
+           //        instruction:'Type your answer in the text box below'
+           //    ),
+            //  TypeAnswerWidget(),
+           //    SizedBox(height: 25,),
 
               ListView.builder(
                 shrinkWrap: true,
@@ -142,10 +178,35 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                 },
 
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 40,
+                    width: 300,
+                    child:TextButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.colorGreenPrimary),
+                          shadowColor: MaterialStateProperty.all<Color>(AppColors.colorGreenPrimary.withOpacity(0.4)),
+                          elevation: MaterialStateProperty.all(5), //Defines Elevation
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ))),
+                      child: Text('Submit',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                      onPressed: () {
+                        calculateScoreAndSaveQuiz();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
             ],
           ),
         ),
       ),
     );
   }
+
 }

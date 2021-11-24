@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/screens/individual_course_lesson.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/custom_tab.dart';
 
 import 'induvidual_course_about.dart';
@@ -19,14 +22,24 @@ class IndividualCourseScreen extends StatefulWidget {
 class _IndividualCourseScreenState extends State<IndividualCourseScreen>  with TickerProviderStateMixin  {
   int selected = 0;
   late TabController tabController;
+
+
   @override
   void initState() {
     super.initState();
+
+
     tabController = TabController(
       initialIndex: 0,
       length: 3,
       vsync: this,
     );
+
+
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
   List<String> categoriesList =[
     "Lessons",
@@ -54,33 +67,24 @@ class _IndividualCourseScreenState extends State<IndividualCourseScreen>  with T
                         child: Stack(
                           children: [
                             Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/group_img.png'),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            Container(color: Colors.black54.withOpacity(0.3),),
-                            Center(child: Icon(Icons.play_circle_fill,color:Colors.white,size: 60,)),
-                            Positioned.fill(
-                              child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child:  Container(
-                                    margin: EdgeInsets.only(right: 150),
-                                    height:13,color:AppColors.colorGreenPrimary),
-
-                              ),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(widget.courses!.image!
+                                    ),
+                                    fit: BoxFit.fill,
+                                  ),
+                                )
                             ),
 
                           ],
                         ),
                       ),
+                      //  _ControlsOverlay(controller: _controller),
                       SizedBox(height: 80,)
                     ],
                   ),
                 ),
+
                 bottom: PreferredSize(
                   preferredSize:Size(queryData.size.width,60),
                   child: SizedBox(
@@ -116,7 +120,7 @@ class _IndividualCourseScreenState extends State<IndividualCourseScreen>  with T
               IndividualCourseAbout( courses: widget.courses!,),
               IndividualCourseEvaluation(courses: widget.courses!),
             ]),
-      ),
+      )
     );
 
   }

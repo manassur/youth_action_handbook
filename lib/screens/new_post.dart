@@ -74,7 +74,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
           likeCount: 0,
           replyCount: 0,
           authorName: appUser!.name,
-          authorImg: appUser!.photoURL,
+          authorImg: appUser!.profilePicture,
           authorId: _currentUserId,
           timestamp: Timestamp.fromDate(DateTime.now()),
           commentsAllowed: true,

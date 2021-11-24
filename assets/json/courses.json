@@ -10,30 +10,34 @@
       "approach": "Approach lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.",
       "references": "References lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.",
       "color": "0XFFFFCD2C",
-      "image": "https://images.pexels.com/photos/3760043/pexels-photo-3760043.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      "image": "https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       "lessons": [
         {
           "id": "1",
           "title": "Welcome!",
-          "lesson": "Headache",
+          "lesson": "<h3>YouTube iframe:<\/h3>\r\n <iframe src=\"https:\/\/google.com\"><\/iframe>\r\n<h3>Google iframe:<\/h3>\r\n          <iframe src=\"https:\/\/www.youtube.com\/embed\/tgbNymZ7vqY\"><\/iframe>\r\n",
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
           "duration": "2:40"
         },
         {
           "id": "2",
           "title": "What is management?",
-          "lesson": "Headache",
+          "lesson": "<video controls>\\r\\n    <source src=\\\"https:\\/\\/www.w3schools.com\\/html\\/mov_bbb.mp4\\\" \\/>\\r\\n  <\\/video>\\r\\n  <iframe src=\\\"https:\\/\\/www.w3schools.com\\/html\\/mov_bbb.mp4\\\"><\\/iframe>",
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
           "duration": "5:00"
         },
         {
           "id": "3",
           "title": "What is management advocacy?",
           "lesson": "Headache",
+          "video": "",
           "duration": "3:10"
         },
         {
           "id": "4",
           "title": "What is management advocacy in principles stuff stuff?",
-          "lesson": "Headache",
+          "lesson": "<p>Render this item<\\/p>\\r\\n    <span>Do not render this item or any other item<\\/span>\\r\\n    <img src='https:\\/\\/flutter.dev\\/images\\/flutter-mono-81x100.png'\\/>",
+          "video": "",
           "duration": "3:40"
         }
       ],
@@ -51,7 +55,7 @@
               "hint": "some hint after answering",
               "correct_answer_id": "1",
               "selected_answer_id": "0",
-              "mark": 5,
+              "mark": 5.0,
               "answers": [
                 {
                   "id": "1",
@@ -78,7 +82,7 @@
               "hint": "some hint after answering",
               "correct_answer_id": "1",
               "selected_answer_id": "0",
-              "mark": 5,
+              "mark": 5.0,
               "answers": [
                 {
                   "id": "1",
@@ -114,7 +118,7 @@
               "hint": "some hint after answering",
               "correct_answer_id": "1",
               "selected_answer_id": "0",
-              "mark": 5,
+              "mark": 5.0,
               "answers": [
                 {
                   "id": "1",
@@ -150,7 +154,7 @@
               "hint": "some hint after answering",
               "correct_answer_id": "1",
               "selected_answer_id": "0",
-              "mark": 5,
+              "mark": 5.0,
               "answers": [
                 {
                   "id": "1",
@@ -184,18 +188,20 @@
       "approach": "Approach lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.",
       "references": "References lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.",
       "color": "0XFF28D5C7",
-      "image": "https://images.pexels.com/photos/3760043/pexels-photo-3760043.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      "image": "https://images.pexels.com/photos/923657/pexels-photo-923657.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       "lessons": [
         {
           "id": "1",
           "title": "Headache",
           "lesson": "Headache",
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
           "duration": ""
         },
         {
           "id": "1",
           "title": "Headache",
           "lesson": "Headache",
+          "video": "",
           "duration": ""
         }
       ],
@@ -213,7 +219,7 @@
               "hint": "some hint after answering",
               "correct_answer_id": "1",
               "selected_answer_id": "0",
-              "mark": 5,
+              "mark": 4.0,
               "answers": [
                 {
                   "id": "1",
@@ -253,12 +259,14 @@
           "id": "1",
           "title": "Headache",
           "lesson": "Headache",
+          "video": "",
           "duration": ""
         },
         {
           "id": "2",
           "title": "Headache",
           "lesson": "Headache",
+          "video": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
           "duration": ""
         }
       ],
@@ -276,7 +284,7 @@
               "hint": "some hint after answering",
               "correct_answer_id": "1",
               "selected_answer_id": "0",
-              "mark": 5,
+              "mark": 2.5,
               "answers": [
                 {
                   "id": "1",

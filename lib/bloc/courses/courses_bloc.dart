@@ -23,6 +23,14 @@ Stream<CoursesState> mapEventToState(CoursesEvent event) async* {
     }catch(e){
       yield CoursesLoadFailureState(error: e.toString());
     }
+  }else   if (event is FetchUserCoursesEvent) {
+    yield CoursesLoadingState();
+    try{
+      CourseResponse courseResponse = await apiService.fetchUserCourses(event.uid!);
+      yield CoursesLoadedState(courses:courseResponse.courses, message: "Courses Updated");
+    }catch(e){
+      yield CoursesLoadFailureState(error: e.toString());
+    }
   }
 }
 

@@ -39,19 +39,13 @@ class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
           children: [
             RichText(
               text: TextSpan(
-                  text: '1250 Enrolled',
+                  text: '',
                   style: TextStyle(
                       color: AppColors.colorBluePrimary,
                       fontSize: 14,
                       fontWeight: FontWeight.w200),
                   children: <TextSpan>[
-                    TextSpan(
-                      text: ' . ',
-                      style: TextStyle(
-                          color: AppColors.colorBluePrimary,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900),
-                    ),
+
                     TextSpan(
                       text: 'Duration : 20hrs',
                       style: TextStyle(

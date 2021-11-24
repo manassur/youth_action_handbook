@@ -7,17 +7,16 @@ import 'package:youth_action_handbook/models/updates_model.dart';
 
 class TopicCard extends StatelessWidget {
   final Topic? topicModel;
-  const TopicCard( {Key? key,this.topicModel}) : super(key: key);
+ final double? scaleFactor;
+  const TopicCard( {Key? key,this.topicModel,this.scaleFactor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
-      width: 180,
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: AppColors.colorGreenPrimary,
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(15*scaleFactor!),
             boxShadow: [
               BoxShadow(
                   color: AppColors.colorGreenPrimary.withOpacity(0.2),
@@ -27,11 +26,11 @@ class TopicCard extends StatelessWidget {
               )
             ]
         ),
-      padding: EdgeInsets.symmetric(vertical: 25,horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 10*scaleFactor!,horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('#'+topicModel!.topic!,style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w900,fontSize: 20),),
+          Text('#'+topicModel!.topic!,style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w900,fontSize: 13*scaleFactor!),),
           Text(topicModel!.postCount!.toString()+' Posts',style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w100))
 
         ],

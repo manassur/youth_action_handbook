@@ -1,8 +1,12 @@
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/data/app_texts.dart';
@@ -21,9 +25,29 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   
   List controllers = [];
-  
-  // final _formKey = GlobalKey<FormState>();
+  File? imageFile;
+  bool isLoading = false;
+  bool isShowSticker = false;
+  String imageUrl = "";
   bool _isSet = false;
+  AppUser? user;
+  bool? isDone=false;
+  String? _currentUserId;
+  DatabaseService? dbservice;
+
+  @override
+  initState() {
+    super.initState();
+    user = Provider.of<AppUser?>(context,listen:false);
+    _currentUserId = user!.uid;
+    dbservice = DatabaseService(uid: _currentUserId);
+    setState(() {
+      imageUrl =user!.profilePicture??'';
+    });
+
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +104,43 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
      
 
     ];
-    
+
+
+    Future uploadFile() async {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference reference = FirebaseStorage.instance.ref().child(fileName);
+      UploadTask uploadTask = reference.putFile(imageFile!);
+
+      try {
+        TaskSnapshot snapshot = await uploadTask;
+        imageUrl = await snapshot.ref.getDownloadURL();
+        appUser.profilePicture!= imageUrl;
+        dbservice!.updateField('profilePicture', imageUrl);
+        setState(() {
+          isLoading = false;
+        });
+      } on FirebaseException catch (e) {
+        setState(() {
+          isLoading = false;
+        });
+        print( e.message ?? e.toString());
+      }
+    }
+    Future getImage() async {
+      ImagePicker imagePicker = ImagePicker();
+      PickedFile pickedFile;
+
+      pickedFile = (await imagePicker.getImage(source: ImageSource.gallery))!;
+      if (pickedFile != null) {
+        imageFile = File(pickedFile.path);
+        if (imageFile != null) {
+          setState(() {
+            isLoading = true;
+          });
+          uploadFile();
+        }
+      }
+    }
       itemEdit(item, context) async{
         String message = '';
         final chosenIndex = item['index'];
@@ -193,6 +253,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
       body:ListView(
           children: <Widget>[
+            GestureDetector(
+              onTap: (){
+                getImage();
+              },
+              child: Container(
+                margin: EdgeInsets.only(top: 20),
+                child:
+                isLoading?
+                CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Color(0xffFFA985)))
+                ):
+                CircleAvatar(
+                  backgroundColor: Colors.black87,
+                  radius: 70,
+                  backgroundImage:  NetworkImage(imageUrl),
+                  child: Icon(Icons.camera_alt,color:  imageUrl.isEmpty? Colors.grey:Colors.white)
+                  ,
+                ),
+              ),
+            ),
              Padding(
                 padding: const EdgeInsets.only(left:15.0, right: 15.0,),
                 child:ListView.separated(

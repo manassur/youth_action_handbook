@@ -1,5 +1,7 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/firestore_models/comment_model.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
   TextEditingController _captionController = TextEditingController();
   bool _isLoading = false;
   Widget? replyBody;
+  bool isDeleted=false;
   @override
   initState() {
     super.initState();
@@ -55,7 +58,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
 
         //Create new Post
         Comment comment = Comment(
-          parentId: widget.induvidualCommentModel!.parentId,
+          parentId: widget.induvidualCommentModel!.id,
           parentAuthorId: widget.induvidualCommentModel!.parentAuthorId,
           caption: _captionController.text,
           replyCount: 0,
@@ -85,11 +88,24 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
       // toast that fields cannot be empty
     }
   }
+  _deleteComment(){
+    dbservice!.deleteComment(widget.induvidualCommentModel!);
+    Navigator.of(context).pop();
+    setState(() {
+      isDeleted=true;
+    });
+    Flushbar(
+      title: "Deleted",
+      message: "Your comment has been deleted",
+      backgroundColor: AppColors.colorYellow,
+      duration: Duration(seconds: 2),
+    ).show(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size.width;
-    return Container(
+    return isDeleted==true?Container():  Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -111,10 +127,8 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                       CircleAvatar(
                         radius: 20,
                         backgroundColor: Colors.grey,
-                        child: Image.network(widget.induvidualCommentModel!.authorImg!,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container();
-                          },
+                        backgroundImage: NetworkImage(widget.induvidualCommentModel!.authorImg!,
+
                         ),
                       ),
                       SizedBox(width: 10,),
@@ -129,6 +143,54 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                           // Text(widget.induvidualCommentModel!.job!,style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.w300),),
                         ],
                       ),
+                      IconButton(
+                        icon:Icon(Icons.more_horiz_outlined),
+                        onPressed: (){
+                          showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              backgroundColor: Colors.white,
+                              builder: (context) {
+                                return  StatefulBuilder(
+                                    builder: (BuildContext context, StateSetter setState )
+                                    { return  FractionallySizedBox(
+                                      heightFactor: 0.25,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height:5,
+                                              width: 50,
+                                              color: Colors.grey,
+                                            ),
+                                            ListTile(
+                                              title: Text('Share'),
+                                              trailing: Icon(Icons.share),
+                                              onTap: (){
+                                                Share.share(widget.induvidualCommentModel!.caption!);
+
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: Text('Delete'),
+                                              trailing: Icon(Icons.delete),
+                                              onTap: (){
+                                                _deleteComment();
+
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    );}
+                                );
+                              });
+                        },
+                      )
                     ],
                   ),
                   SizedBox(height: 10,),

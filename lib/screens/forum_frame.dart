@@ -4,6 +4,7 @@ import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/screens/topic_posts.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/topic_card.dart';
 import 'package:youth_action_handbook/widgets/trending_post_card.dart';
@@ -11,7 +12,9 @@ import 'package:youth_action_handbook/widgets/trending_post_card.dart';
 import 'induvidual_post.dart';
 
 class ForumFrame extends StatefulWidget {
-  const ForumFrame({Key? key}) : super(key: key);
+  final int? selectedIndex;
+
+  const ForumFrame({Key? key,this.selectedIndex}) : super(key: key);
 
   @override
   _ForumFrameState createState() => _ForumFrameState();
@@ -30,8 +33,10 @@ class _ForumFrameState extends State<ForumFrame> {
     _currentUserId = appUser!.uid;
     dbservice = DatabaseService(uid: _currentUserId);
 
-    topicFuture =  dbservice!.getTopics();
-    trendingPostFuture = dbservice!.getTrendingPosts();
+    topicFuture = widget.selectedIndex==0? dbservice!.getTopics():widget.selectedIndex==1?dbservice!.getRecommendedTopics():dbservice!.getNewTopics();
+    trendingPostFuture = widget.selectedIndex==0?
+    dbservice!.getTrendingPosts():
+    widget.selectedIndex==1?dbservice!.getRecommendedPosts():dbservice!.getNewPosts();
 
     // use this to populate topics
     // dbservice!.createTopic('Facts');
@@ -77,7 +82,11 @@ class _ForumFrameState extends State<ForumFrame> {
                 );
               }
               if (snapshot.hasError)
-              { return Center(child: Text('Could not fetch topics at this time'+snapshot.error.toString()));}
+              {
+                print(snapshot.error.toString());
+                return Center(child: Text('Could not fetch topics at this time'+snapshot.error.toString()));
+              }
+
 
               return   ListView.builder(
                   shrinkWrap: true,
@@ -86,10 +95,13 @@ class _ForumFrameState extends State<ForumFrame> {
                   itemBuilder: (ctx,pos){
                     return InkWell(
                       onTap:(){
-
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>
+                                TopicPosts(topic: snapshot.data![pos])));
                       },
                       child: TopicCard(
                         topicModel: snapshot.data![pos],
+                            scaleFactor: 1.7,
                       ),
                     );
                   }
@@ -102,12 +114,10 @@ class _ForumFrameState extends State<ForumFrame> {
         SizedBox(height:20),
         RichText(
           text: TextSpan(
-              text: 'Trending Posts',
+              text: widget.selectedIndex==0?'Trending Posts':widget.selectedIndex==1?'Recommended Posts':'New Posts',
               style: TextStyle(
-                  color: AppColors.colorBluePrimary, fontSize: 20,fontWeight: FontWeight.w900),
-              children: const <TextSpan>[
+                  color: AppColors.colorBluePrimary, fontSize: 17,fontWeight: FontWeight.w900),
 
-              ]
           ),
         ),
         FutureBuilder<List<Post>>(
@@ -128,7 +138,9 @@ class _ForumFrameState extends State<ForumFrame> {
               );
             }
             if (snapshot.hasError)
-            { return Center(child: Text('Could not fetch topics at this time'+snapshot.error.toString()));}
+            {   print(snapshot.error.toString());
+
+            return Center(child: Text('Could not fetch posts at this time'+snapshot.error.toString()));}
 
             return ListView.builder(
                 shrinkWrap: true,
@@ -137,6 +149,7 @@ class _ForumFrameState extends State<ForumFrame> {
                 itemBuilder: (ctx,pos){
                   return InkWell(
                     onTap:(){
+
 
                     },
                     child: TrendingPostsCard(trendingPostModel:snapshot.data![pos] ,

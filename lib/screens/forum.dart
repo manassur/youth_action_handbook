@@ -33,7 +33,7 @@ class _ForumFragmentState extends State<ForumFragment> {
   List<String> categoriesList =[
     "Popular",
   "Recommended",
-  "New Topic"
+  "New"
   ];
   ScrollController? _scrollController;
   double kExpandedHeight = 120;
@@ -43,8 +43,6 @@ class _ForumFragmentState extends State<ForumFragment> {
   initState() {
     super.initState();
 
-    // use this to populate topics
-   // dbservice!.createTopic('Facts');
 
     _scrollController = ScrollController()
       ..addListener(() => setState(() {}));
@@ -204,7 +202,15 @@ class _ForumFragmentState extends State<ForumFragment> {
                             }
                         ),
                       ),
-                    ForumFrame()
+                    Visibility(
+                      visible: selected==0,
+                        child: ForumFrame(selectedIndex: 0,)),
+                      Visibility(
+                          visible: selected==1,
+                          child: ForumFrame(selectedIndex: 1,)),
+                      Visibility(
+                          visible: selected==2,
+                          child: ForumFrame(selectedIndex: 3,)),
                     ],
                   ),
                 ),

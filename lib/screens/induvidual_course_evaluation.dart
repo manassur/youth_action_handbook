@@ -54,52 +54,42 @@ class _IndividualCourseEvaluationState extends State<IndividualCourseEvaluation>
               physics: NeverScrollableScrollPhysics(),
               itemCount: widget.courses!.quiz!.length,
               itemBuilder: (context, pos){
-                return InkWell(
-                  onTap: (){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context)=>
-                            EvaluationScreen(quiz: widget.courses!.quiz![pos],)));
-                  },
-                  child: QuizzCard(
-                    title: widget.courses!.quiz![pos].title,
-                    subtitle: widget.courses!.quiz![pos].quizType,
-                    score: '5.0',
-                    isDone:true,
-                    isAvailable:true,
-                    ),
-                );
+                return QuizzCard(
+                   quiz: widget.courses!.quiz![pos],
+                  courseId: widget.courses!.id,
+                  );
               },
             ),
             SizedBox(height: 20,),
-            RichText(
-              text: TextSpan(
-                  text: 'Evaluation',
-                  style: TextStyle(
-                      color: AppColors.colorBluePrimary,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w900),
-                  children: const <TextSpan>[]),
-            ),
-            SizedBox(height: 10,),
-            RichText(
-              text: TextSpan(
-                  text:"Evaluate yourself",
-                  style: TextStyle(
-                      color: AppColors.colorBluePrimary,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w300),
-                  children: const <TextSpan>[]),
-            ),
-
-            ListView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: const [
-                EvaluationCard(title: 'Fundamental Principles',subtitle: 'Quiz A',isDone:true,isAvailable:true,score: '5.0',),
-                EvaluationCard(title: 'What is peace Education',subtitle: 'Quiz B',isDone:false,isAvailable:true,score: 'N/A',),
-                EvaluationCard(title: 'What is peace Education',subtitle: 'Quiz B',isDone:false,isAvailable:true,score: 'N/A',),
-              ],
-            )
+            // RichText(
+            //   text: TextSpan(
+            //       text: 'Evaluation',
+            //       style: TextStyle(
+            //           color: AppColors.colorBluePrimary,
+            //           fontSize: 25,
+            //           fontWeight: FontWeight.w900),
+            //       children: const <TextSpan>[]),
+            // ),
+            // SizedBox(height: 10,),
+            // RichText(
+            //   text: TextSpan(
+            //       text:"Evaluate yourself",
+            //       style: TextStyle(
+            //           color: AppColors.colorBluePrimary,
+            //           fontSize: 12,
+            //           fontWeight: FontWeight.w300),
+            //       children: const <TextSpan>[]),
+            // ),
+            //
+            // ListView(
+            //   shrinkWrap: true,
+            //   physics: NeverScrollableScrollPhysics(),
+            //   children: const [
+            //     EvaluationCard(title: 'Fundamental Principles',subtitle: 'Quiz A',isDone:true,isAvailable:true,score: '5.0',),
+            //     EvaluationCard(title: 'What is peace Education',subtitle: 'Quiz B',isDone:false,isAvailable:true,score: 'N/A',),
+            //     EvaluationCard(title: 'What is peace Education',subtitle: 'Quiz B',isDone:false,isAvailable:true,score: 'N/A',),
+            //   ],
+            // )
 
           ],
         ),

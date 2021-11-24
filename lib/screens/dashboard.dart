@@ -32,8 +32,12 @@ class _DashboardState extends State<Dashboard> {
             child: HomeFragment()
         )
     ),
+    BlocProvider<CoursesBloc>(
+        create: (context) =>
+            CoursesBloc(apiService: ApiService()),
+        child: CourseFragment()
+    ),
 
-    CourseFragment(),
     ForumFragment(),
     AboutFragment(),
 

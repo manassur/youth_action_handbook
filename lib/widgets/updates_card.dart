@@ -21,6 +21,12 @@ class UpdatesCard extends StatelessWidget {
               height: 80,
               width: 80,
               fit: BoxFit.cover,
+              errorBuilder: (context, exception,stackTrace) {
+                return Container( height: 80,
+                  width: 80,
+                  color:Colors.grey.shade100
+                );
+              },
             ),
           ),
          const SizedBox(

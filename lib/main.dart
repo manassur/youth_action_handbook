@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/dashboard.dart';
 import 'package:youth_action_handbook/screens/edit_login.dart';
@@ -18,6 +19,18 @@ import 'package:youth_action_handbook/services/database.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  //Remove this method to stop OneSignal Debugging
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+  OneSignal.shared.setAppId("42349d73-616f-4579-afbd-4ba2c7df76c0");
+
+// The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+  OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+    print("Accepted permission: $accepted");
+  });
+  OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+    // Will be called whenever a notification is opened/button pressed.
+  });
   runApp(MyApp());
 }
 
@@ -27,11 +40,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   
-    return StreamProvider<User?>.value(
-      value: AuthService().user,
-      initialData: null,
-      child: AppWrapper(),
-    );
+     return StreamProvider<User?>.value(
+       value: AuthService().user,
+       initialData: null,
+       child: AppWrapper(),
+     );
   }
 }
 

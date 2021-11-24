@@ -40,7 +40,7 @@ class _AboutFragmentState extends State<AboutFragment> {
     {
       "leading_icon": Icons.check_circle,
       "title": "Partners",
-      "trailing_icon": Icons.keyboard_arrow_down_sharp,
+      "trailing_icon": Icons.keyboard_arrow_right_sharp,
       "page": RouteNames.partners,
     },
     {
@@ -209,26 +209,29 @@ class _AboutFragmentState extends State<AboutFragment> {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: projectItems.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 50,
-                        child: ListTile(
-                          leading: Icon(
-                            projectItems[index]['leading_icon'], color: AppColors.colorPurple,
-                          ),
-                          title: Text(
-                            projectItems[index]['title'],
-                          ),
-                          trailing: projectItems[index]['trailing_icon']!=null?
-                          Icon(
-                            projectItems[index]['trailing_icon'], color: Colors.black, size: 27,
-                          )
-                              :Text(projectItems[index]['app_version']),
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                            child: ListTile(
+                              leading: Icon(
+                                projectItems[index]['leading_icon'], color: AppColors.colorPurple,
+                              ),
+                              title: Text(
+                                projectItems[index]['title'],
+                              ),
+                              trailing: projectItems[index]['trailing_icon']!=null?
+                              Icon(
+                                projectItems[index]['trailing_icon'], color: Colors.black, size: 27,
+                              )
+                                  :Text(projectItems[index]['app_version']),
 
-
-                            onTap: (){
-                              Navigator.pushNamed(context, projectItems[index]['page']);
-                            }
-                        ),
+                                onTap: (){
+                                  Navigator.pushNamed(context, projectItems[index]['page']);
+                                }
+                            ),
+                          ),
+                        ],
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {

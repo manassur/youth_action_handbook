@@ -6,7 +6,13 @@ final storageRef = FirebaseStorage.instance.ref();
 final  userDataCollection =_firestore.collection('userData');
 
 final postsRef = _firestore.collection('posts');
+
+final coursesRef = _firestore.collection('courses');
+final userCourseRef = _firestore.collection('userCourses');
+final recentlyViewedRef = _firestore.collection('recentViews');
 final replyRef = _firestore.collection('replies');
+final ratingRef = _firestore.collection('courseRatings');
+final userQuizRef = _firestore.collection('quizAttempts');
 final topicsRef = _firestore.collection('topics');
 final followersRef = _firestore.collection('followers');
 final followingRef = _firestore.collection('following');

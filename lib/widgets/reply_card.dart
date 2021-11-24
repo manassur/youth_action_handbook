@@ -40,7 +40,6 @@ class _ReplyCardState extends State<ReplyCard> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color:Colors.red,
         borderRadius: BorderRadius.circular(20),
 
       ),
@@ -50,7 +49,7 @@ class _ReplyCardState extends State<ReplyCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [Container(
                 margin: EdgeInsets.only(left: 20),
-                color: Colors.grey.shade200,width: 1
+                color: Colors.grey.shade200,width: 1,height: 100,
               ),
               SizedBox(width: 10,),
               Column(
@@ -62,10 +61,7 @@ class _ReplyCardState extends State<ReplyCard> {
                       CircleAvatar(
                         radius: 20,
                         backgroundColor: Colors.grey,
-                        child: Image.network(widget.induvidualCommentModel!.authorImg!,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container();
-                          },
+                        backgroundImage:NetworkImage(widget.induvidualCommentModel!.authorImg!,
                         ),
                       ),
                       SizedBox(width: 10,),

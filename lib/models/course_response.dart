@@ -101,14 +101,16 @@ class Lessons {
   String? id;
   String? title;
   String? lesson;
+  String? video;
   String? duration;
 
-  Lessons({this.id, this.title, this.lesson, this.duration});
+  Lessons({this.id, this.title, this.lesson,this.video, this.duration});
 
   Lessons.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     lesson = json['lesson'];
+    video = json['video'];
     duration = json['duration'];
   }
 
@@ -117,6 +119,7 @@ class Lessons {
     data['id'] = this.id;
     data['title'] = this.title;
     data['lesson'] = this.lesson;
+    data['video'] = this.video;
     data['duration'] = this.duration;
     return data;
   }
@@ -164,7 +167,7 @@ class Questions {
   String? hint;
   String? correctAnswerId;
   String? selectedAnswerId;
-  int? mark;
+  double? mark;
   List<Answers>? answers;
 
   Questions(

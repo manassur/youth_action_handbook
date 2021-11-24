@@ -6,6 +6,7 @@ import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/firestore_models/comment_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
 import 'package:youth_action_handbook/models/induvidual_comment_model.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/induvidual_post_card.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
@@ -70,7 +71,7 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
           caption: _captionController.text,
           replyCount: 0,
           authorName: appUser!.name,
-          authorImg: appUser!.photoURL,
+          authorImg: appUser!.profilePicture,
           authorId: _currentUserId,
           timestamp: Timestamp.fromDate(DateTime.now()),
           isParentComment: true,
@@ -103,7 +104,7 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('#GBV',style: TextStyle(color: AppColors.colorBluePrimary,fontSize: 25,fontWeight: FontWeight.bold),),
+        title: Text('Comments',style: TextStyle(color: AppColors.colorBluePrimary,fontSize: 15,fontWeight: FontWeight.bold),),
 
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios,color: AppColors.colorBluePrimary,), // set your color here
@@ -112,53 +113,55 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
           },
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              backgroundColor:AppColors.colorBluePrimary,
-              radius: 30,
-              child: CircleAvatar(
-                radius: 40,
-                child: Image.asset("assets/user.png"),
-              ),
-            ),
-          )
+          MenuForAppBar(),
         ],
       ),
       body:
-      FutureBuilder<List<Comment>>(
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.none &&
-              snapshot.hasData == null) {
-            return Container();
-          }else if( snapshot.connectionState == ConnectionState.waiting){
-            return  const Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: Center(
-                child: SizedBox(
-                  child: CircularProgressIndicator(),
-                  width: 20,
-                  height: 20,
-                ),
-              ),
-            );
-          }
-        else  if (snapshot.hasError)
-          { return Center(child: Text('Could not fetch topics at this time'+snapshot.error.toString()));}
-
-         else if(snapshot.hasData){
-           return  ListView.builder(
-              itemCount:  snapshot.data!.length,
-              itemBuilder: (ctx,pos){
-                return InduvidualPostCard(induvidualCommentModel:snapshot.data![pos]);
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text( widget.post!.caption!,style: TextStyle(color: AppColors.colorBluePrimary,fontSize: 17,fontWeight: FontWeight.bold),),
+        ),
+          SizedBox(height: 20,),
+          FutureBuilder<List<Comment>>(
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.none &&
+                  snapshot.hasData == null) {
+                return Container();
+              }else if( snapshot.connectionState == ConnectionState.waiting){
+                return  const Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: Center(
+                    child: SizedBox(
+                      child: CircularProgressIndicator(),
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                );
               }
-          );}
+            else  if (snapshot.hasError)
+              { return Center(child: Text('Could not fetch comments at this time'+snapshot.error.toString()));}
 
-         else {
-           return Container();
-         }
-        },
-        future: postComments,
+             else if(snapshot.hasData){
+               return  Expanded(
+                 child: ListView.builder(
+                    itemCount:  snapshot.data!.length,
+                    itemBuilder: (ctx,pos){
+                      return InduvidualPostCard(induvidualCommentModel:snapshot.data![pos]);
+                    }
+              ),
+               );}
+
+             else {
+               return Container();
+             }
+            },
+            future: postComments,
+          ),
+        ],
       ),
 
 

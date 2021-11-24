@@ -47,7 +47,7 @@ class AuthService {
       if (results.additionalUserInfo!.isNewUser) {
         //create new doc for new user
         await DatabaseService(uid: user.uid)
-            .createUserData(user.displayName ?? 'Anon.', '', 'en', 'UG','','','');
+            .createUserData(user.displayName ?? 'Anon.', '', 'en', 'UG','','','','');
       }
 
       // return _appUserFromUser(user);
@@ -89,7 +89,7 @@ class AuthService {
       if (results.additionalUserInfo!.isNewUser) {
         //create new doc for new user
         await DatabaseService(uid: user.uid)
-            .createUserData(user.displayName ?? 'Anon', '', 'en', 'UG','','','');
+            .createUserData(user.displayName ?? 'Anon', '', 'en', 'UG','','','','');
       }
 
       // return _appUserFromUser(user);
@@ -142,6 +142,7 @@ class AuthService {
       String organisation,
       String language,
       String country,
+      String profilePicture,
       BuildContext context) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
@@ -150,7 +151,7 @@ class AuthService {
 
       //create new doc for new user
       await DatabaseService(uid: user.uid)
-          .createUserData(name, organisation, language, country,'','','');
+          .createUserData(name, organisation, language, country,'','','','');
 
       return AppUser.fromEmailSignUp(
           user: user,
@@ -160,6 +161,7 @@ class AuthService {
           country: country,
           gender: 'O',
           dateOfBirth: '',
+          profilePicture: '',
           education: '');
     } on FirebaseAuthException catch (e) {
       yahSnackBar(context, e.message);

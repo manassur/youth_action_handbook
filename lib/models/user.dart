@@ -18,12 +18,12 @@ class AppUser{
   final String gender,dateOfBirth,education;
 
   //auth fields
-  final String? displayName,email,phoneNumber,photoURL,refreshToken;
+  final String? displayName,email,phoneNumber,photoURL,refreshToken,profilePicture;
   final bool? emailVerified;
 
-  AppUser({required this.uid, required this.name, required this.organisation, required this.language, required this.country, required this.gender, required this.dateOfBirth, required this.education, this.displayName, this.email, this.emailVerified, this.phoneNumber, this.photoURL, this.refreshToken});
+  AppUser({required this.uid, required this.name, required this.organisation, required this.language, required this.country, required this.gender, required this.dateOfBirth, required this.education, this.displayName, this.email, this.emailVerified, this.phoneNumber, this.photoURL, this.refreshToken,this.profilePicture});
 
-  factory AppUser.fromEmailSignUp({required User user, required name,required language,required organisation,required country,required gender, required dateOfBirth, required education }){
+  factory AppUser.fromEmailSignUp({required User user, required name,required language,required organisation,required country,required gender, required dateOfBirth, required education,required profilePicture }){
 
    
     return AppUser(
@@ -35,11 +35,12 @@ class AppUser{
       gender: gender,
       dateOfBirth: dateOfBirth,
       education: education,
+      profilePicture: profilePicture,
       displayName: user.displayName,
       email: user.email,
       emailVerified: user.emailVerified,
       phoneNumber: user.phoneNumber,
-      photoURL: user.photoURL,
+      photoURL: user.photoURL??'',
       refreshToken: user.refreshToken
       ); 
   }
@@ -50,6 +51,7 @@ class AppUser{
       case 'organisation' : return organisation;
       case 'language' : return language;
       case 'country' : return country;
+      case 'profilePicture' : return profilePicture;
       case 'displayName' : return displayName;
       case 'email' : return email;
       case 'emailVerified' : return emailVerified;
@@ -77,6 +79,6 @@ class UserData{
   final String organisation;
   final String language;
   final String country;
-
-  UserData({required this.uid, required this.name, required this.organisation, required this.language, required this.country,});
+  final String profilePicture;
+  UserData({required this.uid, required this.name, required this.organisation, required this.language, required this.country,required this.profilePicture});
 }

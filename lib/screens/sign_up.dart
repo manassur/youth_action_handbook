@@ -44,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       case 3:
         password = value;
         dynamic result = await _auth.registerWithEmailandPassword(
-            email, password, name, organisation, language, country, context);
+            email, password, name, organisation, language, country,'' ,context);
         if (result == null) {
           setState(() => viewIndex = 0);
         } else {
