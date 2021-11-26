@@ -583,7 +583,7 @@ class DatabaseService {
   Future<List<RecentlyViewedLesson>> getMostRecentCourse() async {
     var lessonUserSnapShot =  await recentlyViewedRef.doc(uid)
         .collection('lessons')
-        .orderBy('timestamp')
+        .orderBy('timestamp',descending:true )
         .limit(1).get();
     List<RecentlyViewedLesson> recentViews =
     lessonUserSnapShot.docs.map((doc) => RecentlyViewedLesson.fromDoc(doc)).toList();

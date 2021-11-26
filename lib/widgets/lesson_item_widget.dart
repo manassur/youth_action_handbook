@@ -73,7 +73,6 @@ class _LessonItemCardState extends State<LessonItemCard> {
     return GestureDetector(
       onTap: (){
         dbservice!.addLessonForUser(widget.lesson!,widget.courseId!,widget.courseName!);
-
         showModalBottomSheet(
             context: context,
             isScrollControlled: true,

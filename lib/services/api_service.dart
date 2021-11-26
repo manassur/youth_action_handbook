@@ -51,5 +51,16 @@ class ApiService {
     CourseResponse result = CourseResponse.fromJson(data);
     return result;
   }
+
+
+  // this extracts the course from the already fetched courses with the courseid
+  Future<Lessons> getCourseByCourseId(String courseId,lessonId) async {
+    final String response = await rootBundle.loadString('assets/json/courses.json');
+    final data = await json.decode(response);
+    print("this is courses json " + response);
+    CourseResponse result = CourseResponse.fromJson(data);
+    var course = result.courses!.firstWhere((Courses element) => element.id==courseId);
+    return course.lessons!.firstWhere((Lessons element) => element.id==lessonId);
+  }
 }
 
