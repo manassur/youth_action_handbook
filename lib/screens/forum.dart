@@ -222,12 +222,21 @@ class _ForumFragmentState extends State<ForumFragment> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.colorBluePrimary,
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+        var result = Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => NewPostScreen()),
           );
+
+        if(result==true){
+          setState(() {
+            selected=0;
+          });
+        }
         },
+
+
+
 
         child: Icon(Icons.add,color: Colors.white,),
       ),

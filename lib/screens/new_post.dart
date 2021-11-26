@@ -85,7 +85,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
           setState(() {
             _isLoading = false;
           }),
-          Navigator.pop(context)
+          Navigator.pop(context,true)
         }).catchError((e) {
           setState(() {
             _isLoading = false;
@@ -225,6 +225,9 @@ class _NewPostScreenState extends State<NewPostScreen> {
                           child: TextFormField(
                             controller: _captionController,
                               maxLines: 2,
+                              onFieldSubmitted: (value){
+                                _submit;
+                              },
                               style: const TextStyle(color: Colors.black54,fontSize: 15,fontWeight: FontWeight.w100),
                               textAlignVertical: TextAlignVertical.center,
                               decoration: const InputDecoration(

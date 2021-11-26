@@ -105,18 +105,20 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
                   backgroundImage:  NetworkImage(widget.trendingPostModel!.authorImg!),
                 ),
                 SizedBox(width: 10,),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.trendingPostModel!.caption!,style: TextStyle(color: AppColors.colorBluePrimary,fontSize: 14,fontWeight: FontWeight.bold)),
-                   SizedBox(height: 5,),
-                    Text(widget.trendingPostModel!.authorName!,style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
-                  ],
+                Expanded(
+                  flex: 10,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.trendingPostModel!.caption!,style: TextStyle(color: AppColors.colorBluePrimary,fontSize: 14,fontWeight: FontWeight.bold)),
+                     SizedBox(height: 5,),
+                      Text(widget.trendingPostModel!.authorName!,style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.bold),),
+                    ],
+                  ),
                 ),
                 Spacer(),
-                widget.trendingPostModel!.authorId!=appUser!.uid ?
-                    Container():
+
                 IconButton(
                   onPressed: (){
                     showModalBottomSheet(
@@ -148,14 +150,14 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
 
                                        },
                                      ),
-                                      ListTile(
+                                      widget.trendingPostModel!.authorId==appUser!.uid ?       ListTile(
                                         title: Text('Delete'),
                                         trailing: Icon(Icons.delete),
                                         onTap: (){
                                         _deletePost();
 
                                         },
-                                      )
+                                      ):Container()
                                     ],
                                   ),
                                 ),

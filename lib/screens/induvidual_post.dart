@@ -82,7 +82,9 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
           setState(() {
             _isLoading = false;
           }),
-          Navigator.pop(context)
+        postComments = dbservice!.getPostComments(widget.post!.id!),
+          _captionController.clear(),
+            Navigator.pop(context)
         }).catchError((e) {
           setState(() {
             _isLoading = false;
@@ -185,10 +187,14 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
                           child: Padding(
                               padding: EdgeInsets.all(10),
                               child: TextFormField(
+
                                 controller: _captionController,
                                   style: TextStyle(color: Colors.black54,fontSize: 15,fontWeight: FontWeight.w100),
                                   textAlignVertical: TextAlignVertical.center,
                                   maxLines: 8,
+                                  onFieldSubmitted: (value) {
+                                  _postComment();
+                                  },
                                   decoration: const InputDecoration(
                                     hintText: "Type your thoughts",
                                     border: InputBorder.none,

@@ -10,6 +10,7 @@ import 'package:youth_action_handbook/widgets/topic_card.dart';
 import 'package:youth_action_handbook/widgets/trending_post_card.dart';
 
 import 'induvidual_post.dart';
+import 'new_post.dart';
 
 class ForumFrame extends StatefulWidget {
   final int? selectedIndex;
@@ -38,33 +39,92 @@ class _ForumFrameState extends State<ForumFrame> {
     dbservice!.getTrendingPosts():
     widget.selectedIndex==1?dbservice!.getRecommendedPosts():dbservice!.getNewPosts();
 
-    // use this to populate topics
-    // dbservice!.createTopic('Facts');
+
+   // use this to populate topics
+   //  dbservice!.createTopic('Facts');
+   //  dbservice!.createTopic('Health');
+   //  dbservice!.createTopic('Politics');
 
 
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height:20),
-        RichText(
-          text: TextSpan(
-              text: 'Topics',
-              style: TextStyle(
-                  color: AppColors.colorBluePrimary, fontSize: 20,fontWeight: FontWeight.w900),
-              children: const <TextSpan>[
+    return  Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height:20),
+          RichText(
+            text: TextSpan(
+                text: 'Topics',
+                style: TextStyle(
+                    color: AppColors.colorBluePrimary, fontSize: 20,fontWeight: FontWeight.w900),
+                children: const <TextSpan>[
 
-              ]
+                ]
+            ),
           ),
-        ),
-        SizedBox(height:10),
-        SizedBox(
-          height: 120,
-          child:
-          FutureBuilder<List<Topic>>(
+          SizedBox(height:10),
+          SizedBox(
+            height: 120,
+            child:
+            FutureBuilder<List<Topic>>(
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.none &&
+                    snapshot.hasData == null) {
+                  return Container();
+                }else if( snapshot.connectionState == ConnectionState.waiting){
+                  return  const Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: Center(
+                      child: SizedBox(
+                        child: CircularProgressIndicator(),
+                        width: 20,
+                        height: 20,
+                      ),
+                    ),
+                  );
+                }
+                if (snapshot.hasError)
+                {
+                  print(snapshot.error.toString());
+                  return Center(child: Text('Could not fetch topics at this time'+snapshot.error.toString()));
+                }
+
+
+                return   ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (ctx,pos){
+                      return InkWell(
+                        onTap:(){
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) =>
+                                  TopicPosts(topic: snapshot.data![pos])));
+                        },
+                        child: TopicCard(
+                          topicModel: snapshot.data![pos],
+                              scaleFactor: 1.7,
+                        ),
+                      );
+                    }
+                );
+              },
+              future: topicFuture,
+            ),
+
+          ),
+          SizedBox(height:20),
+          RichText(
+            text: TextSpan(
+                text: widget.selectedIndex==0?'Trending Posts':widget.selectedIndex==1?'Recommended Posts':'New Posts',
+                style: TextStyle(
+                    color: AppColors.colorBluePrimary, fontSize: 17,fontWeight: FontWeight.w900),
+
+            ),
+          ),
+          FutureBuilder<List<Post>>(
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.none &&
                   snapshot.hasData == null) {
@@ -82,86 +142,31 @@ class _ForumFrameState extends State<ForumFrame> {
                 );
               }
               if (snapshot.hasError)
-              {
-                print(snapshot.error.toString());
-                return Center(child: Text('Could not fetch topics at this time'+snapshot.error.toString()));
-              }
+              {   print(snapshot.error.toString());
 
+              return Center(child: Text('Could not fetch posts at this time'+snapshot.error.toString()));}
 
-              return   ListView.builder(
+              return ListView.builder(
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: snapshot.data!.length,
-                  scrollDirection: Axis.horizontal,
                   itemBuilder: (ctx,pos){
                     return InkWell(
                       onTap:(){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) =>
-                                TopicPosts(topic: snapshot.data![pos])));
+
+
                       },
-                      child: TopicCard(
-                        topicModel: snapshot.data![pos],
-                            scaleFactor: 1.7,
+                      child: TrendingPostsCard(trendingPostModel:snapshot.data![pos] ,
                       ),
                     );
                   }
               );
             },
-            future: topicFuture,
+            future: trendingPostFuture,
           ),
 
-        ),
-        SizedBox(height:20),
-        RichText(
-          text: TextSpan(
-              text: widget.selectedIndex==0?'Trending Posts':widget.selectedIndex==1?'Recommended Posts':'New Posts',
-              style: TextStyle(
-                  color: AppColors.colorBluePrimary, fontSize: 17,fontWeight: FontWeight.w900),
+        ],
+      );
 
-          ),
-        ),
-        FutureBuilder<List<Post>>(
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.none &&
-                snapshot.hasData == null) {
-              return Container();
-            }else if( snapshot.connectionState == ConnectionState.waiting){
-              return  const Padding(
-                padding: EdgeInsets.only(right: 10.0),
-                child: Center(
-                  child: SizedBox(
-                    child: CircularProgressIndicator(),
-                    width: 20,
-                    height: 20,
-                  ),
-                ),
-              );
-            }
-            if (snapshot.hasError)
-            {   print(snapshot.error.toString());
-
-            return Center(child: Text('Could not fetch posts at this time'+snapshot.error.toString()));}
-
-            return ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: snapshot.data!.length,
-                itemBuilder: (ctx,pos){
-                  return InkWell(
-                    onTap:(){
-
-
-                    },
-                    child: TrendingPostsCard(trendingPostModel:snapshot.data![pos] ,
-                    ),
-                  );
-                }
-            );
-          },
-          future: trendingPostFuture,
-        ),
-
-      ],
-    );
   }
 }
