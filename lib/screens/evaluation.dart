@@ -35,7 +35,10 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
   DatabaseService? dbservice;
   TextEditingController _captionController = TextEditingController();
   bool _isLoading = false;
-
+  final _controller = new PageController();
+  static const _kDuration = const Duration(milliseconds: 300);
+  static const _kCurve = Curves.ease;
+  int? currentIndex=0;
   @override
   initState() {
     super.initState();
@@ -78,132 +81,151 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding:  EdgeInsets.all(30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: RichText(
-                      text: TextSpan(
-                        text: widget.quiz!.title!,
-                          style: TextStyle(
-                              color: AppColors.colorBluePrimary,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w900),
-                          children:  <TextSpan>[]),
-                    ),
+      body: Padding(
+        padding:  EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: RichText(
+                    text: TextSpan(
+                      text: widget.quiz!.title!,
+                        style: TextStyle(
+                            color: AppColors.colorBluePrimary,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w900),
+                        children:  <TextSpan>[]),
                   ),
-                  Column(
-                    children: [
-                      Icon(Icons.share,color:AppColors.colorBluePrimary,size: 35,),
-                      SizedBox(height: 12,),
-                      Text('Share',style:TextStyle(color:AppColors.colorBluePrimary))
-                    ],
-                  ),
-                  SizedBox(width: 20,),
-                  Column(
-                    children: [
-                  Image.asset('assets/certify.png',height: 50,width: 50),
-                      Text('Certified',style:TextStyle(color:AppColors.colorBluePrimary))
-                    ],
-                  )
-                ],
-              ),
-              Text('Evaluation 1',style: TextStyle(color: AppColors.colorBluePrimary),),
-           const   SizedBox(height: 15,),
-              RichText(
-                text: TextSpan(
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.',
-                    style: TextStyle(
-                        color: Colors.grey.shade600,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w200),
-                    children: const <TextSpan>[]),
-              ),
-              SizedBox(height: 25,),
+                ),
+                Column(
+                  children: [
+                    Icon(Icons.share,color:AppColors.colorBluePrimary,size: 35,),
+                    SizedBox(height: 12,),
+                    Text('Share',style:TextStyle(color:AppColors.colorBluePrimary))
+                  ],
+                ),
+                SizedBox(width: 20,),
+                Column(
+                  children: [
+                Image.asset('assets/certify.png',height: 50,width: 50),
+                    Text('Certified',style:TextStyle(color:AppColors.colorBluePrimary))
+                  ],
+                )
+              ],
+            ),
+            Text('Evaluation 1',style: TextStyle(color: AppColors.colorBluePrimary),),
+           const  SizedBox(height: 10,),
+            RichText(
+              text: TextSpan(
+                  text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.',
+                  style: TextStyle(
+                      color: Colors.grey.shade600,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w200),
+                  children: const <TextSpan>[]),
+            ),
+            SizedBox(height: 20,),
 
-           // const   QuestionWidget(
-           //      // number:widget.quiz!.questions!,
-           //        number: "1",
-           //        question:'What is Peace Education',
-           //        instruction:'Type your answer in the text box below'
-           //    ),
-            //  TypeAnswerWidget(),
-           //    SizedBox(height: 25,),
+         // const   QuestionWidget(
+         //      // number:widget.quiz!.questions!,
+         //        number: "1",
+         //        question:'What is Peace Education',
+         //        instruction:'Type your answer in the text box below'
+         //    ),
+          //  TypeAnswerWidget(),
+         //    SizedBox(height: 25,),
 
-              ListView.builder(
-                shrinkWrap: true,
+            SizedBox(
+              height: 420,
+              child: PageView.builder(
+                onPageChanged: (index){
+                  setState(() {
+                    currentIndex=index;
+                  });
+                },
+                controller: _controller,
                 itemCount: widget.quiz!.questions!.length,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index){
                   Questions question = widget.quiz!.questions![index];
-                  return Column(
-                    children: [
-                      QuestionWidget(
-                          number:question.id,
-                          question:question.question,
-                          instruction:'Type your answer in the text box below'),
+                  return Card(
+                    elevation: 5,
+                    color: Colors.white,
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          QuestionWidget(
+                              number:question.id,
+                              question:question.question,
+                              instruction:'Type your answer in the text box below'),
 
-                      SizedBox(height: 25,),
+                          SizedBox(height: 25,),
 
-                      // list of options
-                      ListView.separated(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: question.answers!.length,
-                          itemBuilder: (ctx,pos){
-                            Answers ans = question.answers![pos];
+                          // list of options
+                          ListView.separated(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: question.answers!.length,
+                              itemBuilder: (ctx,pos){
+                                Answers ans = question.answers![pos];
 
-                            return GestureDetector(
-                              onTap: (){
-                                setState(() {
-                                  question.selectedAnswerId=ans.id!;
-                                });
-                              },
-                              child: MultipleChoiceItem(
-                               answer:ans,
-                                selectedAnswer:question.selectedAnswerId
-                              ),
-                            );
-                          }, separatorBuilder: (ctx,pos){
-                        return Divider();
-                      }, ),
-                      SizedBox(height: 25,),
-                    ],
+                                return GestureDetector(
+                                  onTap: (){
+                                    setState(() {
+                                      question.selectedAnswerId=ans.id!;
+                                    });
+                                  },
+                                  child: MultipleChoiceItem(
+                                   answer:ans,
+                                    selectedAnswer:question.selectedAnswerId
+                                  ),
+                                );
+                              }, separatorBuilder: (ctx,pos){
+                            return Divider();
+                          }, ),
+                        ],
+                      ),
+                    ),
                   );
                 },
 
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 40,
-                    width: 300,
-                    child:TextButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(AppColors.colorGreenPrimary),
-                          shadowColor: MaterialStateProperty.all<Color>(AppColors.colorGreenPrimary.withOpacity(0.4)),
-                          elevation: MaterialStateProperty.all(5), //Defines Elevation
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              ))),
-                      child: Text('Submit',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
-                      onPressed: () {
+            ),
+            SizedBox(height:10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 40,
+                  width: 300,
+                  child:TextButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(AppColors.colorGreenPrimary),
+                        shadowColor: MaterialStateProperty.all<Color>(AppColors.colorGreenPrimary.withOpacity(0.4)),
+                        elevation: MaterialStateProperty.all(5), //Defines Elevation
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ))),
+                    child: Text(currentIndex==widget.quiz!.questions!.length-1?'Submit':'Next',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                    onPressed: () {
+                      if(currentIndex==widget.quiz!.questions!.length-1){
                         calculateScoreAndSaveQuiz();
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                      }else{
+                        _controller.nextPage(duration: _kDuration, curve: _kCurve);
 
-            ],
-          ),
+                      }
+
+                    },
+                  ),
+                ),
+              ],
+            ),
+
+          ],
         ),
       ),
     );
