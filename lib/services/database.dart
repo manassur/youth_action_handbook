@@ -584,7 +584,7 @@ class DatabaseService {
     var lessonUserSnapShot =  await recentlyViewedRef.doc(uid)
         .collection('lessons')
         .orderBy('timestamp',descending:true )
-        .limit(1).get();
+        .limit(2).get();
     List<RecentlyViewedLesson> recentViews =
     lessonUserSnapShot.docs.map((doc) => RecentlyViewedLesson.fromDoc(doc)).toList();
     return recentViews;
