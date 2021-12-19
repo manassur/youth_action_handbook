@@ -213,8 +213,9 @@ class _HomeFragmentState extends State<HomeFragment> {
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 1.0,
-                            mainAxisSpacing: 5.0,
-                            childAspectRatio: 0.4,
+                            mainAxisSpacing: 3.0,
+                            childAspectRatio: 0.3,
+
 
                         ),
                     shrinkWrap: true,
@@ -230,7 +231,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                             },
                             child: TopicCard(
                               topicModel: snapshot.data![pos],
-                              scaleFactor: 1.1,
+                              scaleFactor: 0.9,
                             ),
                           );
                         }

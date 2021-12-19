@@ -2,14 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
+import 'package:youth_action_handbook/models/course_with_language_response.dart';
 import 'package:youth_action_handbook/models/firestore_models/user_courses.dart';
 import 'package:youth_action_handbook/models/news_response.dart';
 import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/repository/api_client.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:provider/provider.dart';
 
 class ApiService {
   // this will fetch recommended courses
+  ApiClient _apiClient = ApiClient();
+
   Future<CourseResponse> fetchCourses() async {
     final String response = await rootBundle.loadString('assets/json/courses.json');
     final data = await json.decode(response);
@@ -62,5 +66,16 @@ class ApiService {
     var course = result.courses!.firstWhere((Courses element) => element.id==courseId);
     return course.lessons!.firstWhere((Lessons element) => element.id==lessonId);
   }
+
+
+  // service methods calling from the hosted json
+    Future<CourseWithLanguageResponse> fetchCoursesFromServer() async {
+    final response = await _apiClient.get('https://apprant.com/yah/index.html');
+    var data = json.decode(response);
+    print(" from repo error " + response);
+    CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
+    return res;
+  }
+
 }
 

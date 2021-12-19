@@ -13,6 +13,7 @@ class TopicCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 200,
       margin: EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: AppColors.colorGreenPrimary,
@@ -26,11 +27,11 @@ class TopicCard extends StatelessWidget {
               )
             ]
         ),
-      padding: EdgeInsets.symmetric(vertical: 10*scaleFactor!,horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 5*scaleFactor!,horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('#'+topicModel!.topic!,style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w900,fontSize: 13*scaleFactor!),),
+          Text('#'+topicModel!.topic!,maxLines: 2,overflow: TextOverflow.ellipsis,style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w900,fontSize: 16*scaleFactor!),),
           Text(topicModel!.postCount!.toString()+' Posts',style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w100))
 
         ],

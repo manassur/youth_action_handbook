@@ -105,7 +105,7 @@ class _ForumFrameState extends State<ForumFrame> {
                         },
                         child: TopicCard(
                           topicModel: snapshot.data![pos],
-                              scaleFactor: 1.7,
+                              scaleFactor: 1.3,
                         ),
                       );
                     }
