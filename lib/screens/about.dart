@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,6 +17,7 @@ class AboutFragment extends StatefulWidget {
 }
 
 class _AboutFragmentState extends State<AboutFragment> {
+  final AuthService _auth = AuthService();
 
   //PROJECT COLUMN
   List projectItems = [
@@ -312,8 +314,10 @@ class _AboutFragmentState extends State<AboutFragment> {
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: ListTile(
-                    onTap: () {
-
+                    onTap: ()async {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, RouteNames.initialScreen, (route) => false);
+                      await _auth.signOut(context);
                     },
                     leading: Icon(Icons.login_outlined, color: AppColors.colorPurple),
                     title: Text("Sign Out"),
