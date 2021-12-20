@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/repository/language_provider.dart';
 import 'package:youth_action_handbook/screens/dashboard.dart';
 import 'package:youth_action_handbook/screens/edit_login.dart';
 import 'package:youth_action_handbook/screens/initial_screen.dart';
@@ -59,33 +60,36 @@ class AppWrapper extends StatelessWidget {
       initialData: null,
       value: (user == null)? null : DatabaseService().appUserStream(user),
       builder: (context, snapshot) {
-        return MaterialApp(
-            title: 'Youth Action Handbook',
-            debugShowCheckedModeBanner: false,
-            // supportedLocales: AppTexts.supportedLocales,
-            // localizationsDelegates: const [
-            //   CountryLocalizations.delegate,
-            // ],
-            theme: ThemeData(
-        
-              primarySwatch: Colors.blue,
-              textTheme: GoogleFonts.latoTextTheme()
+        return  ChangeNotifierProvider<LanguageProvider>(
+          create: (context) => LanguageProvider(),
+          child: MaterialApp(
+              title: 'Youth Action Handbook',
+              debugShowCheckedModeBanner: false,
+              // supportedLocales: AppTexts.supportedLocales,
+              // localizationsDelegates: const [
+              //   CountryLocalizations.delegate,
+              // ],
+              theme: ThemeData(
+
+                primarySwatch: Colors.blue,
+                textTheme: GoogleFonts.latoTextTheme()
+              ),
+              routes:{
+                RouteNames.signUpScreen: (context) => const SignUpScreen(),
+                RouteNames.initialScreen: (context) => const InitialScreen(),
+                RouteNames.loginScreen: (context) => const LoginScreen(),
+                RouteNames.resetPassword: (context) => const ResetPassword(),
+                RouteNames.dashboard: (context) => const Dashboard(),
+                RouteNames.editProfile: (context) => EditProfileScreen(),
+                RouteNames.editLogin: (context) => EditLoginScreen(),
+                RouteNames.partners: (context) => PartnersScreen(),
+                RouteNames.launch : (context) => (user != null)? const Dashboard() : const InitialScreen(),
+
+              },
+              home: (user != null)? const Dashboard() : const InitialScreen(),
+
             ),
-            routes:{
-              RouteNames.signUpScreen: (context) => const SignUpScreen(),
-              RouteNames.initialScreen: (context) => const InitialScreen(),
-              RouteNames.loginScreen: (context) => const LoginScreen(),
-              RouteNames.resetPassword: (context) => const ResetPassword(),
-              RouteNames.dashboard: (context) => const Dashboard(),
-              RouteNames.editProfile: (context) => EditProfileScreen(),
-              RouteNames.editLogin: (context) => EditLoginScreen(),
-              RouteNames.partners: (context) => PartnersScreen(),
-              RouteNames.launch : (context) => (user != null)? const Dashboard() : const InitialScreen(),
-        
-            },
-            home: (user != null)? const Dashboard() : const InitialScreen(),
-            
-          );
+        );
       }
     );
   }

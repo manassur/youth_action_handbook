@@ -12,6 +12,7 @@ import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/repository/language_provider.dart';
 import 'package:youth_action_handbook/screens/individual_course.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
@@ -158,19 +159,25 @@ class _HomeFragmentState extends State<HomeFragment> {
                       } else if ( state is CoursesLoadingState ) {
                         return buildLoading ( );
                       } else if ( state is CoursesLoadedState ) {
-                        return
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: state.courses!.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (ctx,pos){
-                                return InkWell(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                     IndividualCourseScreen(courses: state.courses![pos],)));
-                                  },
-                                    child: OpenTrainingCard(courseModel:state.courses![pos]));
-                              });
+
+                        return Consumer<LanguageProvider>(
+                              builder: (context, lang, child) {
+                              lang.setupCourseLanguages(state.courseWithLanguageResponse!);
+                              var courseResponse =lang!.getCourseByLanguage;
+                          return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: courseResponse.courses!.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (ctx,pos){
+                                  return InkWell(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                       IndividualCourseScreen(courses: courseResponse.courses![pos],)));
+                                    },
+                                      child: OpenTrainingCard(courseModel:courseResponse.courses![pos]));
+                                });
+    }
+                          );
                       } else if ( state is CoursesLoadFailureState ) {
                         return buildErrorUi ("Oops! Could not load courses at this time" );
                       }
