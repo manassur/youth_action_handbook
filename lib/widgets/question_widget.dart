@@ -16,32 +16,32 @@ class _QuestionWidgetState extends State<QuestionWidget> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 10,
-            ),
-            SizedBox(
-                width: 240,
-                child:
-                Text('${widget.number}. ${widget.question}',
-                    style: TextStyle(
-                        color: AppColors.colorBluePrimary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold))),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              '${widget.instruction}',
-              style: TextStyle(
-                  color: AppColors.colorBluePrimary,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w200),
-            ),
-          ],
+        Expanded(
+          flex: 7,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              Text('${widget.number}. ${widget.question}',
+                  style: TextStyle(
+                      color: AppColors.colorBluePrimary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold)),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                '${widget.instruction}',
+                style: TextStyle(
+                    color: AppColors.colorBluePrimary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w200),
+              ),
+            ],
+          ),
         ),
         Spacer(),
         Container(

@@ -132,7 +132,7 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
                           return  StatefulBuilder(
                               builder: (BuildContext context, StateSetter setState )
                               { return  FractionallySizedBox(
-                                heightFactor: 0.25,
+                                heightFactor: 0.3,
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: Column(

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youth_action_handbook/bloc/courses/courses_bloc.dart';
 import 'package:youth_action_handbook/bloc/news/news_bloc.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
+import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/course.dart';
 import 'package:youth_action_handbook/screens/forum.dart';
 import 'package:youth_action_handbook/services/api_service.dart';
@@ -13,6 +14,7 @@ import 'about.dart';
 import 'home.dart';
 
 class Dashboard extends StatefulWidget {
+
   const Dashboard({Key? key}) : super(key: key);
 
   @override
@@ -20,12 +22,14 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+
   int currentIndex= 0;
   List<Widget> screen = [
 
     BlocProvider<CoursesBloc>(
-      create: (context) =>
-      CoursesBloc(apiService: ApiService()),
+        create: (context) =>
+            CoursesBloc(apiService: ApiService()),
         child: BlocProvider<NewsBloc>(
             create: (context) =>
                 NewsBloc(apiService: ApiService()),
@@ -42,6 +46,12 @@ class _DashboardState extends State<Dashboard> {
     AboutFragment(),
 
   ];
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

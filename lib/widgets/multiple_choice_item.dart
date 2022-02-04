@@ -26,7 +26,6 @@ class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
             children: [
               SizedBox(width: 10),
               SizedBox(
-                  width: 240,
                   child:
                   Text(
                       'Answer',

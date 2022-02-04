@@ -61,7 +61,7 @@ class Courses {
     approach = json['approach'];
     references = json['references'];
     color = int.parse(json['color']) ;
-    image = json['image'];
+    image = json['image']??'';
     if (json['lessons'] != null) {
       lessons = <Lessons>[];
       json['lessons'].forEach((v) {

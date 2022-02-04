@@ -339,17 +339,11 @@ class _CourseFragmentState extends State<CourseFragment> {
                                     Icon(Icons.play_circle_fill_outlined,
                                         color: Colors.white),
                                     SizedBox(width:20),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children:  [
-                                        Text(snapshot.data![pos].lessonTitle!, style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),),
-                                        const Text("2:30", style: TextStyle(
-                                            fontWeight: FontWeight.w100,
-                                            fontSize: 12,
-                                            color: Colors.white),),
-                                      ],
+                                    Expanded(
+                                      flex: 5,
+                                      child: Text(snapshot.data![pos].lessonTitle!, style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),),
                                     ),
                                     Spacer(),
                                     CircularPercentIndicator(

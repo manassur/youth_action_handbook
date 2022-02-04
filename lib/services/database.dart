@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/firestore_models/comment_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/lesson_user_model.dart';
@@ -17,10 +18,11 @@ import 'package:youth_action_handbook/data/constants.dart';
 
 class DatabaseService {
   final String? uid;
+  final BuildContext? context;
   final _auth = AuthService();
   final _fauth = FirebaseAuth.instance;
 
-  DatabaseService({this.uid});
+  DatabaseService({this.uid,this.context});
 
   //Create user Data AT registration
   Future createUserData(String name, String organisation, String language, String country,String? gender, String? education, String? dateOfBirth,String? profilePicture) async {
@@ -551,6 +553,7 @@ class DatabaseService {
 
 
   Future<List<Topic>> getTopics() async {
+
     QuerySnapshot topicSnapshot = await topicsRef
         .where('isActive', isEqualTo: true)
         .limit(5)

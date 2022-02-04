@@ -35,7 +35,6 @@ class _LanguagePickerState extends State<LanguagePicker> {
           onTap: (){
             data.changeLanguage('fr');
             Navigator.of(context).pop();
-
           },child: Text('French',style: TextStyle(fontSize: 18),)),
 
           ],

@@ -9,7 +9,6 @@ class UpdatesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
       padding: const EdgeInsets.only(left: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,7 +52,7 @@ class UpdatesCard extends StatelessWidget {
                       fontWeight: FontWeight.w300),
                 ),
                const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Text(
                   'see more',

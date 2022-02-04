@@ -10,10 +10,13 @@ import 'package:youth_action_handbook/bloc/news/news_event.dart';
 import 'package:youth_action_handbook/bloc/news/news_state.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/data/app_texts.dart';
+import 'package:youth_action_handbook/models/course_response.dart';
+import 'package:youth_action_handbook/models/course_with_language_response.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/repository/language_provider.dart';
 import 'package:youth_action_handbook/screens/individual_course.dart';
+import 'package:youth_action_handbook/services/api_service.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
@@ -22,6 +25,7 @@ import 'package:youth_action_handbook/widgets/popular_items_card.dart';
 import 'package:youth_action_handbook/widgets/topic_card.dart';
 import 'package:youth_action_handbook/widgets/updates_card.dart';
 
+import 'search.dart';
 import 'topic_posts.dart';
 
 class HomeFragment extends StatefulWidget {
@@ -38,20 +42,27 @@ class _HomeFragmentState extends State<HomeFragment> {
   String? _currentUserId;
   DatabaseService? dbservice;
   Future<List<Topic>>? topicFuture;
+  LanguageProvider? langProvider;
+  TextEditingController? searchController;
+  CourseResponse? courseResponse;
 
   @override
   void initState() {
     coursesBloc= BlocProvider.of<CoursesBloc>(context);
-    coursesBloc!.add(FetchCoursesEvent());
+    langProvider= Provider.of<LanguageProvider>(context,listen:false);
+    langProvider!.setupCourseLanguages();
+
+    // coursesBloc!.add(FetchCoursesEvent());
 
     newsBloc= BlocProvider.of<NewsBloc>(context);
     newsBloc!.add(FetchNewsEvent());
 
-    appUser = Provider.of<AppUser?>(context,listen:false);
-    _currentUserId = appUser!.uid;
-    dbservice = DatabaseService(uid: _currentUserId);
-
+    dbservice = DatabaseService();
     topicFuture =  dbservice!.getTopics();
+
+    searchController = TextEditingController();
+
+
 
     //dbservice!.createTopic('Family');
 
@@ -82,7 +93,7 @@ class _HomeFragmentState extends State<HomeFragment> {
           },
     ),
     actions: [
-      MenuForAppBar(),
+      appUser==null?SizedBox():MenuForAppBar(),
     ],
     ),
       body:  (appUser==null)? const Loading() : SingleChildScrollView(
@@ -120,7 +131,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                       child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: TextFormField(
-                              style: const TextStyle(color: Colors.white,fontSize: 15,fontWeight: FontWeight.w100),
+                            controller: searchController,
+                              style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.w100),
                               textAlignVertical: TextAlignVertical.center,
                               decoration: InputDecoration(
                                 hintText: "Search Anything",
@@ -135,7 +147,22 @@ class _HomeFragmentState extends State<HomeFragment> {
                               )))))),
                     Expanded(
                       flex: 2,
-                      child: SvgPicture.asset('assets/slider_03.svg'))
+                      child: IconButton(icon:Icon(Icons.search,color: AppColors.colorBluePrimary,),
+                        onPressed: (){
+
+                          Navigator.push(context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      BlocProvider<CoursesBloc>(
+                                          create: (context) =>
+                                              CoursesBloc(apiService: ApiService()),
+                                          child: Search(query: searchController!.text,)))
+                          ).then((value) => searchController!.clear());
+
+
+
+
+                        },))
                 ],
               ),
             const  SizedBox(height: 25,),
@@ -143,50 +170,35 @@ class _HomeFragmentState extends State<HomeFragment> {
              const SizedBox(height: 10,),
               SizedBox(
                 height: 300,
-                child: BlocListener<CoursesBloc, CoursesState>(
-                  listener: (context, state){
-                    if ( state is CoursesLoadedState && state.message != null ) {
-                        }
-                    else if ( state is CoursesLoadFailureState ) {
-                      Scaffold.of ( context ).showSnackBar ( const SnackBar (
-                        content: Text ( "Could not load courses  at this time" ) , ) );
-                    }
-                  },
-                  child: BlocBuilder<CoursesBloc, CoursesState>(
-                    builder: (context, state) {
-                      if ( state is CoursesInitialState ) {
-                        return buildLoading ( );
-                      } else if ( state is CoursesLoadingState ) {
-                        return buildLoading ( );
-                      } else if ( state is CoursesLoadedState ) {
+                child:      Consumer<LanguageProvider>(
+                  builder: (context, lang, child) {
 
-                        return Consumer<LanguageProvider>(
-                              builder: (context, lang, child) {
-                              lang.setupCourseLanguages(state.courseWithLanguageResponse!);
-                              var courseResponse =lang!.getCourseByLanguage;
-                          return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: courseResponse.courses!.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (ctx,pos){
-                                  return InkWell(
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                       IndividualCourseScreen(courses: courseResponse.courses![pos],)));
-                                    },
-                                      child: OpenTrainingCard(courseModel:courseResponse.courses![pos]));
-                                });
-    }
-                          );
-                      } else if ( state is CoursesLoadFailureState ) {
-                        return buildErrorUi ("Oops! Could not load courses at this time" );
-                      }
-                      else {
-                        return buildErrorUi ( "Something went wrong!" );
-                      }
-                    },
-                  ),
-                ),
+                    if(lang.isLoading){
+                      return buildLoading();
+                    }else if(lang.hasError){
+                      return Center(child: Text(lang.errorText));
+                    }else{
+                      return  ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: lang.getCourseByLanguage.courses!.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (ctx, pos) {
+                            return InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              IndividualCourseScreen(
+                                                courses: lang.getCourseByLanguage
+                                                    .courses![pos],)));
+                                },
+                                child: OpenTrainingCard(
+                                    courseModel: lang.getCourseByLanguage
+                                        .courses![pos]));
+                          });
+                    }
+
+                  }),
               ),
 
              const SizedBox(height: 25,),

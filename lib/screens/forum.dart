@@ -137,28 +137,28 @@ class _ForumFragmentState extends State<ForumFragment> {
                       child: Text("Find topics you like to read, engage with communities and ask questions.",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.white),),
                     ),
                     SizedBox(height: 25,),
-                     Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: AppColors.colorGreenPrimary.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: Padding(
-                            padding: EdgeInsets.all(5),
-                            child: TextFormField(
-                                style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w100),
-                                textAlignVertical: TextAlignVertical.center,
-                                decoration: InputDecoration(
-                                  hintText: "Search Anything",
-                                  prefixIcon: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SvgPicture.asset('assets/search.svg',color: Colors.white70,width: 20,height: 20,),
-                                  ),
-                                  border: InputBorder.none,
-                                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                                  hintStyle:  TextStyle(color: Colors.white70,fontSize: 14,fontWeight: FontWeight.w100),
-
-                                )))),
+                     // Container(
+                     //    height: 40,
+                     //    decoration: BoxDecoration(
+                     //      color: AppColors.colorGreenPrimary.withOpacity(0.3),
+                     //      borderRadius: BorderRadius.circular(30.0),
+                     //    ),
+                     //    child: Padding(
+                     //        padding: EdgeInsets.all(5),
+                     //        child: TextFormField(
+                     //            style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w100),
+                     //            textAlignVertical: TextAlignVertical.center,
+                     //            decoration: InputDecoration(
+                     //              hintText: "Search Anything",
+                     //              prefixIcon: Padding(
+                     //                padding: const EdgeInsets.all(8.0),
+                     //                child: SvgPicture.asset('assets/search.svg',color: Colors.white70,width: 20,height: 20,),
+                     //              ),
+                     //              border: InputBorder.none,
+                     //              floatingLabelBehavior: FloatingLabelBehavior.never,
+                     //              hintStyle:  TextStyle(color: Colors.white70,fontSize: 14,fontWeight: FontWeight.w100),
+                     //
+                     //            )))),
                     SizedBox(height: 10,),
 
 

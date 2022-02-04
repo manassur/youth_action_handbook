@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/course_with_language_response.dart';
 import 'package:youth_action_handbook/repository/cache_helper.dart';
+import 'package:youth_action_handbook/services/api_service.dart';
 
 class LanguageProvider extends ChangeNotifier {
   CacheHelper cacheHelper = CacheHelper();
+  ApiService apiService = ApiService();
+  bool isLoading = false,hasError = false;
+  String errorText = '';
   CourseWithLanguageResponse? _courseWithLanguageResponse;
   var _language = 'en';
   String get getLanguage {
@@ -29,8 +33,34 @@ class LanguageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setupCourseLanguages(CourseWithLanguageResponse courseWithLanguageResponse) {
-    _courseWithLanguageResponse= courseWithLanguageResponse;
+  void setLoading(bool value) {
+    isLoading= value;
+    notifyListeners();
+  }
+
+  void setHasError(bool value) {
+    hasError= value;
+    notifyListeners();
+  }
+
+
+  void setError(String value) {
+    errorText= value;
+    notifyListeners();
+  }
+
+  void setupCourseLanguages() async {
+    try{
+      setLoading(true);
+      CourseWithLanguageResponse courseWithLanguageResponse = await apiService.fetchCoursesFromServer();
+      _courseWithLanguageResponse= courseWithLanguageResponse;
+      setLoading(false);
+    }catch(e){
+      setHasError(true);
+      setError('Could not load courses');
+      setLoading(false);
+
+    }
     notifyListeners();
   }
 }

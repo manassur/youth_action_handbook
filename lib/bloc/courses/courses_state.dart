@@ -24,7 +24,6 @@ class CoursesLoadedState extends CoursesState {
  final CourseWithLanguageResponse? courseWithLanguageResponse;
  final  String? message;
   CoursesLoadedState({@required this.courses, this.message,this.courseWithLanguageResponse});
-
   @override
   List<Object> get props => [];
 }

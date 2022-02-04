@@ -136,8 +136,8 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            width:!widget.induvidualCommentModel!.isParentComment!?200: 240,
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal:!widget.induvidualCommentModel!.isParentComment!?10: 15 ) ,
                               child: Text(widget.induvidualCommentModel!.authorName!,style: TextStyle(color:Colors.black87,fontSize: 14,fontWeight: FontWeight.bold))),
                          SizedBox(height: 5,),
                           // Text(widget.induvidualCommentModel!.job!,style: TextStyle(color: Colors.grey,fontSize: 12,fontWeight: FontWeight.w300),),
@@ -157,7 +157,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                                 return  StatefulBuilder(
                                     builder: (BuildContext context, StateSetter setState )
                                     { return  FractionallySizedBox(
-                                      heightFactor: 0.25,
+                                      heightFactor: 0.3,
                                       child: Padding(
                                         padding: const EdgeInsets.all(15.0),
                                         child: Column(
