@@ -42,6 +42,9 @@ class _SearchState extends State<Search> {
   Future<List<Topic>>? topicFuture;
   LanguageProvider? langProvider;
   TextEditingController? searchController;
+  String? searchQuery;
+  CourseResponse? courseBank;
+  List<Courses>? searchResults=[];
 
   @override
   void initState() {
@@ -49,9 +52,6 @@ class _SearchState extends State<Search> {
     langProvider= Provider.of<LanguageProvider>(context,listen:false);
 
     coursesBloc!.add(FetchCoursesEvent());
-
-
-
     appUser = Provider.of<AppUser?>(context,listen:false);
     _currentUserId = appUser!.uid;
     dbservice = DatabaseService(uid: _currentUserId);
@@ -65,6 +65,13 @@ class _SearchState extends State<Search> {
     super.initState();
   }
 
+  void performSearch(){
+    if(searchController!.text.isNotEmpty) {
+        searchResults = courseBank!.courses!.where((element) =>
+            element.title!.contains(searchController!.text)).toList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final appUser = Provider.of<AppUser?>(context);
@@ -74,6 +81,7 @@ class _SearchState extends State<Search> {
       appBar: AppBar(
          backgroundColor: Colors.white,
           elevation: 0,
+          title: Text('Search',style: TextStyle(color: Colors.black),),
           leading: IconButton(
           icon: Icon(Icons.arrow_back_ios,color: Colors.black,), // set your color here
           onPressed: () {
@@ -107,9 +115,13 @@ class _SearchState extends State<Search> {
                             padding: const EdgeInsets.all(5),
                             child: TextFormField(
                               controller: searchController,
+                                onChanged: (value){
+                                performSearch();
+                                langProvider!.refresh();
+
+                                },
                                 style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.w100),
                                 textAlignVertical: TextAlignVertical.center,
-                                readOnly: true,
                                 decoration: InputDecoration(
                                   hintText: "Search Anything",
                                   prefixIcon: Padding(
@@ -128,62 +140,33 @@ class _SearchState extends State<Search> {
                 ],
               ),
             const  SizedBox(height: 25,),
-              Text("Recommended courses",style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary),),
+              Text("Search Results",style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary),),
              const SizedBox(height: 10,),
               SizedBox(
                 height: 300,
                 child:      Consumer<LanguageProvider>(
                   builder: (context, lang, child) {
                     var courseResponse = langProvider!.getCourseByLanguage;
+                    courseBank = courseResponse;
+                    searchResults = courseBank!.courses;
+                    performSearch();
 
-                    return BlocListener<CoursesBloc, CoursesState>(
-                      listener: (context, state) {
-                        if (state is CoursesLoadedState && state.message !=
-                            null) {}
-                        else if (state is CoursesLoadedState) {
-
-                        }
-                        else if (state is CoursesLoadFailureState) {
-                          Scaffold.of(context).showSnackBar(const SnackBar (
-                            content: Text(
-                                "Could not load courses  at this time"),));
-                        }
-                      },
-                      child: BlocBuilder<CoursesBloc, CoursesState>(
-                        builder: (context, state) {
-                          if (state is CoursesInitialState) {
-                            return buildLoading();
-                          } else if (state is CoursesLoadingState) {
-                            return buildLoading();
-                          } else if (state is CoursesLoadedState) {
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: courseResponse.courses!.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (ctx, pos) {
-                                  return InkWell(
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    IndividualCourseScreen(
-                                                      courses: courseResponse!
-                                                          .courses![pos],)));
-                                      },
-                                      child: OpenTrainingCard(
-                                          courseModel: courseResponse!
-                                              .courses![pos]));
-                                });
-                          } else if (state is CoursesLoadFailureState) {
-                            return buildErrorUi(
-                                "Oops! Could not load courses at this time");
-                          }
-                          else {
-                            return buildErrorUi("Something went wrong!");
-                          }
-                        },
-                      ),
-                    );
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: searchResults!.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, pos) {
+                          return InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            IndividualCourseScreen(
+                                              courses: searchResults![pos],)));
+                              },
+                              child: OpenTrainingCard(
+                                  courseModel: searchResults![pos]));
+                        });
                   }),
               ),
 

@@ -15,6 +15,10 @@ class LanguageProvider extends ChangeNotifier {
     return _language;
   }
 
+  void refresh(){
+    notifyListeners();
+  }
+
   CourseWithLanguageResponse get getLanguageCourses {
     return _courseWithLanguageResponse!;
   }
