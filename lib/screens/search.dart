@@ -68,7 +68,7 @@ class _SearchState extends State<Search> {
   void performSearch(){
     if(searchController!.text.isNotEmpty) {
         searchResults = courseBank!.courses!.where((element) =>
-            element.title!.contains(searchController!.text)).toList();
+            element.title!.toLowerCase().contains(searchController!.text.toLowerCase()) ||  element.description!.toLowerCase().contains(searchController!.text.toLowerCase())).toList();
     }
   }
 
