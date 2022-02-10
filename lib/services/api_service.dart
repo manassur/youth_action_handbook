@@ -73,7 +73,7 @@ class ApiService {
     // final response = await _apiClient.get('https://apprant.com/yah/index.html');
     final response = await _apiClient.get('https://dev.silbaka.com/courses-new.json');
     var data = json.decode(response);
-    print(" from repo error " + response);
+    // print(" from repo error " + response);
     CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
     return res;
   }
