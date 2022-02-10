@@ -36,6 +36,7 @@ class Courses {
   String? references;
   int? color;
   String? image;
+  String? icon;
   List<Lessons>? lessons;
   List<Quiz>? quiz;
 
@@ -49,6 +50,7 @@ class Courses {
         this.references,
         this.color,
         this.image,
+        this.icon,
         this.lessons,
         this.quiz});
 
@@ -62,6 +64,7 @@ class Courses {
     references = json['references'];
     color = int.parse(json['color']) ;
     image = json['image']??'';
+    icon = json['icon']??'';
     if (json['lessons'] != null) {
       lessons = <Lessons>[];
       json['lessons'].forEach((v) {
@@ -87,6 +90,7 @@ class Courses {
     data['references'] = this.references;
     data['color'] = this.color;
     data['image'] = this.image;
+    data['icon'] = this.icon;
     if (this.lessons != null) {
       data['lessons'] = this.lessons!.map((v) => v.toJson()).toList();
     }

@@ -75,7 +75,7 @@ class _LessonItemCardState extends State<LessonItemCard> {
         dbservice!.addLessonForUser(widget.lesson!,widget.courseId!,widget.courseName!);
         showModalBottomSheet(
             context: context,
-            isScrollControlled: true,
+            isScrollControlled: false,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
@@ -147,7 +147,7 @@ class _LessonItemCardState extends State<LessonItemCard> {
                             height: double.infinity,
                             child: Html(
                                 data: widget.lesson!.lesson,
-                                tagsList: Html.tags..remove(Platform.isAndroid ? "iframe" : "video")
+                                // tagsList: Html.tags..remove(Platform.isAndroid ? "iframe" : "video")
                             )
                         ),
                       ),
