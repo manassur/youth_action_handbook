@@ -1,12 +1,14 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:profanity_filter/profanity_filter.dart';
 import 'package:share/share.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/firestore_models/comment_model.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/reply_card.dart';
 
 class InduvidualPostCard extends StatefulWidget {
@@ -47,8 +49,16 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
   }
 
   void _postComment() async {
+    final filter = ProfanityFilter();
     FocusScope.of(context).unfocus();
-    if ((_captionController.text.trim().isNotEmpty)) {
+    if (!(_captionController.text.trim().isNotEmpty)) {
+      yahSnackBar(context, "Comment cannot be empty! :(");
+    }
+    else if(filter.hasProfanity(_captionController.text.trim())){
+      // toast that fields cannot be empty
+      yahSnackBar(context, "Sorry, profanity was detected in your text. Please edit and try submitting again.");
+    }
+    else{
       if (!_isLoading) {
         if (mounted) {
           setState(() {
@@ -60,7 +70,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
         Comment comment = Comment(
           parentId: widget.induvidualCommentModel!.id,
           parentAuthorId: widget.induvidualCommentModel!.parentAuthorId,
-          caption: _captionController.text,
+          caption: _captionController.text.trim(),
           replyCount: 0,
           authorName: appUser!.name,
           authorImg: appUser!.photoURL,
@@ -84,8 +94,6 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
           print('could not post comment at this time');
         });
       }
-    }else{
-      // toast that fields cannot be empty
     }
   }
   _deleteComment(){
@@ -201,7 +209,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                     SizedBox(height: 20,),
                   Row(
                     children: [
-                      Text(widget.induvidualCommentModel!.timestamp!.toDate().day.toString()+'-'+widget.induvidualCommentModel!.timestamp!.toDate().month.toString()+'-'+widget.induvidualCommentModel!.timestamp!.toDate().year.toString(),style: TextStyle(color: Colors.grey.shade500,fontSize: 11),),
+                      Text(convertDate(widget.induvidualCommentModel!.timestamp!),style: TextStyle(color: Colors.grey.shade500,fontSize: 11),),
                       SizedBox(width: 10,),
                       GestureDetector(
                         onTap: (){
@@ -285,6 +293,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                           child: TextFormField(
                             controller:_captionController,
                             maxLines: 5,
+                            textInputAction: TextInputAction.next,
                               style: TextStyle(color: Colors.black54,fontSize: 14,fontWeight: FontWeight.w100),
                               textAlignVertical: TextAlignVertical.center,
                               decoration: InputDecoration(

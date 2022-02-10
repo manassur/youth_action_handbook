@@ -59,6 +59,7 @@ dependencies:
   share: ^2.0.4
   onesignal_flutter: ^3.2.0
   shared_preferences: ^2.0.11
+  profanity_filter: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

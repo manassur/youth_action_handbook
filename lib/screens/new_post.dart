@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/data/app_texts.dart';
@@ -9,13 +7,8 @@ import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
-import 'package:youth_action_handbook/widgets/open_training_card.dart';
-import 'package:youth_action_handbook/widgets/popular_items_card.dart';
-import 'package:youth_action_handbook/widgets/topic_card.dart';
-import 'package:youth_action_handbook/widgets/topic_category_card.dart';
-import 'package:youth_action_handbook/widgets/trending_post_card.dart';
-import 'package:youth_action_handbook/widgets/updates_card.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
+import 'package:profanity_filter/profanity_filter.dart';
 
 class NewPostScreen extends StatefulWidget {
   const NewPostScreen({Key? key}) : super(key: key);
@@ -57,8 +50,19 @@ class _NewPostScreenState extends State<NewPostScreen> {
   }
 
   void _submit() async {
+    final filter = ProfanityFilter();
+    String _theCaption= _captionController.text.trim();
+    String _theDescription = _descriptionController.text.trim();
+
     FocusScope.of(context).unfocus();
-    if ((_captionController.text.trim().isNotEmpty) & (_descriptionController.text.trim().isNotEmpty)) {
+    if (!(_theCaption.isNotEmpty) || !(_theDescription.isNotEmpty) || _selectedTopic == null) {
+      // toast that fields cannot be empty
+      yahSnackBar(context, "Please fill in all fields before submitting.");
+    }
+    else if(filter.hasProfanity(_theCaption) || filter.hasProfanity(_theDescription)){
+      yahSnackBar(context,'passed test 1. The topic is:' + _selectedTopic.toString());
+    }
+    else {
       if (!_isLoading) {
         if (mounted) {
           setState(() {
@@ -69,8 +73,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
         //Create new Post
         Post post = Post(
           topicId: _selectedTopic!.id,
-          caption: _captionController.text,
-          description: _descriptionController.text,
+          caption: _theCaption,
+          description: _theDescription,
           likeCount: 0,
           replyCount: 0,
           authorName: appUser!.name,
@@ -85,17 +89,17 @@ class _NewPostScreenState extends State<NewPostScreen> {
           setState(() {
             _isLoading = false;
           }),
+          yahSnackBar(context, 'Successfully Posted'),
           Navigator.pop(context,true)
         }).catchError((e) {
           setState(() {
             _isLoading = false;
           });
-          print('could not create post at this time');
+          yahSnackBar(context,'could not create post at this time');
         });
       }
-    }else{
-      // toast that fields cannot be empty
-    }
+      }
+    
   }
 
   @override
@@ -225,6 +229,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                           child: TextFormField(
                             controller: _captionController,
                               maxLines: 2,
+                              textInputAction: TextInputAction.next,
                               onFieldSubmitted: (value){
                                 _submit;
                               },
@@ -247,7 +252,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
                           padding: EdgeInsets.all(10),
                           child: TextFormField(
                               controller: _descriptionController,
-                              maxLines: 7,
+                              maxLines: 6,
+                              textInputAction: TextInputAction.next,
                               style: const TextStyle(color: Colors.black54,fontSize: 15,fontWeight: FontWeight.w100),
                               textAlignVertical: TextAlignVertical.center,
                               decoration: const InputDecoration(

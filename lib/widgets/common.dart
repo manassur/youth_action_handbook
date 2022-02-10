@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,6 +11,7 @@ import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:intl/intl.dart';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -238,3 +240,8 @@ launchURL(context, url) async {
     // throw 'Could not launch $url';
   }
 }
+
+String convertDate(Timestamp timeStamp, {String newFormat='d MMM y'}) {
+    String formattedDate = DateFormat(newFormat).format(timeStamp.toDate());
+    return formattedDate;
+  }
