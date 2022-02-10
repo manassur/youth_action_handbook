@@ -15,7 +15,7 @@ class ApiService {
   ApiClient _apiClient = ApiClient();
 
   Future<CourseResponse> fetchCourses() async {
-    final String response = await rootBundle.loadString('assets/json/courses.json');
+    final String response = await rootBundle.loadString('assets/json/courses-new.json');
     final data = await json.decode(response);
     print("this is courses json " + response);
     CourseResponse result = CourseResponse.fromJson(data);
@@ -49,7 +49,7 @@ class ApiService {
     * for now we will just return the regular courses
      */
 
-    final String response = await rootBundle.loadString('assets/json/courses.json');
+    final String response = await rootBundle.loadString('assets/json/courses-new.json');
     final data = await json.decode(response);
     print("this is courses json " + response);
     CourseResponse result = CourseResponse.fromJson(data);
@@ -59,7 +59,7 @@ class ApiService {
 
   // this extracts the course from the already fetched courses with the courseid
   Future<Lessons> getCourseByCourseId(String courseId,lessonId) async {
-    final String response = await rootBundle.loadString('assets/json/courses.json');
+    final String response = await rootBundle.loadString('assets/json/courses-new.json');
     final data = await json.decode(response);
     print("this is courses json " + response);
     CourseResponse result = CourseResponse.fromJson(data);
@@ -70,7 +70,8 @@ class ApiService {
 
   // service methods calling from the hosted json
     Future<CourseWithLanguageResponse> fetchCoursesFromServer() async {
-    final response = await _apiClient.get('https://apprant.com/yah/index.html');
+    // final response = await _apiClient.get('https://apprant.com/yah/index.html');
+    final response = await _apiClient.get('https://dev.silbaka.com/courses-new.json');
     var data = json.decode(response);
     print(" from repo error " + response);
     CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);

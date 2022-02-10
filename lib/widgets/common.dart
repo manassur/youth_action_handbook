@@ -1,8 +1,10 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/user.dart';
@@ -29,11 +31,21 @@ class _LoadingState extends State<Loading> {
 }
 
 yahSnackBar(context, e) {
+  final msg;
+  if(e is String){
+    msg = e;
+  }
+  else if(e is FirebaseException || e is FirebaseAuthException){
+    msg = e.message;
+  }
+  else{
+    msg = e.toString();
+  }
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       backgroundColor: AppColors.colorYellow,
       content: Text(
-        e ?? 'An error occured. Please try again',
+        msg ?? 'An error occured. Please try again',
         style: const TextStyle(fontSize: 15.0, color: Colors.black),
       ),
     ),
@@ -213,5 +225,16 @@ extension EmailValidator on String {
     return RegExp(
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(this);
+  }
+}
+
+
+launchURL(context, url) async {
+  // const url = 'https://flutter.dev';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    yahSnackBar(context, "Can't Open Website");
+    // throw 'Could not launch $url';
   }
 }
