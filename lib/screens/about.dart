@@ -331,8 +331,11 @@ class _AboutFragmentState extends State<AboutFragment> {
                                     String url = socialItems[index]['page'];
                                     if (await canLaunch(url)) {
                                       // await launch(url, forceWebView: true, forceSafariVC: true, );
-                                      await launch(url, forceWebView: false);
+                                      await launch(url);
                                     } else {
+                                      if(socialItems[index]['title'] == 'App Version'){
+                                        yahSnackBar(context, socialItems[index]['page']);
+                                      }
                                       yahSnackBar(context, "Can't Open Website");
                                     }
                                   }
@@ -380,6 +383,11 @@ class _AboutFragmentState extends State<AboutFragment> {
                     title: Text("Impressum"),
                     trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
                   ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,),
                 ),
 
 

@@ -26,16 +26,16 @@ class GetInTouch extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          Row(
+          Column(
             children: [
             Image.asset(
                 'assets/certify.png',
                 // height: 32,
-                width: MediaQuery.of(context).size.width/4,
+                // width: MediaQuery.of(context).size.width/4,
               ),
            Container(
                 padding: const EdgeInsets.all(16.0),
-                width: MediaQuery.of(context).size.width/1.5,
+                // width: MediaQuery.of(context).size.width/1.5,
                 child: Flexible(
                   
                   child: Text(

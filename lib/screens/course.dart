@@ -17,6 +17,7 @@ import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/recently_viewed_lessons_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/repository/language_provider.dart';
 import 'package:youth_action_handbook/screens/individual_course.dart';
 import 'package:youth_action_handbook/screens/test.dart';
 import 'package:youth_action_handbook/services/api_service.dart';
@@ -378,48 +379,82 @@ class _CourseFragmentState extends State<CourseFragment> {
                   fontSize: 12,
                   color: Colors.black54),),
               SizedBox(height: 10,),
-              SizedBox(
+               SizedBox(
                 height: 300,
-                child: BlocListener<CoursesBloc, CoursesState>(
-                  listener: (context, state){
-                    if ( state is CoursesLoadedState && state.message != null ) {
+                child:      Consumer<LanguageProvider>(
+                  builder: (context, lang, child) {
+
+                    if(lang.isLoading){
+                      return buildLoading();
+                    }else if(lang.hasError){
+                      return Center(child: Text(lang.errorText));
+                    }else{
+                      return  ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: lang.getCourseByLanguage.courses!.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (ctx, pos) {
+                            return InkWell(
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              IndividualCourseScreen(
+                                                courses: lang.getCourseByLanguage
+                                                    .courses![pos],)));
+                                },
+                                child: OpenTrainingCard(
+                                    courseModel: lang.getCourseByLanguage
+                                        .courses![pos]));
+                          });
                     }
-                    else if ( state is CoursesLoadFailureState ) {
-                      Scaffold.of ( context ).showSnackBar ( const SnackBar (
-                        content: Text ( "Could not load courses  at this time" ) , ) );
-                    }
-                  },
-                  child: BlocBuilder<CoursesBloc, CoursesState>(
-                    builder: (context, state) {
-                      if ( state is CoursesInitialState ) {
-                        return buildLoading ( );
-                      } else if ( state is CoursesLoadingState ) {
-                        return buildLoading ( );
-                      } else if ( state is CoursesLoadedState ) {
-                        return
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: state.courses!.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (ctx,pos){
-                                return InkWell(
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                                          IndividualCourseScreen(courses: state.courses![pos],)));
-                                    },
-                                    child: OpenTrainingCard(courseModel:state.courses![pos]));
-                              });
-                      } else if ( state is CoursesLoadFailureState ) {
-                        return buildErrorUi ("Oops! Could not load courses at this time" );
-                      }
-                      else {
-                        return buildErrorUi ( "Something went wrong!" );
-                      }
-                    },
-                  ),
-                ),
+
+                  }),
               ),
 
+
+              // SizedBox(
+              //   height: 300,
+              //   child: BlocListener<CoursesBloc, CoursesState>(
+              //     listener: (context, state){
+              //       if ( state is CoursesLoadedState && state.message != null ) {
+              //       }
+              //       else if ( state is CoursesLoadFailureState ) {
+              //         Scaffold.of ( context ).showSnackBar ( const SnackBar (
+              //           content: Text ( "Could not load courses  at this time" ) , ) );
+              //       }
+              //     },
+              //     child: BlocBuilder<CoursesBloc, CoursesState>(
+              //       builder: (context, state) {
+              //         if ( state is CoursesInitialState ) {
+              //           return buildLoading ( );
+              //         } else if ( state is CoursesLoadingState ) {
+              //           return buildLoading ( );
+              //         } else if ( state is CoursesLoadedState ) {
+              //           return
+              //             ListView.builder(
+              //                 shrinkWrap: true,
+              //                 itemCount: state.courses!.length,
+              //                 scrollDirection: Axis.horizontal,
+              //                 itemBuilder: (ctx,pos){
+              //                   return InkWell(
+              //                       onTap: (){
+              //                         Navigator.push(context, MaterialPageRoute(builder: (context)=>
+              //                             IndividualCourseScreen(courses: state.courses![pos],)));
+              //                       },
+              //                       child: OpenTrainingCard(courseModel:state.courses![pos]));
+              //                 });
+              //         } else if ( state is CoursesLoadFailureState ) {
+              //           return buildErrorUi ("Oops! Could not load courses at this time" );
+              //         }
+              //         else {
+              //           return buildErrorUi ( "Something went wrong!" );
+              //         }
+              //       },
+              //     ),
+              //   ),
+              // ),
+ 
 
             ],
           ),
