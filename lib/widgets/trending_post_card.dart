@@ -146,7 +146,7 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
                                        title: Text('Share'),
                                        trailing: Icon(Icons.share),
                                        onTap: (){
-                                         Share.share(widget.trendingPostModel!.description!, subject: widget.trendingPostModel!.caption);
+                                         Share.share(widget.trendingPostModel!.description!+"\n -from the YAH app , download it here to learn more: https://greatlakesyouth.africa/en/app/", subject: widget.trendingPostModel!.caption);
 
                                        },
                                      ),

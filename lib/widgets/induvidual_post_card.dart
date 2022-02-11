@@ -179,7 +179,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                                               title: Text('Share'),
                                               trailing: Icon(Icons.share),
                                               onTap: (){
-                                                Share.share(widget.induvidualCommentModel!.caption!);
+                                                Share.share(widget.induvidualCommentModel!.caption!+"\n -from the YAH app , download it here to learn more: https://greatlakesyouth.africa/en/app/");
 
                                               },
                                             ),
