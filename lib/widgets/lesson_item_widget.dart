@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/screens/lesson_content.dart';
 import 'package:youth_action_handbook/services/database.dart';
 
 class LessonItemCard extends StatefulWidget {
@@ -73,89 +74,10 @@ class _LessonItemCardState extends State<LessonItemCard> {
     return GestureDetector(
       onTap: (){
         dbservice!.addLessonForUser(widget.lesson!,widget.courseId!,widget.courseName!);
-        showModalBottomSheet(
-            context: context,
-            isScrollControlled: false,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            backgroundColor: Colors.white,
-            builder: (context) {
-              return  StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState )
-                 { return  FractionallySizedBox(
-                  heightFactor: 0.95,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent
-                        ),
-                        child:Center(child: Text(widget.lesson!.title!,style:TextStyle(fontSize: 15,fontWeight:FontWeight.bold,color: AppColors.colorBluePrimary)))
-                      ),
-                      Stack(
-                        children: [
-                          widget.lesson!.video!.isNotEmpty? Center(
-                            child: _controller!.value.isInitialized
-                                ? AspectRatio(
-                              aspectRatio: _controller!.value.aspectRatio,
-                              child: VideoPlayer(_controller!),
-                            )
-                                : Container(),
-                          ):Container(),
-                          Positioned.fill(
-                            child: Align(
-                                alignment: Alignment.center,
-                                child:  InkWell(
-                                    onTap:(){
-                                      setState(() {
-                                        _controller!.value.isPlaying
-                                            ? _controller!.pause()
-                                            : _controller!.play();
-                                      });
-                                    },
-                                    child: Visibility(
-                                        visible:widget.lesson!.video!.isNotEmpty,
-                                        child:widget.lesson!.video!.isNotEmpty? Center(child:_controller!.value.isPlaying?Icon(Icons.pause_circle_filled_sharp,color:Colors.white,size: 60,): Icon(Icons.play_circle_fill,color:Colors.white,size: 60,)):Container())),
-                            )
-                          ),
-
-                          Positioned.fill(
-                            child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child:  Container(
-                                  child: widget.lesson!.video!.isNotEmpty? Container(
-                                    child: _controller!.value.isInitialized?
-
-                                    VideoProgressIndicator(_controller!, allowScrubbing: true,colors: VideoProgressColors(
-                                        backgroundColor: Colors.grey.shade200,
-                                        bufferedColor: Colors.grey,
-                                        playedColor: AppColors.colorGreenPrimary
-                                    ) ,
-                                    ):Container(),
-                                  ):Container(),
-                                )
-                            ),
-                          ),
-
-                        ],
-                      ),
-
-                      Expanded(
-                        child: Container(
-                            height: double.infinity,
-                            child: Html(
-                                data: widget.lesson!.lesson,
-                                // tagsList: Html.tags..remove(Platform.isAndroid ? "iframe" : "video")
-                            )
-                        ),
-                      ),
-                    ],
-                  ),
-                );}
-              );
-            });
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>  LessonContent(lesson: widget.lesson,)),
+        );
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 20),
