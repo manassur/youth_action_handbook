@@ -1,0 +1,10 @@
+{
+    "hello": "Hellozz",
+    "@hello": {
+      "description": "The conventional newborn programmer greeting"
+    },
+    "goodMorning": "Good Morning",
+    "@GoodMorning": {
+      "description": "good morning front page text"
+    }
+}

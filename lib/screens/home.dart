@@ -24,6 +24,7 @@ import 'package:youth_action_handbook/widgets/open_training_card.dart';
 import 'package:youth_action_handbook/widgets/popular_items_card.dart';
 import 'package:youth_action_handbook/widgets/topic_card.dart';
 import 'package:youth_action_handbook/widgets/updates_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'search.dart';
 import 'topic_posts.dart';
@@ -104,7 +105,8 @@ class _HomeFragmentState extends State<HomeFragment> {
             children: [
               RichText(
                 text: TextSpan(
-                    text: 'Good Morning, ',
+                    // text: 'Good Morning, ',
+                    text: AppLocalizations.of(context)!.hello + ", ",
                     style: const TextStyle(
                         color: Colors.black, fontSize: 25,fontWeight: FontWeight.w900),
                     children: <TextSpan>[
@@ -115,6 +117,9 @@ class _HomeFragmentState extends State<HomeFragment> {
                     ]
                 ),
               ),
+              const SizedBox(height: 10,),
+              Text("My Locale is: " + Localizations.localeOf(context).toString() ,style: TextStyle(fontWeight: FontWeight.w100,fontSize: 16,color: Colors.black),),
+              
               const SizedBox(height: 10,),
               const Text("it's a great day to learn something new.",style: TextStyle(fontWeight: FontWeight.w100,fontSize: 12,color: Colors.black87),),
               const SizedBox(height: 25,),
@@ -285,8 +290,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                   if ( state is NewsLoadedState && state.message != null ) {
                   }
                   else if ( state is NewsLoadFailureState ) {
-                    Scaffold.of ( context ).showSnackBar ( const SnackBar (
-                      content: Text ( "Could not load news update at this time" )) );
+                    yahSnackBar(context, "Could not load news update at this time");
+                    
                   }
                 },
                 child: BlocBuilder<NewsBloc, NewsState>(

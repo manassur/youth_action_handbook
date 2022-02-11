@@ -1,8 +1,10 @@
+import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/repository/language_provider.dart';
 import 'package:youth_action_handbook/screens/dashboard.dart';
@@ -16,6 +18,8 @@ import 'package:youth_action_handbook/screens/edit_profile.dart';
 import 'package:youth_action_handbook/screens/sign_up.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/services/database.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +56,8 @@ class MyApp extends StatelessWidget {
 class AppWrapper extends StatelessWidget {
   AppWrapper({Key? key}) : super(key: key);
 
+  
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -66,11 +72,17 @@ class AppWrapper extends StatelessWidget {
               title: 'Youth Action Handbook',
               debugShowCheckedModeBanner: false,
               // supportedLocales: AppTexts.supportedLocales,
-              // localizationsDelegates: const [
-              //   CountryLocalizations.delegate,
-              // ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                CountryLocalizations .delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              locale: Locale("fr"),
+              // locale: Locale("fr"),
               theme: ThemeData(
-
                 primarySwatch: Colors.blue,
                 textTheme: GoogleFonts.latoTextTheme()
               ),
