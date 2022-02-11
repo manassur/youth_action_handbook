@@ -20,31 +20,79 @@ class AboutFragment extends StatefulWidget {
 
 class _AboutFragmentState extends State<AboutFragment> {
 
-  //PROJECT COLUMN
+   //OTHER COLUMN
+  List otherItems = [
+    {
+      "leading_icon": Icons.link,
+      "title": "Impressum",
+      "trailing_icon": Icons.keyboard_arrow_right_sharp,
+    },
+    {
+      "leading_icon": Icons.check_circle,
+      "title": "Privacy Policy",
+      "trailing_icon": Icons.keyboard_arrow_right_sharp,
+    },
+    {
+      "leading_icon": Icons.info_outline,
+      "title": "Terms & Conditions",
+      "trailing_icon": Icons.keyboard_arrow_right_sharp,
+    },
+    {
+      "leading_icon": Icons.login_outlined,
+      "title": "Sign Out",
+      "trailing_icon": Icons.keyboard_arrow_right_sharp,
+    },
+  ];
+
+
+  @override
+  Widget build(BuildContext context) {
+    final appUser = Provider.of<AppUser?>(context);
+    String locale = Localizations.localeOf(context).toString().split("_")[0];
+    String about = (locale == 'fr')? '/about-1':'/about';
+
+    //SETTINGS DATA
+    List settingItems = [
+      {
+        "leading_icon": Icons.person_outline,
+        "title": 'Edit Profile',
+        "trailing_icon": Icons.chevron_right,
+        "page": RouteNames.editProfile,
+      },
+
+      {
+        "leading_icon": Icons.email_outlined,
+        "title": 'Edit Login Information',
+        "trailing_icon": Icons.chevron_right,
+        "page": RouteNames.editLogin,
+      },
+    ];
+
+  //PROJECT DATA
   List projectItems = [
     {
       "leading_icon": Icons.person_outline,
       "title": "About the project",
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
-      "page": "https://greatlakesyouth.africa/en/about/",
+      "page": "https://greatlakesyouth.africa/"+locale+about+"/",
     },
     {
       "leading_icon": Icons.people,
       "title": "Team",
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
-      "page": "https://greatlakesyouth.africa/en/about/team/",
+      "page": "https://greatlakesyouth.africa/"+locale+about+"/team/",
     },
     {
       "leading_icon": Icons.check_circle,
       "title": "Partners",
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
-      "page": "https://greatlakesyouth.africa/en/about/partners/",
+      "page": "https://greatlakesyouth.africa/"+locale+about+"/partners/",
     },
     {
       "leading_icon": Icons.add_business,
       "title": "Youth Initiatives",
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
-      "page": "https://greatlakesyouth.africa/en/initiatives/",
+      "page": "https://greatlakesyouth.africa/"+locale+"/initiatives/",
     },
     {
       "leading_icon": Icons.info_outline,
@@ -55,7 +103,7 @@ class _AboutFragmentState extends State<AboutFragment> {
 
   ];
 
-  //SOCIAL COLUMN
+  //SOCIAL DATA
   List socialItems = [
     {
       "leading_icon": 'assets/social/fb.svg',
@@ -82,51 +130,7 @@ class _AboutFragmentState extends State<AboutFragment> {
       "page": "https://www.instagram.com/4youthdialogue/",
     }
   ];
-  //OTHER COLUMN
-  List otherItems = [
-    {
-      "leading_icon": Icons.link,
-      "title": "Impressum",
-      "trailing_icon": Icons.keyboard_arrow_right_sharp,
-    },
-    {
-      "leading_icon": Icons.check_circle,
-      "title": "Privacy Policy",
-      "trailing_icon": Icons.keyboard_arrow_right_sharp,
-    },
-    {
-      "leading_icon": Icons.info_outline,
-      "title": "Terms & Conditions",
-      "trailing_icon": Icons.keyboard_arrow_right_sharp,
-    },
-    {
-      "leading_icon": Icons.login_outlined,
-      "title": "Sign Out",
-      "trailing_icon": Icons.keyboard_arrow_right_sharp,
-    },
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final appUser = Provider.of<AppUser?>(context);
-
-      //SETTINGS COLUMN
-    List settingItems = [
-      {
-        "leading_icon": Icons.person_outline,
-        "title": 'Edit Profile',
-        "trailing_icon": Icons.chevron_right,
-        "page": RouteNames.editProfile,
-      },
-
-      {
-        "leading_icon": Icons.email_outlined,
-        "title": 'Edit Login Information',
-        "trailing_icon": Icons.chevron_right,
-        "page": RouteNames.editLogin,
-      },
-    ];
-
+ 
   
     return Scaffold(
       appBar: AppBar(
