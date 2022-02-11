@@ -80,7 +80,7 @@ class AppWrapper extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              locale: Locale("fr"),
+              // locale: Locale("fr"),
               // locale: Locale("fr"),
               theme: ThemeData(
                 primarySwatch: Colors.blue,
