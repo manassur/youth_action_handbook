@@ -23,7 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String email = '',
       name = '',
       organisation = '',
-      language = 'en',
+      language = '',
       country = '',
       password = '';
   int viewIndex = 0;
@@ -64,6 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    language = Localizations.localeOf(context).toString().split("_")[0];
     MediaQueryData size;
     size = MediaQuery.of(context);
     return Scaffold(
