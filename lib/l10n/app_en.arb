@@ -1,5 +1,5 @@
 {
-    "hello": "Hellozz",
+    "hello": "Hello",
     "@hello": {
       "description": "The conventional newborn programmer greeting"
     },

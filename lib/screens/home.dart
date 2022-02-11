@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/bloc/courses/courses_bloc.dart';
 import 'package:youth_action_handbook/bloc/courses/courses_event.dart';
@@ -10,6 +12,7 @@ import 'package:youth_action_handbook/bloc/news/news_event.dart';
 import 'package:youth_action_handbook/bloc/news/news_state.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/data/app_texts.dart';
+import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/course_with_language_response.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
@@ -117,9 +120,6 @@ class _HomeFragmentState extends State<HomeFragment> {
                     ]
                 ),
               ),
-              const SizedBox(height: 10,),
-              Text("My Locale is: " + Localizations.localeOf(context).toString() ,style: TextStyle(fontWeight: FontWeight.w100,fontSize: 16,color: Colors.black),),
-              
               const SizedBox(height: 10,),
               const Text("it's a great day to learn something new.",style: TextStyle(fontWeight: FontWeight.w100,fontSize: 12,color: Colors.black87),),
               const SizedBox(height: 25,),

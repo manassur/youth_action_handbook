@@ -77,7 +77,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       {
         "leading_icon": Icons.language,
         "value": appUser.language.isEmpty? 'en' : appUser.language,
-        "display_value": (appUser.language == 'FR')? AppTexts.french : AppTexts.english,
+        "display_value": (appUser.language == 'fr')? AppTexts.french : AppTexts.english,
         "leading": "Language",
         "name": "language",
         "trailing_icon": Icons.edit,
@@ -153,15 +153,42 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 contentPadding: const EdgeInsets.all(12),
                 children: [
 
-                    if(chosenIndex==2 || chosenIndex==3)
+                      if(chosenIndex==2)
+                        DropDownEditWidget(
+                          title: item['leading'],
+                          icon: item['leading_icon'],
+                          initialValue: Localizations.localeOf(context).toString() ,
+                          values: 
+                          const [
+                            DropdownMenuItem(child: Text(AppTexts.english),value: 'en',),
+                            DropdownMenuItem(child: Text(AppTexts.french),value: 'fr',),],
+
+                          setValue:  (index,value) async{
+                            try{
+                              loading = true;
+                              setState(() {
+                                AppWrapper.setLocale(context, Locale(value.toString(), ""));
+                              });
+                              message = await DatabaseService(uid: appUser.uid).updateField(item['name'], value);
+                            }on FirebaseException catch(e){
+                              message = e.message ?? 'An Error Occured';
+                            }catch (e){
+                              message = e.toString();
+                            }
+                            setState((){
+                              // message = message;
+                              yahSnackBar(context, message);
+                              Navigator.pop(context);
+                              loading = false;
+                            });
+                          }),
+
+                    if(chosenIndex==3)
                         DropDownEditWidget(
                           title: item['leading'],
                           icon: item['leading_icon'],
                           initialValue: item['value'] ,
                           values: 
-                          (chosenIndex == 2) ? const [
-                            DropdownMenuItem(child: Text(AppTexts.english),value: 'en',),
-                            DropdownMenuItem(child: Text(AppTexts.french),value: 'FR',),] :
                           const [
                             DropdownMenuItem(child: Text(AppTexts.female),value:'F',),
                             DropdownMenuItem(child: Text(AppTexts.male),value:'M',),

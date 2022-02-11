@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
+import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/repository/language_provider.dart';
 
 class LanguagePicker extends StatefulWidget {
@@ -9,6 +10,7 @@ class LanguagePicker extends StatefulWidget {
   @override
   State<LanguagePicker> createState() => _LanguagePickerState();
 }
+
 
 class _LanguagePickerState extends State<LanguagePicker> {
   @override
@@ -27,6 +29,9 @@ class _LanguagePickerState extends State<LanguagePicker> {
             GestureDetector(
                 onTap: (){
                   data.changeLanguage('en');
+                  setState(() {
+                          AppWrapper.setLocale(context, Locale('en', ""));
+                        });
                   Navigator.of(context).pop();
                 },
                 child: Text('English',style: TextStyle(fontSize: 18),)),
@@ -34,6 +39,9 @@ class _LanguagePickerState extends State<LanguagePicker> {
         GestureDetector(
           onTap: (){
             data.changeLanguage('fr');
+            setState(() {
+                          AppWrapper.setLocale(context, Locale('fr', ""));
+                        });
             Navigator.of(context).pop();
           },child: Text('French',style: TextStyle(fontSize: 18),)),
 

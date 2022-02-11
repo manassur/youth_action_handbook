@@ -3,7 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/repository/language_provider.dart';
@@ -53,12 +56,59 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AppWrapper extends StatelessWidget {
+class AppWrapper extends StatefulWidget {
   AppWrapper({Key? key}) : super(key: key);
 
-  
+   /*
+  To Change Locale of App
+   */
+  static void setLocale(BuildContext context, Locale newLocale) async {
+    _AppWrapperState? state = context.findAncestorStateOfType<_AppWrapperState>();
 
-  // This widget is the root of your application.
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setString('languageCode', newLocale.languageCode);
+
+    state?.setState(() {
+      state._locale = newLocale;
+    });
+    
+  }
+
+  @override
+  State<AppWrapper> createState() => _AppWrapperState();
+}
+
+class _AppWrapperState extends State<AppWrapper> {
+
+  Locale _locale = Locale('en');
+
+  @override
+  void initState() {
+    super.initState();
+    this._fetchLocale().then((locale) {
+      setState(() {
+        this._locale = locale;
+      });
+    });
+  }
+
+
+  /*
+  To get local from SharedPreferences if exists
+   */
+  Future<Locale> _fetchLocale() async {
+    var prefs = await SharedPreferences.getInstance();
+    //get device locale to use as default if there is none, but only if it is french or enlgish
+    // String deviceLocale = Localizations.localeOf(context).languageCode;
+    findSystemLocale();
+    String deviceLocale= Intl.systemLocale.split("_")[0];
+    deviceLocale = (deviceLocale == 'en' || deviceLocale == 'fr')? deviceLocale : 'en';
+
+    String languageCode = prefs.getString('languageCode') ?? (deviceLocale);
+
+    return Locale(languageCode);
+  }
+
   @override
   Widget build(BuildContext context) {
     User? user = Provider.of<User?>(context);
@@ -80,7 +130,7 @@ class AppWrapper extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              // locale: Locale("fr"),
+              locale: _locale,
               // locale: Locale("fr"),
               theme: ThemeData(
                 primarySwatch: Colors.blue,
@@ -117,6 +167,5 @@ class RouteNames{
   static const editLogin = '/EditLogin'; 
   static const launch = '/launch';
   static const partners = '/partners';
-
 
 }
