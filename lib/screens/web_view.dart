@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -23,6 +24,11 @@ class _WebViewScreenState extends State<WebViewScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.colorBluePrimary,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: AppColors.colorBluePrimary,
+        ), 
         elevation: 0,
         title:  RichText(
           text: TextSpan(

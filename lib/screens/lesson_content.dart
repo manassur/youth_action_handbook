@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
@@ -61,25 +62,42 @@ class _LessonContentState extends State<LessonContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.colorBluePrimary,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: AppColors.colorBluePrimary,
+        ), 
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
           onPressed: (){
             Navigator.pop(context);
           },
-            icon: Icon(Icons.arrow_back_ios,color: Colors.black87,)),
-        title: Text('Lesson Content',style: TextStyle(color: Colors.black87),),
+          icon: Icon(Icons.arrow_back_ios,color: AppColors.colorYellow,)
+        ),
+        title:  RichText(
+          text: TextSpan(
+              text: 'Lesson Content',
+              style: TextStyle(
+                  color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
+              children: const <TextSpan>[
+
+              ]
+          ),
+        ),
+        
       ),
       body: Column(
         children: [
           Container(
-              height: 50,
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              // height: 50,
+              padding: EdgeInsets.symmetric(vertical:10,horizontal: 20),
               decoration: BoxDecoration(
                   color: Colors.transparent
               ),
-              child:Center(child: Text(widget.lesson!.title!,style:TextStyle(fontSize: 15,fontWeight:FontWeight.bold,color: AppColors.colorBluePrimary)))
+              child:Center(child: Text(widget.lesson!.title!,style:TextStyle(fontSize: 18,fontWeight:FontWeight.bold,color: AppColors.colorBluePrimary)))
+              // child:Center(child: Text("widget.lesson!.title! widget.lesson!.title! widget.lesson!.title! widget.lesson!.title! widget.lesson!.title! widget.lesson! .title dvsdv dfdfb dfb dfb dfb dfb dfb dfb dfb dfb dfbb !widget.lesson!.title! widget.lesson!.title! ",style:TextStyle(fontSize: 15,fontWeight:FontWeight.bold,color: AppColors.colorBluePrimary)))
           ),
           Stack(
             children: [
@@ -131,11 +149,10 @@ class _LessonContentState extends State<LessonContent> {
 
           Expanded(
             child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: SingleChildScrollView(
                   child: Html(
                     data: widget.lesson!.lesson,
-
-                    // tagsList: Html.tags..remove(Platform.isAndroid ? "iframe" : "video")
                   ),
                 )
             ),

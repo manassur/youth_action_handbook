@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
@@ -82,6 +83,11 @@ class _ForumFragmentState extends State<ForumFragment> {
         headerSliverBuilder: (context, value) {
           return [
             SliverAppBar(
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarBrightness: Brightness.light,
+                  statusBarIconBrightness: Brightness.light,
+          statusBarColor: AppColors.colorBluePrimary,
+                ), 
                 floating: true,
                 pinned: true,
                 backgroundColor: AppColors.colorBluePrimary,

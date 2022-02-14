@@ -44,10 +44,11 @@ class AuthService {
       // Once signed in, return the UserCredential
       UserCredential results = await _auth.signInWithCredential(credential);
       User user = results.user as User;
+      
       if (results.additionalUserInfo!.isNewUser) {
         //create new doc for new user
         await DatabaseService(uid: user.uid)
-            .createUserData(user.displayName ?? 'Anon.', '', 'en', 'UG','','','','');
+            .createUserData(user.displayName ??  'Anon.', '', 'en', 'UG','','','',googleUser.photoUrl?? '');
       }
 
       // return _appUserFromUser(user);
@@ -181,21 +182,32 @@ class AuthService {
   }
 
   //change password
-   changePassword(String currentPassword, String newPassword) {
+   Future changePassword(String currentPassword, String newPassword) async{
     String message = '';
     final user = FirebaseAuth.instance.currentUser!;
     final cred = EmailAuthProvider.credential(
         email: user.email!, password: currentPassword);
 
-    user.reauthenticateWithCredential(cred).then((value) {
-      user.updatePassword(newPassword).then((_) {
+   await user.reauthenticateWithCredential(cred).then((value) async{
+      print('reauthentication worked');
+      await user.updatePassword(newPassword).then((_) {
         message = 'Successfully updated password';
       }).catchError((error) {
         print(error);
-        message = 'Sorry, an error occured. Please Try Again';
+        if(error is FirebaseException){
+          message = error.message ?? 'Sorry, an error occured. Please Try Again';
+        }else{
+          message = 'Sorry, an error occured. Please Try Again';
+        }
       });
     }).catchError((error) {
-        message= 'sorry, an error occured';
+      print('reauthentication error caught');
+      message = 'reauthentication error caught';
+        if(error is FirebaseException){
+          message = 'reauth error: ' +( error.message ?? 'Sorry, an error occured. Please Try Again');
+        }else{
+          message = 'Sorry, an error occured. Please Try Again';
+        }
         print(error);
     });
     
@@ -213,6 +225,40 @@ class AuthService {
       await user.updateEmail(newEmail).then((_) {
         message = 'Successfully updated Email';
         print('email updated. New email :'+user.email!);
+      }).catchError((error) {
+        print(error);
+        if(error is FirebaseException){
+          message = error.message ?? 'Sorry, an error occured. Please Try Again';
+        }else{
+          message = 'Sorry, an error occured. Please Try Again';
+        }
+      });
+    }).catchError((error) {
+      print(error);
+         if(error is FirebaseException){
+          message = error.message ?? 'Sorry, an error occured. Please Try Again';
+        }else{
+          message = 'Sorry, an error occured. Please Try Again';
+        }
+    });
+    
+    return message;
+    }
+
+
+  
+  //Verify Email Feb 2022 Akbr
+  Future verifyEmail(String currentPassword) async {
+    String message = '';
+    final user = FirebaseAuth.instance.currentUser!;
+    final cred = EmailAuthProvider.credential(
+        email: user.email!, password: currentPassword);
+
+    await user.reauthenticateWithCredential(cred).then((value) async {
+      // await user.updateEmail(newEmail).then((_) {
+      await user.sendEmailVerification().then((_) {
+        message = 'Please check your email for an email with a verification link';
+        print('email verified :'+user.email!);
       }).catchError((error) {
         print(error);
         if(error is FirebaseException){
@@ -251,7 +297,7 @@ class AuthService {
 //sign in with phone functions
 
   Future<void> verifyPhoneNumber(
-      String phoneNumber, BuildContext context, Function setData) async {
+    String phoneNumber, BuildContext context, Function setData) async {
     PhoneVerificationCompleted verificationCompleted =
         (PhoneAuthCredential phoneAuthCredential) async {
       showSnackBar(context, "Verification Completed");
@@ -283,7 +329,7 @@ class AuthService {
   }
 
   Future<void> signInwithPhoneNumber(
-      String verificationId, String smsCode, BuildContext context) async {
+    String verificationId, String smsCode, BuildContext context) async {
     try {
       AuthCredential credential = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: smsCode);

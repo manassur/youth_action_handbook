@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
@@ -44,6 +45,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
       {
         "leading_icon": Icons.mark_email_read_outlined,
         "value": appUser.emailVerified,
+        // "display_value": (appUser.emailVerified?? true)? "Yes" : "No. Verify now?",
         "display_value": appUser.emailVerified.toString(),
         "leading": "Email Verified?",
         "name": "emailVerified",
@@ -52,7 +54,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
       },
       {
         "leading_icon": Icons.lock_outline,
-        "value": '      ',
+        "value": '',
         "display_value": '******',
         "leading": "Password",
         "name": "password",
@@ -74,65 +76,32 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
                 contentPadding: const EdgeInsets.all(12),
                 children: loading? [const Loading()]: [
 
-                    if(chosenIndex==1)
-                        DropDownEditWidget(
-                          title: item['leading'],
-                          icon: item['leading_icon'],
-                          initialValue: item['value'] ,
-                          values: 
-                          (chosenIndex == 2) ? const [
-                            DropdownMenuItem(child: Text(AppTexts.english),value: 'en',),
-                            DropdownMenuItem(child: Text(AppTexts.french),value: 'FR',),] :
-                          const [
-                            DropdownMenuItem(child: Text(AppTexts.female),value:'F',),
-                            DropdownMenuItem(child: Text(AppTexts.male),value:'M',),
-                            DropdownMenuItem(child: Text(AppTexts.other),value:'O',)
-
-                          ],
-
-                          setValue:  (index,value) async{
-                            try{
-                              loading = true;
-                              message = await DatabaseService(uid: appUser.uid).updateField(item['name'], value);
-                            }on FirebaseException catch(e){
-                              message = e.message ?? 'An Error Occured';
-                            }catch (e){
-                              message = e.toString();
-                            }
-                            setState((){
-                              // message = message;
-                              yahSnackBar(context, message);
-                              Navigator.pop(context);
-                              loading = false;
-                            });
-                          }),
-
-
-                    if(chosenIndex == 4)
-                      CountryWidget(initialValue: item['value'], setValue:  (index,value) async{
-                                      try{
-                                        loading = true;
-                                        message = await DatabaseService(uid: appUser.uid).updateField(item['name'], value);
-                                      }on FirebaseException catch(e){
-                                        message = e.message ?? 'An Error Occured';
-                                      }catch (e){
-                                        message = e.toString();
-                                      }
-                                      setState((){
-                                        // message = message;
-                                        yahSnackBar(context, message);
-                                        Navigator.pop(context);
-                                        loading = false;
-                                      });
-                                    }, size: size),
-              
-                  
-                    if(chosenIndex ==0)
-                    LoginTextEditWidget(title: item['leading'],icon:item['leading_icon'], initialValue: item['value'] ,setValue:  (value,currrentEmail) async{
+                    if(chosenIndex==1) //email verification
+                      LoginTextEditWidget(title: item['leading'],icon:item['leading_icon'], initialValue: appUser.email?? '' ,setValue:  (password,value) async{
                       final AuthService _auth = AuthService();
                       try{
                         loading = true;
-                        message = await _auth.changeEmail(currrentEmail, value);
+                        message = await _auth.verifyEmail(password);
+                        
+                      }on FirebaseException catch(e){
+                        message = e.message ?? 'An Error Occured';
+                      }catch (e){
+                        message = e.toString();
+                      }
+                      setState((){
+                        message = message;
+                        yahSnackBar(context, message);
+                        Navigator.pop(context);
+                        loading = false;
+                      });
+                    }),
+
+                    if(chosenIndex ==0) //email
+                    LoginTextEditWidget(title: item['leading'],icon:item['leading_icon'], initialValue: item['value'] ,setValue:  (password,currrentEmail) async{
+                      final AuthService _auth = AuthService();
+                      try{
+                        loading = true;
+                        message = await _auth.changeEmail(password, currrentEmail);
                         
                       }on FirebaseException catch(e){
                         message = e.message ?? 'An Error Occured';
@@ -147,12 +116,12 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
                       });
                     }),
                     
-                    if(chosenIndex ==3)
-                    LoginTextEditWidget(title: item['leading'],icon:item['leading_icon'], initialValue: item['value'] ,setValue:  (value,currrentPassword) async{
+                    if(chosenIndex ==2) //password
+                    LoginTextEditWidget(title: item['leading'],icon:item['leading_icon'], initialValue: item['value'] ,setValue:  (password,newPassword) async{
                       final AuthService _auth = AuthService();
                       try{
                         loading = true;
-                        message = await _auth.changePassword(currrentPassword, value);
+                        message = await _auth.changePassword(password, newPassword);
                         
                       }on FirebaseException catch(e){
                         message = e.message ?? 'An Error Occured';
@@ -178,6 +147,11 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.colorBluePrimary,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: AppColors.colorBluePrimary,
+        ), 
         elevation: 0,
         title:  RichText(
           text: TextSpan(
@@ -296,6 +270,7 @@ class _LoginTextEditWidgetState extends State<LoginTextEditWidget> {
                     padding: const EdgeInsets.all(5),
                     child: TextFormField(
                         controller: nameController,
+                        readOnly: (widget.icon == Icons.mark_email_read_outlined)? true : false,
                         obscureText: (widget.title == 'Password')? true :false,
                         style: const TextStyle(
                             color: Colors.white,
@@ -317,7 +292,7 @@ class _LoginTextEditWidgetState extends State<LoginTextEditWidget> {
             const SizedBox(
               height: 20,
             ),
-            const Text(AppTexts.enterCurrentPassword),
+            (widget.icon == Icons.mark_email_read_outlined)? Text('Enter password and submit to receive an email with a verification link'):const Text(AppTexts.enterCurrentPassword),
             Container(
                 decoration: BoxDecoration(
                   color: AppColors.colorBlueSecondary,
@@ -361,7 +336,7 @@ class _LoginTextEditWidgetState extends State<LoginTextEditWidget> {
                 yahSnackBar(context, 'Fields cannot be blank');
               } else {
                 setState(() {
-                  widget.setValue(nameController.text, passwordController.text);
+                  widget.setValue(passwordController.text, nameController.text);
                 });
               }
             },
@@ -378,213 +353,4 @@ class _LoginTextEditWidgetState extends State<LoginTextEditWidget> {
     );
   }
 }
-
-
-class DropDownEditWidget extends StatefulWidget {
-  final Function setValue;
-  final String initialValue;
-  final String title;
-  final IconData icon;
-  final List<DropdownMenuItem<String>>? values;
-
-  DropDownEditWidget({
-    Key? key,
-    required this.setValue,
-    required this.initialValue,
-    required this.values,
-    required this.title,
-    required this.icon,
-  }) : super(key: key);
-
-
-  @override
-  State<DropDownEditWidget> createState() => _DropDownEditWidgetState();
-}
-
-class _DropDownEditWidgetState extends State<DropDownEditWidget> {
-  final nameController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    String _currentValue = widget.initialValue;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Column(
-          children: [
-           
-            const SizedBox(
-              height: 20,
-            ),
-           
-            Container(
-                decoration: BoxDecoration(
-                  color: AppColors.colorBlueSecondary,
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: DropdownButtonFormField(
-                      value: _currentValue,
-                      onChanged: (val2)=> _currentValue = val2 as String,
-                      items: widget.values,
-                      dropdownColor: AppColors.colorBlueSecondary,
-                      style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            ),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            widget.icon,
-                            color: AppColors.colorGreenPrimary,
-                          ),
-                          border: InputBorder.none,
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          hintStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w100),
-                        )
-                    )
-                  )
-        ),
-          ]),
-        const SizedBox(
-          height: 30,
-        ),
-        
-        SizedBox(
-          width: 200.0,
-          height: 50,
-          child: ElevatedButton(
-            child: const Text(AppTexts.save),
-            onPressed: () {
-              if (_currentValue == null || _currentValue == '') {
-                yahSnackBar(context, 'Field cannot be blank');
-              } else {
-                setState(() {
-                  widget.setValue(0, _currentValue);
-                });
-              }
-            },
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    AppColors.colorGreenPrimary),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ))),
-          ),
-        ),
-
-      ],
-    );
-  }
-}
-
-
-
-class CountryWidget extends StatefulWidget {
-  final Function setValue;
-  final String initialValue;
-  const CountryWidget({
-    Key? key,
-    required this.size,
-    required this.setValue,
-    required this.initialValue,
-  }) : super(key: key);
-
-  final MediaQueryData size;
-
-  @override
-  State<CountryWidget> createState() => _CountryWidgetState();
-}
-
-class _CountryWidgetState extends State<CountryWidget> {
-  String country = '';
-
-
-  void _onCountryChange(CountryCode countryCode) {
-    country = countryCode.code.toString();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    country = widget.initialValue;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: AppColors.colorBlueSecondary,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 5,
-                          child: CountryCodePicker(
-                            onChanged: _onCountryChange,
-                            // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                            initialSelection: country,
-                            favorite: const ['UG', 'RW', 'CD'],
-                            textStyle: const TextStyle(color: Colors.white),
-                            // optional. Shows only country name and flag
-                            showCountryOnly: true,
-                            // optional. Shows only country name and flag when popup is closed.
-                            showOnlyCountryWhenClosed: true,
-                            // optional. aligns the flag and the Text left
-                            alignLeft: true,
-                            dialogSize: Size(widget.size.size.width / 1.2,
-                                widget.size.size.height / 1.2),
-                          ),
-                        ),
-                        const Expanded(
-                            flex: 2,
-                            child: Icon(Icons.arrow_drop_down,
-                                color: Colors.white)),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        SizedBox(
-          width: 200.0,
-          height: 50,
-          child: ElevatedButton(
-            child: const Text(AppTexts.save),
-            onPressed: () {
-              widget.setValue(2, country);
-            },
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    AppColors.colorGreenPrimary),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ))),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -80,6 +81,11 @@ class _SearchState extends State<Search> {
       backgroundColor: Colors.white,
       appBar: AppBar(
          backgroundColor: Colors.white,
+         systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark,
+                statusBarColor: Colors.white,
+          ), 
           elevation: 0,
           title: Text('Search',style: TextStyle(color: Colors.black),),
           leading: IconButton(

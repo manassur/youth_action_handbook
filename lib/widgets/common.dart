@@ -69,6 +69,9 @@ class MenuForAppBar extends StatelessWidget {
           Navigator.pushNamed(context, RouteNames.editProfile);
           break;
         case 1:
+          Navigator.pushNamed(context, RouteNames.editLogin);
+          break;
+        case 2:
           Navigator.pushNamedAndRemoveUntil(
               context, RouteNames.initialScreen, (route) => false);
           await _auth.signOut(context);
@@ -82,7 +85,8 @@ class MenuForAppBar extends StatelessWidget {
         child:   CircleAvatar(
           backgroundColor: Colors.grey,
           radius: 20,
-          backgroundImage:  NetworkImage(appUser!.profilePicture??''),
+          // backgroundImage:  NetworkImage(appUser!.profilePicture??''),
+          backgroundImage:  CachedNetworkImageProvider((appUser!.profilePicture == null || appUser.profilePicture == '')?'http://via.placeholder.com/350x150':appUser.profilePicture!),
         ),
         color: Colors.indigo,
         onSelected: (item) => onSelected(context, item),
@@ -91,7 +95,7 @@ class MenuForAppBar extends StatelessWidget {
             value: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children:  [
                 Text(
                   'Edit Profile',
                   style: TextStyle(color: Colors.white),
@@ -107,6 +111,25 @@ class MenuForAppBar extends StatelessWidget {
           const PopupMenuDivider(),
           PopupMenuItem<int>(
             value: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:  [
+                Text(
+                  'Edit Login Info',
+                  style: TextStyle(color: Colors.white),
+                ),
+                // CircleAvatar(
+                //   backgroundColor: Colors.black87,
+                //   radius: 20,
+                //   backgroundImage:  NetworkImage(appUser!.photoURL!),
+                // )
+              ],
+            ),
+          ),
+          const PopupMenuDivider(),
+          
+          PopupMenuItem<int>(
+            value: 2,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [

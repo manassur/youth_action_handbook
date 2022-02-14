@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
@@ -135,6 +136,11 @@ class _AboutFragmentState extends State<AboutFragment> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.colorBluePrimary,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: AppColors.colorBluePrimary,
+        ), 
         elevation: 0,
         leading: IconButton(
           icon: SvgPicture.asset('assets/menu_alt_03.svg',color: Colors.white,), // set your color here

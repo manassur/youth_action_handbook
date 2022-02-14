@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -81,6 +82,11 @@ class _HomeFragmentState extends State<HomeFragment> {
       backgroundColor: Colors.white,
       appBar: AppBar(
          backgroundColor: Colors.white,
+         systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark,
+                statusBarColor: Colors.white,
+          ), 
           elevation: 0,
           leading: IconButton(
           icon: SvgPicture.asset('assets/menu_alt_03.svg',color: Colors.black54,), // set your color here
