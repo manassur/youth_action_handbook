@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +23,7 @@ import 'package:youth_action_handbook/screens/individual_course.dart';
 import 'package:youth_action_handbook/screens/test.dart';
 import 'package:youth_action_handbook/services/api_service.dart';
 import 'package:youth_action_handbook/services/database.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
 import 'package:youth_action_handbook/widgets/open_training_card.dart';
 import 'package:youth_action_handbook/widgets/popular_items_card.dart';
@@ -123,6 +125,11 @@ class _CourseFragmentState extends State<CourseFragment> {
               floating: true,
               pinned: true,
               backgroundColor: Colors.white,
+              systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarBrightness: Brightness.light,
+                statusBarIconBrightness: Brightness.dark,
+                statusBarColor: Colors.white,
+              ),
               elevation: 0,
               expandedHeight: kExpandedHeight,
               leading: IconButton(
@@ -139,6 +146,9 @@ class _CourseFragmentState extends State<CourseFragment> {
                   );
                 },
               ),
+              actions: [
+                appUser==null?SizedBox():MenuForAppBar(),
+              ],
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: false,
                   titlePadding: EdgeInsets.symmetric(
