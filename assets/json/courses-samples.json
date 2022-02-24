@@ -1,0 +1,198 @@
+{
+    "error": false,
+    "en":{
+      "courses": [
+        {
+          "id": "1",
+          "title": "Course Title Text",
+          "description": "description text",
+          "overview": "overview text here",
+          "objectives": "objectives come in here",
+          "approach": "approach text",
+          "references": "",
+          "color": "0XFFFFCD2C",
+          "image": "https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+          "icon": "https://dev.silbaka.com/laptop.png",
+          "lessons": [
+            {
+                "id": "1",
+                "title": "Unit One : Key Concepts",
+                "lesson": "<p>using html to format lesson content</p>",
+                "video": "",
+                "duration": "10 munies"
+            },
+            {
+                "id": "2",
+                "title": "Lesson Title",
+                "lesson": "lesson content",
+                "video": "https://www.youtube.com/watch?v=SkYAdgqpxYQ",
+                "duration": "1 hour"
+            }
+          ],
+          "quiz": [
+            {
+              "id": "1",
+              "title": "Fundamental Principles",
+              "duration": "3 min",
+              "quiz_type": "Quiz A",
+              "questions": [
+                {
+                  "id": "1",
+                  "question": "What is fundamental principles?",
+                  "type": "multiple_choice",
+                  "hint": "some hint after answering",
+                  "correct_answer_id": "1",
+                  "selected_answer_id": "0",
+                  "mark": 5.0,
+                  "answers": [
+                    {
+                      "id": "1",
+                      "option": "option a fundamentals"
+                    },
+                    {
+                      "id": "2",
+                      "option": "option b fundamentals"
+                    },
+                    {
+                      "id": "3",
+                      "option": "option c fundamentals"
+                    },
+                    {
+                      "id": "4",
+                      "option": "option d fundamentals"
+                    }
+                  ]
+                },
+                {
+                  "id": "2",
+                  "question": "What is fundamental principles 2?",
+                  "type": "multiple_choice",
+                  "hint": "some hint after answering",
+                  "correct_answer_id": "1",
+                  "selected_answer_id": "0",
+                  "mark": 5.0,
+                  "answers": [
+                    {
+                      "id": "1",
+                      "option": "option aa fundamentals"
+                    },
+                    {
+                      "id": "2",
+                      "option": "option bb fundamentals"
+                    },
+                    {
+                      "id": "3",
+                      "option": "option cc fundamentals"
+                    },
+                    {
+                      "id": "4",
+                      "option": "option dd fundamentals"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+    
+      ]
+    },
+    "fr":{
+      "courses": [
+        {
+          "id": "1",
+          "title": "L'introduction",
+          "description": "This module introduces participants to the training program and manual as a training tool",
+          "overview": "Ce module présente aux participants le programme de formation et le manuel en tant qu'outil de formation",
+          "objectives": "Ce module présente aux participants le programme de formation et le manuel en tant qu'outil de formationCe module vise à :  - Donner aux apprenants le déroulement des modules clés successifs du programme de formation ",
+          "approach": "By the end of this module, the learners should be: <br>-\n Knowledgeable on the importance of the training program  <br>-\n Follow the flow of the key successive modules of the training program",
+          "references": "References lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.",
+          "color": "0XFFFFCD2C",
+          "image": "https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+          "icon": "https://dev.silbaka.com/laptop.png",
+          "lessons": [
+            {
+              "id": "1",
+              "title": "Bienvenu!",
+              "lesson": "Cette formation pour les jeunes est importante car le \u00ab R\u00e9seau des jeunes des Grands Lacs pour le dialogue et la paix. Le projet \"Notre diversit\u00e9 - notre opportunit\u00e9\" positionne les jeunes comme une pi\u00e8ce ma\u00eetresse pour la r\u00e9alisation d'une paix durable et d'un d\u00e9veloppement durable dans leurs communaut\u00e9s. Compte tenu de cela, le projet reconna\u00eet la n\u00e9cessit\u00e9 d'un r\u00e9seau solide de pairs et de bons contacts avec d'autres acteurs concern\u00e9s, pour que la voix des jeunes cr\u00e9e l'impact souhait\u00e9.",
+              "video": "",
+              "duration": "2:40"
+            },
+            {
+              "id": "2",
+              "title": "1.5 L'organisation des modules de formation successifs dans le manuel",
+              "lesson": "<p><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">Le manuel comporte onze modules traitant des diff\u00e9rentes composantes des comp\u00e9tences des jeunes des diff\u00e9rentes organisations membres identifi\u00e9es dans l'\u00e9valuation des besoins identifi\u00e9s comme des domaines critiques de renforcement des capacit\u00e9s dans leurs initiatives de pr\u00e9vention des conflits et de consolidation de la paix. <\/font><font style=\"vertical-align: inherit;\">Ceux-ci inclus:<\/font><\/font><\/p><p><strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">Introduction (Module 1) : Le<\/font><\/font><\/strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\"> module 1 pr\u00e9sente aux participants le programme de formation et le manuel en tant qu'outil de formation. <\/font><font style=\"vertical-align: inherit;\">Il vise \u00e0 aider les participants \u00e0 comprendre l'importance du programme de formation. <\/font><font style=\"vertical-align: inherit;\">Deuxi\u00e8mement, il vise \u00e0 donner aux participants le d\u00e9roulement des principaux modules successifs du programme de formation. <\/font><font style=\"vertical-align: inherit;\">Il comprend \u00e0 cet effet, une unit\u00e9 sur l'importance du programme de formation et une autre sur l'organisation des principaux modules successifs de tra\u00e7age dans le manuel.<\/font><\/font><\/p><p><strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">\u00c9galit\u00e9 et \u00e9quit\u00e9 entre les sexes (Module deux) : Le<\/font><\/font><\/strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\"> module deux explore six unit\u00e9s de contenu. <\/font><font style=\"vertical-align: inherit;\">Il s'agit notamment des concepts cl\u00e9s, des st\u00e9r\u00e9otypes qui perp\u00e9tuent l'in\u00e9galit\u00e9 et l'in\u00e9galit\u00e9 entre les sexes, de la r\u00e9alisation d'une analyse de genre \u00e0 l'aide des diff\u00e9rents cadres, de la r\u00e9alisation d'une \u00e9valuation participative, de l'\u00e9laboration de plans sensibles au genre et enfin, du suivi et de l'\u00e9valuation des interventions en mati\u00e8re de genre. <\/font><font style=\"vertical-align: inherit;\">L'objectif est de renforcer vos capacit\u00e9s en analyse de genre en tant qu'\u00e9l\u00e9ment important de la strat\u00e9gie de r\u00e9alisation de l'\u00e9quit\u00e9 et de l'\u00e9galit\u00e9 des sexes dans les agences et les communaut\u00e9s.<\/font><\/font><\/p><p><strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">Pens\u00e9e critique (module trois) :<\/font><\/font><\/strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\"> Le module trois couvre les comp\u00e9tences en pens\u00e9e critique dont on a besoin pour \u00e9viter la tendance courante \u00e0 penser de mani\u00e8re simpliste \u00e0 des questions complexes et s'efforcer de tenir compte de mani\u00e8re appropri\u00e9e des droits et des besoins des parties prenantes concern\u00e9es. <\/font><font style=\"vertical-align: inherit;\">Celles-ci comprennent les comp\u00e9tences inf\u00e9rentielles, les comp\u00e9tences \u00e9valuatives, les comp\u00e9tences en r\u00e9solution de probl\u00e8mes, les comp\u00e9tences analytiques, les comp\u00e9tences en compr\u00e9hension et les comp\u00e9tences cognitives. <\/font><\/font><a><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">L'objectif est d'am\u00e9liorer votre capacit\u00e9 \u00e0 penser intelligemment face \u00e0 un d\u00e9fi qui vous oblige \u00e0 penser de mani\u00e8re critique.<\/font><\/font><\/a><strong><\/strong><\/p><p><strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">Communication et utilisation des m\u00e9dias (module quatre) : Le<\/font><\/font><\/strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\"> module quatre partage des id\u00e9es sur la fa\u00e7on dont les participants aux efforts de consolidation de la paix peuvent changer leur fa\u00e7on de consommer les m\u00e9dias. <\/font><font style=\"vertical-align: inherit;\">Plus pr\u00e9cis\u00e9ment, il vous fournira des comp\u00e9tences de renforcement des capacit\u00e9s sur le paysage m\u00e9diatique actuel, comment vous pouvez naviguer \u00e0 travers diff\u00e9rents m\u00e9dias, r\u00e9seauter et aussi comment vous pouvez lutter contre la manipulation des m\u00e9dias. <\/font><font style=\"vertical-align: inherit;\">Entre autres choses, ce module vise \u00e0 aider les jeunes \u00e0 comprendre le paysage m\u00e9diatique et son \u00e9volution et \u00e0 montrer comment utiliser les m\u00e9dias pour promouvoir leur travail.<\/font><\/font><\/p><p><strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">Communication non violente (module cinq) :<\/font><\/font><\/strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\"> Dans le module cinq, vous aborderez le sujet de la communication non violente (CNV) - la pratique personnelle de ne pas se faire du mal ni de faire du mal aux autres dans toutes les conditions de communication. <\/font><font style=\"vertical-align: inherit;\">La CNV est large. <\/font><font style=\"vertical-align: inherit;\">Cependant, vous vous concentrerez sur les comp\u00e9tences CNV qui se sont d\u00e9marqu\u00e9es dans l'\u00e9valuation des besoins, en particulier : l'utilisation des comp\u00e9tences CNV\/instrumentales, la connaissance des composants CNV\/comp\u00e9tences cognitives et l'utilisation des comp\u00e9tences d'empathie. <\/font><font style=\"vertical-align: inherit;\">Le module vise \u00e0 donner aux participants des initiatives de pr\u00e9vention des conflits et de consolidation de la paix des comp\u00e9tences cl\u00e9s en CNV<\/font><\/font><\/p><p><strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">Plaidoyer (Module six) : Le<\/font><\/font><\/strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\"> module six traite des comp\u00e9tences dont vous avez besoin pour mener \u00e0 bien un programme de plaidoyer. <\/font><font style=\"vertical-align: inherit;\">Les unit\u00e9s cl\u00e9s que vous couvrirez dans ce module impliquent : la formation aux comp\u00e9tences de S&E pour les activit\u00e9s de plaidoyer, les comp\u00e9tences de mise en \u0153uvre des projets de plaidoyer, l'identification des ressources disponibles et des d\u00e9lais, les comp\u00e9tences d'identification des cibles de plaidoyer et enfin, la d\u00e9finition des questions politiques qui n\u00e9cessitent une attention. <\/font><font style=\"vertical-align: inherit;\">Le module vise \u00e0 renforcer les capacit\u00e9s des participants en mati\u00e8re de plaidoyer en tant que composante importante des initiatives de pr\u00e9vention et de gestion des conflits chez les jeunes.<\/font><\/font><\/p><p><strong>Public Speaking and Debate (Module Seven) :<\/strong> Module seven focusses on public speaking and debate skills one needs to be impactful. In particular, the skills you will cover in this module include: the use of visual aids, use of the power of a pause, playing with the voice tone and control, practicing, managing audience relations and lastly, storytelling. This module aims at equipping participants with skills on the use of visual aids, use of the power of a pause, playing with the voice tone and control, practicing, managing audience relations and lastly, storytelling in public speaking and debate<\/p><p><strong>Conflict and Conflict Management (Module Eight) : <\/strong>Module eightshares experiences on conflict management. It attempts to boost your understanding of the key terms of conflict and your confidence to engage in the peacebuilding process in your communities. Some conflicts are at an individual level. Others appear quite large-group level conflict. Depending on whether it is an individual or group level conflict, different skills are used in conflict management. The skills you will cover in this module are those participants in the needs assessment demanded most. At individual level, this includes mediation. At group level, the skills the module focuses on team building and cooperation skills, group building skills and advocacy for youth development. The module aims to build the capacity of participants with skills in conflict management both at the individual and group levels<\/p><p><strong>Methods for Training Adults (Module Nine):<\/strong> Module nine offers skills and tools that will enble you to design and implement interactive learner centered trainings.  It will share facilitating experiences and you will learn facilitator tips, methods, as well as models of teaching including the variety of exercises related to re-energizing participants, and creative ways to make them want to participate actively and eventually practice what they have learnt in their lives or their work as peacebuilders. This module aims to equip participants will various skills as facilitators of trainings and how to plan and deliver an effective training<\/p><p><strong>Organizational Development (Module Ten): <\/strong>Module ten covers networking skills, M&E skills, proposal writing skills, project delivery skills and impact visualisation skills. The aim is to equip participants with the knowledge in organizational development processes and skills in implementing key organizational development interventions.<\/p><p><strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\">Offrir une formation efficace et s\u00fbre dans des situations d'urgence comme le Covid-19 (module onze) :<\/font><\/font><\/strong><font style=\"vertical-align: inherit;\"><font style=\"vertical-align: inherit;\"> le module onze fournit des informations de base et des conseils sur la mani\u00e8re d'organiser efficacement des formations dans le contexte de pand\u00e9mies en utilisant le COVID-19 comme cas. <\/font><font style=\"vertical-align: inherit;\">Les informations et comp\u00e9tences fournies sont g\u00e9n\u00e9riques \u00e0 adapter en fonction de votre contexte pour r\u00e9ussir votre formation. <\/font><font style=\"vertical-align: inherit;\">En particulier, le module vous expliquera : les connaissances g\u00e9n\u00e9rales sur le COVID-19, comment organiser des formations pendant le COVID19, l'\u00e9tiquette pour organiser des r\u00e9unions virtuelles et enfin comment \u00e9valuer les formations \u00e0 l'aide de plateformes en ligne.<\/font><\/font><\/p>                  <\/div>",
+              "video": "",
+              "duration": "2o dk."
+            }
+          ],
+          "quiz": [
+            {
+              "id": "1",
+              "title": "Principes fondamentaux",
+              "duration": "",
+              "quiz_type": "Quiz A",
+              "questions": [
+                {
+                  "id": "1",
+                  "question": "Principes fondamentaux?",
+                  "type": "multiple_choice",
+                  "hint": "some hint after answering",
+                  "correct_answer_id": "1",
+                  "selected_answer_id": "0",
+                  "mark": 5.0,
+                  "answers": [
+                    {
+                      "id": "1",
+                      "option": "option a fundamentals"
+                    },
+                    {
+                      "id": "2",
+                      "option": "option b fundamentals"
+                    },
+                    {
+                      "id": "3",
+                      "option": "option c fundamentals"
+                    },
+                    {
+                      "id": "4",
+                      "option": "option d fundamentals"
+                    }
+                  ]
+                },
+                {
+                  "id": "2",
+                  "question": "What is fundamental principles 2?",
+                  "type": "multiple_choice",
+                  "hint": "some hint after answering",
+                  "correct_answer_id": "1",
+                  "selected_answer_id": "0",
+                  "mark": 5.0,
+                  "answers": [
+                    {
+                      "id": "1",
+                      "option": "option aa fundamentals"
+                    },
+                    {
+                      "id": "2",
+                      "option": "option bb fundamentals"
+                    },
+                    {
+                      "id": "3",
+                      "option": "option cc fundamentals"
+                    },
+                    {
+                      "id": "4",
+                      "option": "option dd fundamentals"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+    
+      
+      ]
+    }
+  }

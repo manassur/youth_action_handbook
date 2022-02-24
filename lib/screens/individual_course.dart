@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -70,8 +71,8 @@ class _IndividualCourseScreenState extends State<IndividualCourseScreen>  with T
                             Container(
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: NetworkImage(widget.courses!.image!
-                                    ),
+                                    // image: NetworkImage(widget.courses!.image!),
+                                    image: CachedNetworkImageProvider((widget.courses!.image! == null || widget.courses!.image! == '')?'https://dev.silbaka.com/laptop.png':widget.courses!.image!),
                                     fit: BoxFit.fill,
                                   ),
                                 )

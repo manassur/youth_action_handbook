@@ -1,6 +1,9 @@
 import 'dart:convert';
-
+import 'package:flutter_cache_manager/file.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/course_with_language_response.dart';
 import 'package:youth_action_handbook/models/firestore_models/user_courses.dart';
@@ -69,13 +72,68 @@ class ApiService {
 
 
   // service methods calling from the hosted json
-    Future<CourseWithLanguageResponse> fetchCoursesFromServer() async {
+    Future<CourseWithLanguageResponse> fetchCoursesFromServerold() async {
     // final response = await _apiClient.get('https://apprant.com/yah/index.html');
     final response = await _apiClient.get('https://dev.silbaka.com/courses-new.json');
+
+    // final String response = await rootBundle.loadString('assets/json/courses-new.json');
+    
     var data = json.decode(response);
+    print("AKBR HERE IS THE DATA:"+ response);
     // print(" from repo error " + response);
     CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
     return res;
+  }
+
+
+  Future<CourseWithLanguageResponse> fetchCoursesFromServer() async {
+    var onlineVersion;
+    String courseVersion;
+    File file;
+    var url = 'https://dev.silbaka.com/courses-new.json';
+    DateTime currentTime = DateTime.now();
+
+    var prefs = await SharedPreferences.getInstance();
+    DateTime lastCheckTime = DateTime.parse(prefs.getString('lastCheckTime') ?? '2010-01-02 03:04:05');
+    courseVersion = prefs.getString('courseVersion') ?? ('');
+
+    try{
+      if(currentTime.difference(lastCheckTime).inMinutes >= 1){
+        final response = await http.get(Uri.parse('https://dev.silbaka.com/CourseVersion'));
+        onlineVersion = response.body;
+        prefs.setString('lastCheckTime', currentTime.toString());
+        print('AKBRRR TIME HAS PASSED!! CHECKING NOWWW'+ currentTime.toString());
+      }else{
+        onlineVersion = courseVersion;
+      }
+
+    }catch(e){
+      onlineVersion = courseVersion;
+    }
+
+    try {
+      print('AKBR SEE THE VERSIONS:\tonline = '+onlineVersion+'\toffline = '+courseVersion);
+      if (courseVersion == onlineVersion){
+        file = await DefaultCacheManager().getSingleFile(url);
+      }else{
+        DefaultCacheManager().removeFile(url).then((value) {
+          prefs.setString('courseVersion', onlineVersion);
+          print('AKBR!! File removed!|||||||||||||||||NEW DOWNLOAD||||||||||||||||||||||||||');
+        }).onError((error, stackTrace) {
+          print(error);
+        });
+        file = await DefaultCacheManager().getSingleFile(url);  
+      }
+      final contents = await file.readAsString();
+
+      var data = json.decode(contents);
+      // print(" from repo error " + response);
+      CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
+      return res;
+    } on Exception catch (e) {
+      print("AKBR IT FAILED!!!! error is:"+ e.toString());
+      throw e;
+    }
   }
 
 }

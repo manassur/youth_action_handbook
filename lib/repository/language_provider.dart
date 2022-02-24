@@ -55,13 +55,14 @@ class LanguageProvider extends ChangeNotifier {
 
   void setupCourseLanguages() async {
     try{
+      setHasError(false);
       setLoading(true);
       CourseWithLanguageResponse courseWithLanguageResponse = await apiService.fetchCoursesFromServer();
       _courseWithLanguageResponse= courseWithLanguageResponse;
       setLoading(false);
     }catch(e){
       setHasError(true);
-      setError('Could not load courses');
+      setError('Could not load courses, error:'+ e.toString());
       setLoading(false);
 
     }

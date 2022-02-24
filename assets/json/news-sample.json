@@ -1,0 +1,41 @@
+{
+    "error": false,
+    "news": {
+      "en": [
+        {
+          "id": "1",
+          "title": "Fund the girl child campaign 2021 launched'",
+          "blurb": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum is simply dummy",
+          "link": "https://google.com",
+          "date": "",
+          "image": "https://images.pexels.com/photos/3760043/pexels-photo-3760043.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+        },
+        {
+          "id": "2",
+          "title": "Peace talks commence in DRC",
+          "blurb": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum is simply dummy",
+          "link": "https://google.com",
+          "date": "",
+          "image": "https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+        }
+      ],
+      "fr": [
+        {
+          "id": "1",
+          "title": "Fund the girl child campaign 2021 launched'",
+          "blurb": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum is simply dummy",
+          "link": "https://google.com",
+          "date": "",
+          "image": "https://images.pexels.com/photos/3760043/pexels-photo-3760043.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+        },
+        {
+          "id": "2",
+          "title": "Peace talks commence in DRC",
+          "blurb": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum is simply dummy",
+          "link": "https://google.com",
+          "date": "",
+          "image": "https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+        }
+      ]
+    }
+  }

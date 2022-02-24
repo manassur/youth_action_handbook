@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 
@@ -37,9 +38,9 @@ class _OpenTrainingCardState extends State<OpenTrainingCard> {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal:20),
                   // uncomment to use network image
-                  child: Image.network(widget.courseModel!.icon!,width: 200,height: 200,)),
-          //        child: Image.asset(widget.courseModel!.image!,width: 200,height: 200, errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-          // return CircleAvatar(radius: 50,backgroundColor: Colors.black54,child:Text('No image'));})),
+                  // child: Image.network(widget.courseModel!.icon!,width: 200,height: 200,)),
+                  child: CachedNetworkImage(imageUrl: ((widget.courseModel!.icon! == null || widget.courseModel!.icon! == '')?'https://dev.silbaka.com/laptop.png':widget.courseModel!.icon!))),
+         
             ],
           ),
          const SizedBox(height: 10,),

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
@@ -440,6 +441,22 @@ class _AboutFragmentState extends State<AboutFragment> {
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: ListTile(
                     onTap: () async{
+                        await DefaultCacheManager().emptyCache().then((value) => yahSnackBar(context, 'App Cache Cleared'));
+                    },
+                    leading: Icon(Icons.cached, color: AppColors.colorPurple),
+                    title: Text("Clear Cache"),
+                    // trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                  child: ListTile(
+                    onTap: () async{
                         final AuthService _auth = AuthService();
                         Navigator.pushNamedAndRemoveUntil(
                                     context, RouteNames.initialScreen, (route) => false);
@@ -447,7 +464,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                     },
                     leading: Icon(Icons.login_outlined, color: AppColors.colorPurple),
                     title: Text("Sign Out"),
-                    trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
+                    // trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
                   ),
                 ),
 

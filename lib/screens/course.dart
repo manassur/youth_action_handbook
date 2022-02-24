@@ -72,6 +72,7 @@ class _CourseFragmentState extends State<CourseFragment> {
   ApiService? _apiService;
   Future<Lessons>? courseFuture;
   VideoPlayerController? _controller;
+  LanguageProvider? langProvider;
 
   _initializeVideoPlayer(String url) async{
     if(url.isNotEmpty){
@@ -397,7 +398,35 @@ class _CourseFragmentState extends State<CourseFragment> {
                     if(lang.isLoading){
                       return buildLoading();
                     }else if(lang.hasError){
-                      return Center(child: Text(lang.errorText));
+                      return Center(child: Column(
+                        children: [
+                          Text(lang.errorText),
+                          SizedBox(height: 20,),
+                           SizedBox(
+                            width: 150.0,
+                            height: 50,
+                            child: ElevatedButton(
+                              child: const Text('Tap to Reload'),
+                              onPressed: () {
+                                {
+                                  setState(() {
+                                    langProvider!.setupCourseLanguages();
+                                    yahSnackBar(context, 'Trying to Reload. If it fails, try restarting the app');
+                                  });
+                                }
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all<Color>(
+                                      AppColors.colorGreenPrimary),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ))),
+                            ),
+                          ),
+                      
+                        ],
+                      ));
                     }else{
                       return  ListView.builder(
                           shrinkWrap: true,

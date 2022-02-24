@@ -7,6 +7,7 @@ import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 
+// ignore: must_be_immutable
 class WebViewScreen extends StatefulWidget {
   String link = "https://studio.rtl.ug/yah-privacy-policy"; //start here
 

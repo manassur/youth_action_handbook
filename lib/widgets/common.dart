@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -86,7 +87,7 @@ class MenuForAppBar extends StatelessWidget {
           backgroundColor: Colors.grey,
           radius: 20,
           // backgroundImage:  NetworkImage(appUser!.profilePicture??''),
-          backgroundImage:  CachedNetworkImageProvider((appUser!.profilePicture == null || appUser.profilePicture == '')?'http://via.placeholder.com/350x150':appUser.profilePicture!),
+          backgroundImage:  CachedNetworkImageProvider((appUser!.profilePicture == null || appUser.profilePicture == '')?'https://studio.rtl.ug/yah/user.png':appUser.profilePicture!),
         ),
         color: Colors.indigo,
         onSelected: (item) => onSelected(context, item),
@@ -207,7 +208,7 @@ class TopLangMenu extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: PopupMenuButton<int>(
-        child: const Avatar(url: "http://via.placeholder.com/350x150"),
+        child: const Avatar(url: "https://studio.rtl.ug/yah/user.png"),
         color: Colors.indigo,
         onSelected: (item) => onSelected(context, item),
         itemBuilder: (context) => [
