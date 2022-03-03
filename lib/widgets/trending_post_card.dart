@@ -107,7 +107,7 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
                 SizedBox(width: 10,),
                 Expanded(
                   flex: 10,
-                  child: Column(
+                  child: Column(  
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -150,7 +150,7 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
 
                                        },
                                      ),
-                                      widget.trendingPostModel!.authorId==appUser!.uid ?       ListTile(
+                                      (widget.trendingPostModel!.authorId==appUser!.uid || (appUser!.email!.endsWith('rtl.ug') && appUser!.emailVerified!)) ?       ListTile(
                                         title: Text('Delete'),
                                         trailing: Icon(Icons.delete),
                                         onTap: (){
