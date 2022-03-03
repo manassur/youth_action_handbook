@@ -47,17 +47,17 @@ class _WebViewScreenState extends State<WebViewScreen> {
       ),
 
       body: WebView(initialUrl: widget.link, onWebViewCreated: (controller) => _controller.complete(controller)),
-            bottomNavigationBar: Container(
-              // color: Theme.of(context).accentColor,
-              child: Padding(
-                padding: const EdgeInsets.only(right:20),
-                child: ButtonBar(children: [
-                  navigationButton(Icons.chevron_left, (controller) => _goback(controller!)),
-                  navigationButton(Icons.chevron_right, (controller) => _goForward(controller!)),
-                  ]
-                ),
-              ),
-            ),
+            // bottomNavigationBar: Container(
+            //   // color: Theme.of(context).accentColor,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(right:20),
+            //     child: ButtonBar(children: [
+            //       navigationButton(Icons.chevron_left, (controller) => _goback(controller!)),
+            //       navigationButton(Icons.chevron_right, (controller) => _goForward(controller!)),
+            //       ]
+            //     ),
+            //   ),
+            // ),
     );
   }
 
