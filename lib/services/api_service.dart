@@ -17,18 +17,23 @@ class ApiService {
   // this will fetch recommended courses
   ApiClient _apiClient = ApiClient();
 
-  Future<CourseResponse> fetchCourses() async {
-    final String response = await rootBundle.loadString('assets/json/courses-new.json');
-    final data = await json.decode(response);
-    print("this is courses json " + response);
-    CourseResponse result = CourseResponse.fromJson(data);
-    return result;
-  }
+  // Future<CourseResponse> fetchCourses() async {
+  //   final String response = await rootBundle.loadString('assets/json/courses-new.json');
+  //   final data = await json.decode(response);
+  //   print("this is courses json " + response);
+  //   CourseResponse result = CourseResponse.fromJson(data);
+  //   return result;
+  // }
 
   // this fetches news updates
   Future<NewsResponse> fetchNewsUpdate() async {
-    final String response = await rootBundle.loadString('assets/json/news.json');
-    final data = await json.decode(response);
+    var url = 'https://dev.silbaka.com/news.json';
+   
+
+    final response = await http.get(Uri.parse('https://dev.silbaka.com/news.json'));
+    var body = response.body;
+    // final String response = await rootBundle.loadString('assets/json/news.json');
+    final data = await json.decode(body);
     NewsResponse result = NewsResponse.fromJson(data);
     return result;
   }
@@ -75,12 +80,7 @@ class ApiService {
     Future<CourseWithLanguageResponse> fetchCoursesFromServerold() async {
     // final response = await _apiClient.get('https://apprant.com/yah/index.html');
     final response = await _apiClient.get('https://dev.silbaka.com/courses-new.json');
-
-    // final String response = await rootBundle.loadString('assets/json/courses-new.json');
-    
     var data = json.decode(response);
-    print("AKBR HERE IS THE DATA:"+ response);
-    // print(" from repo error " + response);
     CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
     return res;
   }
