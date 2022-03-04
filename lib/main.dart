@@ -19,10 +19,12 @@ import 'package:youth_action_handbook/screens/partners.dart';
 import 'package:youth_action_handbook/screens/reset_password.dart';
 import 'package:youth_action_handbook/screens/edit_profile.dart';
 import 'package:youth_action_handbook/screens/sign_up.dart';
+import 'package:youth_action_handbook/screens/web_view.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,15 +32,16 @@ void main() async {
   //Remove this method to stop OneSignal Debugging
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-  OneSignal.shared.setAppId("42349d73-616f-4579-afbd-4ba2c7df76c0");
+  OneSignal.shared.setAppId("fdf6a04d-2f10-4e6b-9b8f-3a50584d5f38");
 
 // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
   OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
     print("Accepted permission: $accepted");
   });
-  OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-    // Will be called whenever a notification is opened/button pressed.
-  });
+  // OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+  //   print('AKBR THIS ONE WORKED');
+  //   // Will be called whenever a notification is opened/button pressed.
+  // });
   runApp(MyApp());
 }
 
@@ -85,6 +88,7 @@ class _AppWrapperState extends State<AppWrapper> {
   @override
   void initState() {
     super.initState();
+    // OneSignalWrapper.handleClickNotification(context);
     this._fetchLocale().then((locale) {
       setState(() {
         this._locale = locale;
@@ -168,4 +172,25 @@ class RouteNames{
   static const launch = '/launch';
   static const partners = '/partners';
 
+}
+
+class OneSignalWrapper{
+  static void handleClickNotification(BuildContext context) {
+    print('AKBR IT WORKED');
+      try {
+        OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) async {
+          final launchUrl = await result.notification.launchUrl;
+          print('AKBR THE LAUNCHURL IS: '+ launchUrl.toString());
+
+          if(launchUrl != null){
+            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => WebViewScreen(link:launchUrl))); 
+          }else{
+            yahSnackBar(context, 'NO URL to VISIT');
+          }
+        });
+      } catch (e) {
+        print('AKBR OneSignal:'+ e.toString());
+        yahSnackBar(context, e);
+      }
+  }
 }
