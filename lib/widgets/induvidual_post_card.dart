@@ -183,14 +183,14 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
 
                                               },
                                             ),
-                                            ListTile(
+                                            (widget.induvidualCommentModel!.authorId! == appUser!.uid || (appUser!.email!.endsWith('rtl.ug') && appUser!.emailVerified!)) ? ListTile(
                                               title: Text('Delete'),
                                               trailing: Icon(Icons.delete),
                                               onTap: (){
                                                 _deleteComment();
 
                                               },
-                                            )
+                                            ):Container(),
                                           ],
                                         ),
                                       ),

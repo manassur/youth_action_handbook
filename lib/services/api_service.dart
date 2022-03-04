@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 class ApiService {
   // this will fetch recommended courses
   ApiClient _apiClient = ApiClient();
+  var coursesUrl = 'https://dev.silbaka.com/courses-new.json';
+  DateTime currentTime = DateTime.now();
 
   // Future<CourseResponse> fetchCourses() async {
   //   final String response = await rootBundle.loadString('assets/json/courses-new.json');
@@ -56,22 +58,23 @@ class ApiService {
     *TODO: the idSet should be passed as seperated commas to the api
     * for now we will just return the regular courses
      */
-
-    final String response = await rootBundle.loadString('assets/json/courses-new.json');
-    final data = await json.decode(response);
-    print("this is courses json " + response);
+    final file = await DefaultCacheManager().getSingleFile(coursesUrl);
+    final contents = await file.readAsString();
+    final data = await json.decode(contents);
     CourseResponse result = CourseResponse.fromJson(data);
     return result;
   }
 
 
-  // this extracts the course from the already fetched courses with the courseid
   Future<Lessons> getCourseByCourseId(String courseId,lessonId) async {
-    final String response = await rootBundle.loadString('assets/json/courses-new.json');
-    final data = await json.decode(response);
-    print("this is courses json " + response);
-    CourseResponse result = CourseResponse.fromJson(data);
-    var course = result.courses!.firstWhere((Courses element) => element.id==courseId);
+    //TODO: CHECK TO SEE IF ENGLISH AND FRENCH CAN BE FETCHED 
+    final file = await DefaultCacheManager().getSingleFile(coursesUrl);
+    final contents = await file.readAsString();
+    
+    final data = await json.decode(contents);
+    CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
+    CourseResponse result = res.en!;
+    final course = result.courses!.firstWhere((Courses element) => element.id==courseId);
     return course.lessons!.firstWhere((Lessons element) => element.id==lessonId);
   }
 
@@ -90,11 +93,9 @@ class ApiService {
     var onlineVersion;
     String courseVersion;
     File file;
-    var url = 'https://dev.silbaka.com/courses-new.json';
-    DateTime currentTime = DateTime.now();
 
     var prefs = await SharedPreferences.getInstance();
-    DateTime lastCheckTime = DateTime.parse(prefs.getString('lastCheckTime') ?? '2010-01-02 03:04:05');
+    DateTime lastCheckTime = DateTime.parse(prefs.getString('lastCheckTime') ?? '2022-01-02 03:04:05');
     courseVersion = prefs.getString('courseVersion') ?? ('');
 
     try{
@@ -102,7 +103,6 @@ class ApiService {
         final response = await http.get(Uri.parse('https://dev.silbaka.com/CourseVersion'));
         onlineVersion = response.body;
         prefs.setString('lastCheckTime', currentTime.toString());
-        print('AKBRRR TIME HAS PASSED!! CHECKING NOWWW'+ currentTime.toString());
       }else{
         onlineVersion = courseVersion;
       }
@@ -114,20 +114,18 @@ class ApiService {
     try {
       print('AKBR SEE THE VERSIONS:\tonline = '+onlineVersion+'\toffline = '+courseVersion);
       if (courseVersion == onlineVersion){
-        file = await DefaultCacheManager().getSingleFile(url);
+        file = await DefaultCacheManager().getSingleFile(coursesUrl);
       }else{
-        DefaultCacheManager().removeFile(url).then((value) {
+        DefaultCacheManager().removeFile(coursesUrl).then((value) {
           prefs.setString('courseVersion', onlineVersion);
-          print('AKBR!! File removed!|||||||||||||||||NEW DOWNLOAD||||||||||||||||||||||||||');
         }).onError((error, stackTrace) {
           print(error);
         });
-        file = await DefaultCacheManager().getSingleFile(url);  
+        file = await DefaultCacheManager().getSingleFile(coursesUrl);  
       }
       final contents = await file.readAsString();
 
       var data = json.decode(contents);
-      // print(" from repo error " + response);
       CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
       return res;
     } on Exception catch (e) {
