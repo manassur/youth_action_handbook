@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
+import 'package:youth_action_handbook/models/user.dart';
+import 'package:youth_action_handbook/services/database.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
 
 class ProgressHeaderWidget extends StatefulWidget {
   final Courses? courses;
@@ -12,6 +16,56 @@ class ProgressHeaderWidget extends StatefulWidget {
 }
 
 class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
+  
+  AppUser? appUser;
+  String? _currentUserId;
+  DatabaseService? dbservice;
+  bool? _hasViewed;
+  String total = '';
+  double percentDone = 0;
+
+  Future testFunc() async {
+    print('AKBR testFUNc fired!@');
+    String voids = '23';
+    return voids;
+  }
+
+   Future<double> _percentageDone() async {
+    
+    var prefs = await SharedPreferences.getInstance();
+    final lessonList =  widget.courses!.lessons!;
+    bool hasViewed = false;
+    int coursesDone = 0;
+    total = lessonList.length.toString();
+
+    int i = 0;
+    print('AKBR start noe');
+    while(i < lessonList.length){
+      // hasViewed = await dbservice!.hasViewedLesson(lessonList[i].id!,widget.courses!.id!);
+      hasViewed = prefs.getBool(widget.courses!.id!+'-'+lessonList[i].id!) ?? false;
+      // String testVar = await testFunc();
+      print('AKBR course no.'+i.toString()+' has been viewd? : '+ hasViewed.toString());
+      if(hasViewed){coursesDone = coursesDone + 1;}
+      i = i+1;
+    }
+    if (mounted) {
+      setState(() {
+        total = lessonList.length.toString();
+        percentDone = (100 * coursesDone/lessonList.length);
+      });
+    }
+
+      return percentDone;
+    
+  }
+
+   @override
+  initState() {
+    _percentageDone().then((value) => super.initState());
+    
+  }
+  @override
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,15 +80,6 @@ class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
                   fontWeight: FontWeight.w900),
               children: const <TextSpan>[]),
         ),
-        // RichText(
-        //   text: TextSpan(
-        //       text: 'Education',
-        //       style: TextStyle(
-        //           color: AppColors.colorBluePrimary,
-        //           fontSize: 25,
-        //           fontWeight: FontWeight.w900),
-        //       children: const <TextSpan>[]),
-        // ),
         Row(
           children: [
             RichText(
@@ -47,8 +92,8 @@ class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
                   children: <TextSpan>[
 
                     TextSpan(
-                      text: 'Duration : 20hrs',
-                      style: TextStyle(
+                      text: 'No. of Lessons :'+ total,
+                      style: TextStyle( 
                           color: AppColors.colorPurple,
                           fontSize: 14,
                           fontWeight: FontWeight.w700),
@@ -58,7 +103,7 @@ class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
             Spacer(),
             RichText(
               text: TextSpan(
-                  text: '65%',
+                  text: percentDone.toStringAsFixed(1) + '%',
                   style: TextStyle(
                       color: AppColors.colorPurple,
                       fontSize: 20,
@@ -73,7 +118,7 @@ class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
           animation: true,
           animationDuration: 1000,
           lineHeight: 15.0,
-          percent: 0.2,
+          percent: percentDone/100,
           center: Text(""),
           linearStrokeCap: LinearStrokeCap.roundAll,
           progressColor: AppColors.colorGreenPrimary,

@@ -67,7 +67,7 @@ class ApiService {
 
 
   Future<Lessons> getCourseByCourseId(String courseId,lessonId) async {
-    //TODO: CHECK TO SEE IF ENGLISH AND FRENCH CAN BE FETCHED 
+    //TODO: CHECK TO SEE IF ENGLISH OR FRENCH CAN BE FETCHED Depneding on language 
     final file = await DefaultCacheManager().getSingleFile(coursesUrl);
     final contents = await file.readAsString();
     

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
@@ -63,6 +64,10 @@ class _LessonItemCardState extends State<LessonItemCard> {
 
   _hasViewedLesson() async {
     bool hasViewed = await dbservice!.hasViewedLesson(widget.lesson!.id!,widget.courseId!);
+    
+    //save to state for percentage
+    var prefs = await SharedPreferences.getInstance();
+    prefs.setBool(widget.courseId! + '-'+widget.lesson!.id!, hasViewed);
     if (mounted) {
       setState(() {
         _hasViewed = hasViewed;
