@@ -20,6 +20,7 @@ import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/repository/language_provider.dart';
 import 'package:youth_action_handbook/screens/individual_course.dart';
+import 'package:youth_action_handbook/screens/lesson_content.dart';
 import 'package:youth_action_handbook/screens/test.dart';
 import 'package:youth_action_handbook/services/api_service.dart';
 import 'package:youth_action_handbook/services/database.dart';
@@ -201,7 +202,7 @@ class _CourseFragmentState extends State<CourseFragment> {
                     );
                   }
                   if (snapshot.hasError)
-                  { return Center(child: Text('Could not fetch recent lessons at this time'+snapshot.error.toString()));}
+                  { return Center(child: Text('Could not fetch recent lessons at this time'+snapshot.stackTrace.toString()));}
 
                   return ListView.builder(
                       shrinkWrap: true,
@@ -209,118 +210,9 @@ class _CourseFragmentState extends State<CourseFragment> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (ctx,pos){
                         return GestureDetector(
-                          onTap: () {
-                            courseFuture =  _apiService!.getCourseByCourseId(snapshot.data![pos].courseId!,snapshot.data![pos].lessonId!);
-                            showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                backgroundColor: Colors.white,
-                                builder: (context) {
-
-                                  return  StatefulBuilder(
-                                      builder: (BuildContext context, StateSetter setState )
-                                      {
-                                      return  FutureBuilder<Lessons>(
-                                          builder: (context, snapshot) {
-                                            if (snapshot.connectionState == ConnectionState.none &&
-                                                snapshot.hasData == null) {
-                                              return Container();
-                                            }else if( snapshot.connectionState == ConnectionState.waiting){
-                                              return  const Padding(
-                                                padding: EdgeInsets.only(right: 10.0),
-                                                child: Center(
-                                                  child: SizedBox(
-                                                    child: CircularProgressIndicator(),
-                                                    width: 20,
-                                                    height: 20,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            if (snapshot.hasError)
-                                            { return Center(child: Text('Could not fetch recent lessons at this time'+snapshot.error.toString()));}
-                                            _initializeVideoPlayer(snapshot.data!.video!);
-                                             return  FractionallySizedBox(
-                                              heightFactor: 0.95,
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                      height: 50,
-                                                      decoration: const BoxDecoration(
-                                                          color: Colors.transparent
-                                                      ),
-                                                      child:Center(child: Text(snapshot.data!.title!,style:TextStyle(fontSize: 15,fontWeight:FontWeight.bold,color: AppColors.colorBluePrimary)))
-                                                  ),
-                                                  Stack(
-                                                    children: [
-                                                      snapshot.data!.video!.isNotEmpty? Center(
-                                                        child: _controller!.value.isInitialized
-                                                            ? AspectRatio(
-                                                          aspectRatio: _controller!.value.aspectRatio,
-                                                          child: VideoPlayer(_controller!),
-                                                        )
-                                                            : Container(),
-                                                      ):Container(),
-                                                      Positioned.fill(
-                                                          child: Align(
-                                                            alignment: Alignment.center,
-                                                            child:  InkWell(
-                                                                onTap:(){
-                                                                  setState(() {
-                                                                    _controller!.value.isPlaying
-                                                                        ? _controller!.pause()
-                                                                        : _controller!.play();
-                                                                  });
-                                                                },
-                                                                child: Visibility(
-                                                                    visible:snapshot.data!.video!.isNotEmpty,
-                                                                    child:snapshot.data!.video!.isNotEmpty? Center(child:_controller!.value.isPlaying?Icon(Icons.pause_circle_filled_sharp,color:Colors.white,size: 60,): Icon(Icons.play_circle_fill,color:Colors.white,size: 60,)):Container())),
-                                                          )
-                                                      ),
-
-                                                      Positioned.fill(
-                                                        child: Align(
-                                                            alignment: Alignment.bottomCenter,
-                                                            child:  Container(
-                                                              child: snapshot.data!.video!.isNotEmpty? Container(
-                                                                child: _controller!.value.isInitialized?
-
-                                                                VideoProgressIndicator(_controller!, allowScrubbing: true,colors: VideoProgressColors(
-                                                                    backgroundColor: Colors.grey.shade200,
-                                                                    bufferedColor: Colors.grey,
-                                                                    playedColor: AppColors.colorGreenPrimary
-                                                                ) ,
-                                                                ):Container(),
-                                                              ):Container(),
-                                                            )
-                                                        ),
-                                                      ),
-
-                                                    ],
-                                                  ),
-
-                                                  Expanded(
-                                                    child: Container(
-                                                        height: double.infinity,
-                                                        child: Html(
-                                                            data: snapshot.data!.lesson,
-                                                            tagsList: Html.tags..remove(Platform.isAndroid ? "iframe" : "video")
-                                                        )
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                          future: courseFuture,
-                                        );
-
-                                      }
-                                  );
-                                });
+                          onTap: () async{
+                            var coursenow = await  _apiService!.getCourseByCourseId(snapshot.data![pos].courseId!,snapshot.data![pos].lessonId!);
+                            Navigator.push(context, MaterialPageRoute( builder: (context) =>LessonContent(lesson: coursenow,)));
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
