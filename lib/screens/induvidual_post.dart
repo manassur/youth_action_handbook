@@ -1,24 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:profanity_filter/profanity_filter.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/firestore_models/comment_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
-import 'package:youth_action_handbook/models/induvidual_comment_model.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/induvidual_post_card.dart';
 import 'package:provider/provider.dart';
-import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
-import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
-import 'package:youth_action_handbook/widgets/topic_card.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'new_post.dart';
 class InduvidualPostScreen extends StatefulWidget {
   final Post? post;
   const InduvidualPostScreen({Key? key,this.post}) : super(key: key);
@@ -60,11 +52,11 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
     final filter = ProfanityFilter();
     FocusScope.of(context).unfocus();
     if (!(_captionController.text.trim().isNotEmpty)) {
-      yahSnackBar(context, "Comment cannot be empty! :(");
+      yahSnackBar(context, AppLocalizations.of(context)!.commentCannotBeEmpty_);
     }
     else if(filter.hasProfanity(_captionController.text.trim())){
       // toast that fields cannot be empty
-      yahSnackBar(context, "Sorry, profanity was detected in your text. Please edit and try submitting again.");
+      yahSnackBar(context, AppLocalizations.of(context)!.sorryProfanityWasDetectedInYourTextPleaseEditAndTrySubmittingAgain);
     }
     else {
       if (!_isLoading) {
@@ -99,7 +91,7 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
           setState(() {
             _isLoading = false;
           });
-          print('could not post comment at this time');
+          print(AppLocalizations.of(context)!.couldNotPostCommentAtThisTime);
         });
       }
     }
@@ -114,7 +106,7 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text('Comments',style: TextStyle(color: AppColors.colorBluePrimary,fontSize: 15,fontWeight: FontWeight.bold),),
+        title: Text(AppLocalizations.of(context)!.comments,style: TextStyle(color: AppColors.colorBluePrimary,fontSize: 15,fontWeight: FontWeight.bold),),
 
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios,color: AppColors.colorBluePrimary,), // set your color here
@@ -168,7 +160,7 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
                 );
               }
             else  if (snapshot.hasError)
-              { return Center(child: Text('Could not fetch comments at this time'+snapshot.error.toString()));}
+              { return Center(child: Text(AppLocalizations.of(context)!.couldNotFetchCommentsAtThisTime+ ' ' +snapshot.error.toString()));}
 
              else if(snapshot.hasData){
                return  Expanded(
@@ -219,8 +211,8 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
                                   onFieldSubmitted: (value) {
                                   _postComment();
                                   },
-                                  decoration: const InputDecoration(
-                                    hintText: "Type your thoughts",
+                                  decoration: InputDecoration(
+                                    hintText: AppLocalizations.of(context)!.typeYourThoughts,
                                     border: InputBorder.none,
                                     floatingLabelBehavior: FloatingLabelBehavior.never,
                                     hintStyle:  TextStyle(color: Colors.black54,fontSize: 15,fontWeight: FontWeight.w100),
@@ -242,7 +234,7 @@ class _InduvidualPostScreenState extends State<InduvidualPostScreen> {
                                       RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30.0),
                                       ))),
-                              child:!_isLoading?Text('Post Comment',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),)
+                              child:!_isLoading?Text(AppLocalizations.of(context)!.postComment,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),)
                               : const Padding(
                                 padding: EdgeInsets.only(right: 10.0),
                                 child: Center(

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youth_action_handbook/bloc/courses/courses_bloc.dart';
 import 'package:youth_action_handbook/bloc/news/news_bloc.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/course.dart';
 import 'package:youth_action_handbook/screens/forum.dart';
 import 'package:youth_action_handbook/services/api_service.dart';
 import 'package:youth_action_handbook/widgets/custom_bottom_nav_item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'about.dart';
 import 'home.dart';
@@ -74,10 +73,10 @@ class _DashboardState extends State<Dashboard> {
             });
           },
           items: [
-            BottomNavigationBarItem(label:'Home',icon: CustomBottomNavItem(icon:'assets/home.svg',isSelected:currentIndex==0)),
-            BottomNavigationBarItem(label:'Study',icon: CustomBottomNavItem(icon:'assets/note.svg',isSelected:currentIndex==1)),
-            BottomNavigationBarItem(label:'Forum',icon:CustomBottomNavItem(icon:'assets/comment.svg',isSelected:currentIndex==2)),
-            BottomNavigationBarItem(label:'About',icon:CustomBottomNavItem(icon:'assets/info_circle_outline.svg',isSelected:currentIndex==3)),
+            BottomNavigationBarItem(label:AppLocalizations.of(context)!.home,icon: CustomBottomNavItem(icon:'assets/home.svg',isSelected:currentIndex==0)),
+            BottomNavigationBarItem(label:AppLocalizations.of(context)!.study,icon: CustomBottomNavItem(icon:'assets/note.svg',isSelected:currentIndex==1)),
+            BottomNavigationBarItem(label:AppLocalizations.of(context)!.forum,icon:CustomBottomNavItem(icon:'assets/comment.svg',isSelected:currentIndex==2)),
+            BottomNavigationBarItem(label:AppLocalizations.of(context)!.about,icon:CustomBottomNavItem(icon:'assets/info_circle_outline.svg',isSelected:currentIndex==3)),
           ],
         ),
       )

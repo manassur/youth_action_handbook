@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
-import 'package:youth_action_handbook/models/single_choice_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/multiple_choice_item.dart';
 import 'package:youth_action_handbook/widgets/question_widget.dart';
-import 'package:youth_action_handbook/widgets/type_answer_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EvaluationScreen extends StatefulWidget {
   final String? courseId;
@@ -59,8 +58,8 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
       }
     });
     Flushbar(
-      title: "Quiz Saved",
-      message: "Great, you have taken this quiz",
+      title: AppLocalizations.of(context)!.quizSaved,
+      message: AppLocalizations.of(context)!.greatYouHaveTakenThisQuiz,
       backgroundColor: AppColors.colorYellow,
       duration: Duration(seconds: 1),
     ).show(context).then((value) => Navigator.of(context).pop());
@@ -104,23 +103,23 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                     children: [
                       Icon(Icons.share,color:AppColors.colorBluePrimary,size: 35,),
                       SizedBox(height: 12,),
-                      Text('Share',style:TextStyle(color:AppColors.colorBluePrimary))
+                      Text(AppLocalizations.of(context)!.share,style:TextStyle(color:AppColors.colorBluePrimary))
                     ],
                   ),
                   SizedBox(width: 10,),
                   Column(
                     children: [
                   Image.asset('assets/certify.png',height: 50,width: 50),
-                      Text('Certified',style:TextStyle(color:AppColors.colorBluePrimary))
+                      Text(AppLocalizations.of(context)!.certified,style:TextStyle(color:AppColors.colorBluePrimary))
                     ],
                   )
                 ],
               ),
-              Text('Evaluation 1',style: TextStyle(color: AppColors.colorBluePrimary),),
+              Text(AppLocalizations.of(context)!.evaluation1,style: TextStyle(color: AppColors.colorBluePrimary),),
              const  SizedBox(height: 10,),
               RichText(
                 text: TextSpan(
-                    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sodales diam mi, ut luctus sapien vehicula vitae. Fusce iaculis eget nisl at finibus. Etiam vel libero urna. Cras a ligula non sem ultricies lobortis vitae vitae velit.',
+                    text: 'Questions Can be accessed in the handbook',
                     style: TextStyle(
                         color: Colors.grey.shade600,
                         fontSize: 12,
@@ -161,7 +160,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                             QuestionWidget(
                                 number:question.id,
                                 question:question.question,
-                                instruction:'Type your answer in the text box below'),
+                                instruction:AppLocalizations.of(context)!.typeYourAnswerInTheTextBoxBelow),
 
                             SizedBox(height: 10,),
 
@@ -211,7 +210,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),
                               ))),
-                      child: Text(currentIndex==widget.quiz!.questions!.length-1?'Submit':'Next',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                      child: Text(currentIndex==widget.quiz!.questions!.length-1?AppLocalizations.of(context)!.submit:AppLocalizations.of(context)!.next,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
                       onPressed: () {
                         if(currentIndex==widget.quiz!.questions!.length-1){
                           calculateScoreAndSaveQuiz();

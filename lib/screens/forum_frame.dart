@@ -8,9 +8,7 @@ import 'package:youth_action_handbook/screens/topic_posts.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/topic_card.dart';
 import 'package:youth_action_handbook/widgets/trending_post_card.dart';
-
-import 'induvidual_post.dart';
-import 'new_post.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForumFrame extends StatefulWidget {
   final int? selectedIndex;
@@ -56,7 +54,7 @@ class _ForumFrameState extends State<ForumFrame> {
           SizedBox(height:20),
           RichText(
             text: TextSpan(
-                text: 'Topics',
+                text: AppLocalizations.of(context)!.topics,
                 style: TextStyle(
                     color: AppColors.colorBluePrimary, fontSize: 20,fontWeight: FontWeight.w900),
                 children: const <TextSpan>[
@@ -88,7 +86,7 @@ class _ForumFrameState extends State<ForumFrame> {
                 if (snapshot.hasError)
                 {
                   print(snapshot.error.toString());
-                  return Center(child: Text('Could not fetch topics at this time'+snapshot.error.toString()));
+                  return Center(child: Text(AppLocalizations.of(context)!.couldNotFetchTopicsAtThisTime+snapshot.error.toString()));
                 }
 
 
@@ -118,7 +116,7 @@ class _ForumFrameState extends State<ForumFrame> {
           SizedBox(height:20),
           RichText(
             text: TextSpan(
-                text: widget.selectedIndex==0?'Trending Posts':widget.selectedIndex==1?'Recommended Posts':'New Posts',
+                text: widget.selectedIndex==0?AppLocalizations.of(context)!.trendingPosts:widget.selectedIndex==1?AppLocalizations.of(context)!.recommendedPosts:AppLocalizations.of(context)!.newPosts,
                 style: TextStyle(
                     color: AppColors.colorBluePrimary, fontSize: 17,fontWeight: FontWeight.w900),
 
@@ -144,7 +142,7 @@ class _ForumFrameState extends State<ForumFrame> {
               if (snapshot.hasError)
               {   print(snapshot.error.toString());
 
-              return Center(child: Text('Could not fetch posts at this time'+snapshot.error.toString()));}
+              return Center(child: Text(AppLocalizations.of(context)!.couldNotFetchPostsAtThisTime+snapshot.error.toString()));}
 
               return ListView.builder(
                   shrinkWrap: true,

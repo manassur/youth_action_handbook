@@ -1,14 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
-import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/screens/individual_course_lesson.dart';
-import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/custom_tab.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'induvidual_course_about.dart';
 import 'induvidual_course_evaluation.dart';
 
@@ -43,13 +38,14 @@ class _IndividualCourseScreenState extends State<IndividualCourseScreen>  with T
   void dispose() {
     super.dispose();
   }
-  List<String> categoriesList =[
-    "Lessons",
-    "About",
-    "Evaluation"
-  ];
+  
   @override
   Widget build(BuildContext context) {
+    List<String> categoriesList =[
+    AppLocalizations.of(context)!.lessons,
+    AppLocalizations.of(context)!.about,
+    AppLocalizations.of(context)!.evaluation
+  ];
     MediaQueryData queryData;
     queryData = MediaQuery.of(context);
     return Scaffold(

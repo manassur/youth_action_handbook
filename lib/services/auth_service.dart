@@ -120,7 +120,7 @@ class AuthService {
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.message == 'Given String is empty or null') {
-        yahSnackBar(context, 'email and password can\'t be empty.');
+        yahSnackBar(context, "email and password can't be empty.");
       } else if (e.code == 'user-not-found') {
         yahSnackBar(context,
             'User not found, please enter the right email or press sign up to make a new account');

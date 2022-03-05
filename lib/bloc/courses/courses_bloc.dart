@@ -24,7 +24,7 @@ Stream<CoursesState> mapEventToState(CoursesEvent event) async* {
     yield CoursesLoadingState();
     try{
      CourseWithLanguageResponse courseWithLanguageResponse = await apiService.fetchCoursesFromServer();
-     print('hit course bloc');
+    //  print('hit course bloc');
       yield CoursesLoadedState(courseWithLanguageResponse:courseWithLanguageResponse, message: "Courses Updated");
     }catch(e){
       yield CoursesLoadFailureState(error: e.toString());

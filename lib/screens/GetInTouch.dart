@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class GetInTouch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class GetInTouch extends StatelessWidget {
         elevation: 0,
         title:  RichText(
           text: TextSpan(
-              text: 'Impressum',
+              text: AppLocalizations.of(context)!.impressum,
               style: TextStyle(
                   color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
               children: const <TextSpan>[
@@ -45,14 +47,14 @@ class GetInTouch extends StatelessWidget {
                 child: Flexible(
                   
                   child: Text(
-                    'This App\'s contents are the sole responsibility of the Project Great Lakes Youth Network for Dialogue and Peace and do not necessarily reflect the views of the Partners.',
+                    AppLocalizations.of(context)!.thisAppsContentsAreTheResponsibility,
                   ),
                 ),
               ),
           ],),
           StepWidget2(
             indicator: Icons.location_city_rounded,
-            title: 'Address',
+            title: AppLocalizations.of(context)!.address,
             nobullets: true,
             nolines: true,
             text: '289,Alindi av./Himbi; Goma\nRépublique Démocratique du Congo',
@@ -66,14 +68,14 @@ class GetInTouch extends StatelessWidget {
           ),
           StepWidget2(
             indicator: Icons.email_rounded,
-            title: 'Email',
+            title: AppLocalizations.of(context)!.email,
             nobullets: true,
             nolines: true,
             text: 'info@greatlakesyouth.africa',
           ),
           // Padding(
           //       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-          //       child: Text('App Developed by:'),
+          //       child: Text(AppLocalizations.of(context)!.appDevelopedBy),
           //     ),
           // Padding(
           //     padding: const EdgeInsets.symmetric(horizontal: 16.0),

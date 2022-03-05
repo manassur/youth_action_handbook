@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:profanity_filter/profanity_filter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewPostScreen extends StatefulWidget {
   const NewPostScreen({Key? key}) : super(key: key);
@@ -57,10 +57,10 @@ class _NewPostScreenState extends State<NewPostScreen> {
     FocusScope.of(context).unfocus();
     if (!(_theCaption.isNotEmpty) || !(_theDescription.isNotEmpty) || _selectedTopic == null) {
       // toast that fields cannot be empty
-      yahSnackBar(context, "Please fill in all fields before submitting.");
+      yahSnackBar(context, AppLocalizations.of(context)!.pleaseFillInAllFieldsBeforeSubmitting);
     }
     else if(filter.hasProfanity(_theCaption) || filter.hasProfanity(_theDescription)){
-      yahSnackBar(context,'passed test 1. The topic is:' + _selectedTopic.toString());
+      yahSnackBar(context,AppLocalizations.of(context)!.sorryProfanityWasDetectedInYourTextPleaseEditAndTrySubmittingAgain);
     }
     else {
       if (!_isLoading) {
@@ -89,13 +89,13 @@ class _NewPostScreenState extends State<NewPostScreen> {
           setState(() {
             _isLoading = false;
           }),
-          yahSnackBar(context, 'Successfully Posted'),
+          yahSnackBar(context, AppLocalizations.of(context)!.successfullyPosted),
           Navigator.pop(context,true)
         }).catchError((e) {
           setState(() {
             _isLoading = false;
           });
-          yahSnackBar(context,'could not create post at this time');
+          yahSnackBar(context,AppLocalizations.of(context)!.couldNotCreatePostAtThisTime);
         });
       }
       }
@@ -141,7 +141,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 children: [
                   RichText(
                     text: TextSpan(
-                        text: 'Make a Post',
+                        text: AppLocalizations.of(context)!.makeaPost,
                         style: TextStyle(
                             color: AppColors.colorBluePrimary, fontSize: 25,fontWeight: FontWeight.w900),
                         children: const <TextSpan>[
@@ -152,7 +152,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                   SizedBox(height: 10,),
                   SizedBox(
                     width: 250,
-                    child: Text("Find topics you like to read, engage with communities and ask questions.",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.grey[500]),),
+                    child: Text(AppLocalizations.of(context)!.findTopicsYouLikeToReadEngageWithCommunitiesAndAskQuestions,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.grey[500]),),
                   ),
 
 
@@ -200,7 +200,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                                   );
                                 }).toList(),
                                 hint:Text(
-                                  "Choose a Topic",
+                                  AppLocalizations.of(context)!.chooseaTopic,
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -216,7 +216,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     ],
                   ),
                   SizedBox(height: 40,),
-                  Text("Post your question or start a discussion.",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.grey[500]),),
+                  Text(AppLocalizations.of(context)!.postYourQuestionOrStartaDiscussion,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.grey[500]),),
                   SizedBox(height: 25,),
                   Container(
                       height: 50,
@@ -235,8 +235,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
                               },
                               style: const TextStyle(color: Colors.black54,fontSize: 15,fontWeight: FontWeight.w100),
                               textAlignVertical: TextAlignVertical.center,
-                              decoration: const InputDecoration(
-                                hintText: "Title",
+                              decoration: InputDecoration(
+                                hintText: AppLocalizations.of(context)!.title,
                                 border: InputBorder.none,
                                 floatingLabelBehavior: FloatingLabelBehavior.never,
                                 hintStyle:  TextStyle(color: Colors.black54,fontSize: 15,fontWeight: FontWeight.w100),
@@ -256,8 +256,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
                               textInputAction: TextInputAction.next,
                               style: const TextStyle(color: Colors.black54,fontSize: 15,fontWeight: FontWeight.w100),
                               textAlignVertical: TextAlignVertical.center,
-                              decoration: const InputDecoration(
-                                hintText: "description",
+                              decoration: InputDecoration(
+                                hintText: AppLocalizations.of(context)!.description,
                                 border: InputBorder.none,
                                 floatingLabelBehavior: FloatingLabelBehavior.never,
                                 hintStyle:  TextStyle(color: Colors.black54,fontSize: 15,fontWeight: FontWeight.w100),
@@ -278,7 +278,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                                       borderRadius: BorderRadius.circular(30.0),
                                     ))),
                             child:
-                            !_isLoading? Text('Make a Post',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),):
+                            !_isLoading? Text(AppLocalizations.of(context)!.makeaPost,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),):
                             const Padding(
                               padding: EdgeInsets.only(right: 10.0),
                               child: Center(

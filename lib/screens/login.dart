@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -48,29 +48,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 150,
                         ),
                         RichText(
-                          text: const TextSpan(
-                              text: 'Our ',
+                          text: TextSpan(
+                              text: AppLocalizations.of(context)!.our,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w200),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Diversity.',
+                                  text: AppLocalizations.of(context)!.diversity,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700),
                                 ),
                                 TextSpan(
-                                  text: ' Our ',
+                                  text: AppLocalizations.of(context)!.our,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w200),
                                 ),
                                 TextSpan(
-                                  text: 'Opportunity',
+                                  text: AppLocalizations.of(context)!.opportunity,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         fontWeight: FontWeight.w100),
                                     textAlignVertical: TextAlignVertical.center,
                                     decoration: InputDecoration(
-                                      hintText: "Email",
+                                      hintText: AppLocalizations.of(context)!.email,
                                       prefixIcon: Icon(
                                         Icons.mail_outline,
                                         color: AppColors.colorGreenPrimary,
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: Colors.white, fontSize: 15),
                                     textAlignVertical: TextAlignVertical.center,
                                     decoration: InputDecoration(
-                                      hintText: "Password",
+                                      hintText: AppLocalizations.of(context)!.password,
                                       prefixIcon: Icon(
                                         Icons.lock_outlined,
                                         color: AppColors.colorGreenPrimary,
@@ -144,13 +144,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                         onPressed: () => Navigator.pushNamed(
                                             context, RouteNames.signUpScreen),
                                         child:
-                                            const Text(AppTexts.signUpPrompt)),
+                                            Text(AppLocalizations.of(context)!.signUpPrompt)),
                                     const Text('|'),
                                     TextButton(
                                         onPressed: () => Navigator.pushNamed(
                                             context, RouteNames.resetPassword),
                                         child:
-                                            const Text(AppTexts.forgotPassword))
+                                            Text(AppLocalizations.of(context)!.forgotPassword))
                                   ]),
 
                         // const SizedBox(height:20,),
@@ -187,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           }
                                         }
                                       },
-                                      child: const Text(AppTexts.login,
+                                      child: Text(AppLocalizations.of(context)!.login,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.w400)),
@@ -225,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             MainAxisAlignment.spaceAround,
                                         children: [
                                           SvgPicture.asset('assets/google.svg'),
-                                          const Text(AppTexts.loginWithGoogle,
+                                          Text(AppLocalizations.of(context)!.loginWithGoogle,
                                               style: TextStyle(
                                                   color: Colors.white)),
                                         ],
@@ -264,7 +264,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             MainAxisAlignment.spaceAround,
                                         children: [
                                           SvgPicture.asset('assets/apple.svg'),
-                                          const Text(AppTexts.loginWithApple,
+                                          Text(AppLocalizations.of(context)!.loginWithApple,
                                               style: TextStyle(
                                                   color: Colors.white)),
                                         ],
@@ -287,10 +287,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const SizedBox(
+                            SizedBox(
                                 width: 100,
                                 child: Text(
-                                  'Co Founded by the European Union',
+                                  AppLocalizations.of(context)!.coFoundedByTheEuropeanUnion,
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white,

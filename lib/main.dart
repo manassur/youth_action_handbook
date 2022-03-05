@@ -61,6 +61,8 @@ class MyApp extends StatelessWidget {
 
 class AppWrapper extends StatefulWidget {
   AppWrapper({Key? key}) : super(key: key);
+  static GlobalKey<NavigatorState> navigatorKey = 
+  GlobalKey<NavigatorState>();
 
    /*
   To Change Locale of App
@@ -153,6 +155,7 @@ class _AppWrapperState extends State<AppWrapper> {
 
               },
               home: (user != null)? const Dashboard() : const InitialScreen(),
+              navigatorKey: AppWrapper.navigatorKey,
 
             ),
         );
@@ -173,6 +176,7 @@ class RouteNames{
   static const partners = '/partners';
 
 }
+
 
 class OneSignalWrapper{
   static void handleClickNotification(BuildContext context) {

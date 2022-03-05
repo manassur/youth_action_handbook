@@ -4,7 +4,7 @@ import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/widgets/progress_header_widget.dart';
 import 'package:youth_action_handbook/widgets/title_body_widget.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IndividualCourseAbout extends StatefulWidget {
   // final Courses courses;
@@ -26,17 +26,17 @@ class _IndividualCourseAboutState extends State<IndividualCourseAbout> {
           children: [
             ProgressHeaderWidget(courses:widget.courses!,),
             SizedBox(height: 20,),
-            TitleBodyWidget(title: "Overview", courses: widget.courses!.overview,),
+            TitleBodyWidget(title: AppLocalizations.of(context)!.overview, courses: widget.courses!.overview,),
             SizedBox(height: 20,),
-            TitleBodyWidget(title: "Objectives",courses: widget.courses!.objectives),
+            TitleBodyWidget(title: AppLocalizations.of(context)!.objectives,courses: widget.courses!.objectives),
             SizedBox(height: 20,),
-            TitleBodyWidget(title: "Approach",courses: widget.courses!.approach),
+            TitleBodyWidget(title: AppLocalizations.of(context)!.approach,courses: widget.courses!.approach),
             SizedBox(height: 20,),
-            TitleBodyWidget(title: "References",courses: widget.courses!.references),
+            TitleBodyWidget(title: AppLocalizations.of(context)!.references,courses: widget.courses!.references),
             SizedBox(height: 20,),
             RichText(
               text: TextSpan(
-                  text: 'Did you like this Course?',
+                  text: AppLocalizations.of(context)!.didYouLikeThisCourse,
                   style: TextStyle(
                       color: AppColors.colorBluePrimary,
                       fontSize: 25,
@@ -46,7 +46,7 @@ class _IndividualCourseAboutState extends State<IndividualCourseAbout> {
             SizedBox(height: 10,),
             RichText(
               text: TextSpan(
-                text:'Rate this course',
+                text:AppLocalizations.of(context)!.rateThisCourse,
                   style: TextStyle(
                       color: Colors.grey.shade600,
                       fontSize: 15,
@@ -111,7 +111,7 @@ class _IndividualCourseAboutState extends State<IndividualCourseAbout> {
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),
                               ))),
-                      child: Text('Rate',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                      child: Text(AppLocalizations.of(context)!.rate,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
                       onPressed: () {
                         _modalBottomSheetMenu();
                       },
@@ -149,7 +149,7 @@ class _IndividualCourseAboutState extends State<IndividualCourseAbout> {
                     children: [
                       RichText(
                         text: TextSpan(
-                            text: 'Rate this Course',
+                            text: AppLocalizations.of(context)!.rateThisCourse,
                             style: TextStyle(
                                 color: AppColors.colorBluePrimary,
                                 fontSize: 25,
@@ -176,7 +176,7 @@ class _IndividualCourseAboutState extends State<IndividualCourseAbout> {
 
                       RichText(
                         text: TextSpan(
-                            text:'Tap on the star you find appropriate',
+                            text:AppLocalizations.of(context)!.tapOnTheStarYouFindAppropriate,
                             style: TextStyle(
                                 color: Colors.grey.shade600,
                                 fontSize: 15,

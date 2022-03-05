@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PartnersScreen extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _PartnersScreenState extends State<PartnersScreen> {
         elevation: 0,
         title:  RichText(
           text: TextSpan(
-              text: 'Partners',
+              text: AppLocalizations.of(context)!.partners,
               style: TextStyle(
                   color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
               children: const <TextSpan>[
@@ -65,7 +65,7 @@ class _PartnersScreenState extends State<PartnersScreen> {
                 Image.asset('assets/partners.png', width: 150, height: 150,
                  ),
 
-                    Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy ',
+                    Text('',
                       style: TextStyle(color: Color(0XFFA7A7A7)),
                       textAlign: TextAlign.justify,
 
@@ -98,7 +98,7 @@ class _PartnersScreenState extends State<PartnersScreen> {
                   Image.asset('assets/partners1.png', width: 150, height: 150,
                   ),
 
-                  Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy ',
+                  Text('',
                     style: TextStyle(color: Color(0XFFA7A7A7),),
                     textAlign: TextAlign.justify,
                   ),
@@ -128,7 +128,7 @@ class _PartnersScreenState extends State<PartnersScreen> {
                 children: [
                   Image.asset('assets/partners2.png', width: 150, height: 150,
                   ),
-                  Text('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy ',
+                  Text('',
                     style: TextStyle(color: Color(0XFFA7A7A7)),
                     textAlign: TextAlign.justify,
 

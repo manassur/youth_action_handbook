@@ -127,7 +127,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                 ),
               ),
               const SizedBox(height: 10,),
-              const Text("it's a great day to learn something new.",style: TextStyle(fontWeight: FontWeight.w100,fontSize: 12,color: Colors.black87),),
+              Text( AppLocalizations.of(context)!.itsaGreatDayToLearnSomethingNew ,style: TextStyle(fontWeight: FontWeight.w100,fontSize: 12,color: Colors.black87),),
               const SizedBox(height: 25,),
               Row(
                 children: [
@@ -146,7 +146,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                               style: const TextStyle(color: Colors.black,fontSize: 15,fontWeight: FontWeight.w100),
                               textAlignVertical: TextAlignVertical.center,
                               decoration: InputDecoration(
-                                hintText: "Search Anything",
+                                hintText: AppLocalizations.of(context)!.searchAnything,
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: SvgPicture.asset('assets/search.svg',color: Colors.grey,width: 20,height: 20,),
@@ -177,7 +177,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                 ],
               ),
             const  SizedBox(height: 25,),
-              Text("Recommended courses",style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary),),
+              Text(AppLocalizations.of(context)!.recommendedCourses,style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary),),
              const SizedBox(height: 10,),
               SizedBox(
                 height: 300,
@@ -196,12 +196,12 @@ class _HomeFragmentState extends State<HomeFragment> {
                             width: 150.0,
                             height: 50,
                             child: ElevatedButton(
-                              child: const Text('Tap to Reload'),
+                              child: Text(AppLocalizations.of(context)!.tapToReload),
                               onPressed: () {
                                 {
                                   setState(() {
                                     langProvider!.setupCourseLanguages();
-                                    yahSnackBar(context, 'Trying to Reload. If it fails, try restarting the app');
+                                    yahSnackBar(context, AppLocalizations.of(context)!.tryingToReloadIfItFailsTryRestartingTheApp);
                                   });
                                 }
                               },
@@ -242,7 +242,7 @@ class _HomeFragmentState extends State<HomeFragment> {
               ),
 
              const SizedBox(height: 25,),
-              Text("Popular topics",style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary),),
+              Text(AppLocalizations.of(context)!.popularTopics,style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary),),
              const SizedBox(height: 10,),
 
               SizedBox(
@@ -266,7 +266,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                       );
                     }
                     if (snapshot.hasError)
-                    { return Center(child: Text('Could not fetch topics at this time'+snapshot.error.toString()));}
+                    { return Center(child: Text(AppLocalizations.of(context)!.couldNotFetchPostsAtThisTime +snapshot.error.toString()));}
 
                     return   GridView.builder(
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -300,24 +300,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                 ),
 
               ),
-              // GridView.builder(
-              //   itemBuilder: (ctx,pos){
-              //     return PopularItemCard(popularcategoryModel: AppTexts.popularCategoryItems[pos]);
-              //   },
-              //   padding: const EdgeInsets.all(10.0),
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   shrinkWrap: true,
-              //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 2,
-              //       crossAxisSpacing: 15.0,
-              //       mainAxisSpacing: 15.0,
-              //       childAspectRatio: 2.5
-              //   ),
-              //   itemCount: AppTexts.popularCategoryItems.length,
-              //
-              // ),
               const SizedBox(height: 25,),
-              Text("Updates",style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary,),),
+              Text(AppLocalizations.of(context)!.updates,style: TextStyle(fontWeight: FontWeight.bold,color: AppColors.colorBluePrimary,),),
               const SizedBox(height: 10,),
 
               BlocListener<NewsBloc, NewsState>(
@@ -325,7 +309,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                   if ( state is NewsLoadedState && state.message != null ) {
                   }
                   else if ( state is NewsLoadFailureState ) {
-                    yahSnackBar(context, "Could not load news update at this time");
+                    yahSnackBar(context, AppLocalizations.of(context)!.couldNotLoadNewsUpdateAtThisTime);
                     
                   }
                 },
@@ -356,7 +340,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                       return buildErrorUi (state.error.toString() );
                     }
                     else {
-                      return buildErrorUi ( "Something went wrong!" );
+                      return buildErrorUi ( AppLocalizations.of(context)!.somethingWentWrong );
                     }
                   },
                 ),

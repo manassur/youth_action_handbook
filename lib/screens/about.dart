@@ -13,6 +13,7 @@ import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class AboutFragment extends StatefulWidget {
@@ -21,30 +22,6 @@ class AboutFragment extends StatefulWidget {
 }
 
 class _AboutFragmentState extends State<AboutFragment> {
-
-   //OTHER COLUMN
-  List otherItems = [
-    {
-      "leading_icon": Icons.link,
-      "title": "Impressum",
-      "trailing_icon": Icons.keyboard_arrow_right_sharp,
-    },
-    {
-      "leading_icon": Icons.check_circle,
-      "title": "Privacy Policy",
-      "trailing_icon": Icons.keyboard_arrow_right_sharp,
-    },
-    {
-      "leading_icon": Icons.info_outline,
-      "title": "Terms & Conditions",
-      "trailing_icon": Icons.keyboard_arrow_right_sharp,
-    },
-    {
-      "leading_icon": Icons.login_outlined,
-      "title": "Sign Out",
-      "trailing_icon": Icons.keyboard_arrow_right_sharp,
-    },
-  ];
 
 
   @override
@@ -57,14 +34,14 @@ class _AboutFragmentState extends State<AboutFragment> {
     List settingItems = [
       {
         "leading_icon": Icons.person_outline,
-        "title": 'Edit Profile',
+        "title": AppLocalizations.of(context)!.editProfile,
         "trailing_icon": Icons.chevron_right,
         "page": RouteNames.editProfile,
       },
 
       {
         "leading_icon": Icons.email_outlined,
-        "title": 'Edit Login Information',
+        "title": AppLocalizations.of(context)!.editLoginInformation,
         "trailing_icon": Icons.chevron_right,
         "page": RouteNames.editLogin,
       },
@@ -74,31 +51,31 @@ class _AboutFragmentState extends State<AboutFragment> {
   List projectItems = [
     {
       "leading_icon": Icons.person_outline,
-      "title": "About the project",
+      "title": AppLocalizations.of(context)!.aboutTheProject,
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
       "page": "https://greatlakesyouth.africa/"+locale+about+"/",
     },
     {
       "leading_icon": Icons.people,
-      "title": "Team",
+      "title": AppLocalizations.of(context)!.team,
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
       "page": "https://greatlakesyouth.africa/"+locale+about+"/team/",
     },
     {
       "leading_icon": Icons.check_circle,
-      "title": "Partners",
+      "title": AppLocalizations.of(context)!.partners,
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
       "page": "https://greatlakesyouth.africa/"+locale+about+"/partners/",
     },
     {
       "leading_icon": Icons.add_business,
-      "title": "Youth Initiatives",
+      "title": AppLocalizations.of(context)!.youthInitiatives,
       "trailing_icon": Icons.keyboard_arrow_right_sharp,
       "page": "https://greatlakesyouth.africa/"+locale+"/initiatives/",
     },
     {
       "leading_icon": Icons.info_outline,
-      "title": "App version",
+      "title": AppLocalizations.of(context)!.appVersion,
       "app_version": "1.1.0" ,
       "page": "",
     },
@@ -159,7 +136,7 @@ class _AboutFragmentState extends State<AboutFragment> {
         ),
         title:  RichText(
           text: TextSpan(
-              text: 'About',
+              text: AppLocalizations.of(context)!.about,
               style: TextStyle(
                   color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
               children: const <TextSpan>[
@@ -184,11 +161,11 @@ class _AboutFragmentState extends State<AboutFragment> {
                   color: AppColors.colorBlueSecondary,
                   width: MediaQuery.of(context).size.width,
                   height: 30,
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.only(left: 35.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("SETTINGS",
+                      child: Text(AppLocalizations.of(context)!.settings,
                         style: TextStyle(color: Colors.white),),
                     ),
                   )),
@@ -240,7 +217,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                         padding:  EdgeInsets.only(left: 35.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("THE PROJECT",
+                          child: Text(AppLocalizations.of(context)!.theProject,
                             style: TextStyle(color: Colors.white),),
                         ),
                       )),
@@ -277,7 +254,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                                       // await launch(url, forceWebView: true, forceSafariVC: true, );
                                       await launch(url, forceWebView: false);
                                     } else {
-                                      yahSnackBar(context, "Can't Open Website");
+                                      yahSnackBar(context, AppLocalizations.of(context)!.cantOpenWebsite);
                                     }
                                   }
                                   launchDrop();
@@ -307,7 +284,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                         padding:  EdgeInsets.only(left: 35.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text("Social Media",
+                          child: Text(AppLocalizations.of(context)!.socialMedia,
                             style: TextStyle(color: Colors.white),),
                         ),
                       )),
@@ -347,7 +324,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                                       if(socialItems[index]['title'] == 'App Version'){
                                         yahSnackBar(context, socialItems[index]['page']);
                                       }
-                                      yahSnackBar(context, "Can't Open Website");
+                                      yahSnackBar(context, AppLocalizations.of(context)!.cantOpenWebsite);
                                     }
                                   }
                                   socialDrop();
@@ -374,11 +351,11 @@ class _AboutFragmentState extends State<AboutFragment> {
                     color: AppColors.colorBlueSecondary,
                     width: MediaQuery.of(context).size.width,
                     height: 30,
-                    child: const Padding(
+                    child: Padding(
                       padding: EdgeInsets.only(left: 20.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("OTHER",
+                        child: Text(AppLocalizations.of(context)!.other,
                           style: TextStyle(color: Colors.white),),
                       ),
                     )),
@@ -391,7 +368,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                       
                     },
                     leading: Icon(Icons.link, color: AppColors.colorPurple),
-                    title: Text("Impressum"),
+                    title: Text(AppLocalizations.of(context)!.impressum),
                     trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
                   ),
                 ),
@@ -410,7 +387,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                       
                     },
                     leading: Icon(Icons.check_circle, color: AppColors.colorPurple),
-                    title: Text("Privacy Policy"),
+                    title: Text(AppLocalizations.of(context)!.privacyPolicy),
                     trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
                   ),
                 ),
@@ -428,7 +405,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                       
                     },
                     leading: Icon(Icons.info_outline, color: AppColors.colorPurple),
-                    title: Text("Terms and Conditions"),
+                    title: Text(AppLocalizations.of(context)!.termsAndConditions),
                     trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
                   ),
                 ),
@@ -441,10 +418,10 @@ class _AboutFragmentState extends State<AboutFragment> {
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: ListTile(
                     onTap: () async{
-                        await DefaultCacheManager().emptyCache().then((value) => yahSnackBar(context, 'App Cache Cleared'));
+                        await DefaultCacheManager().emptyCache().then((value) => yahSnackBar(context, AppLocalizations.of(context)!.appCacheCleared));
                     },
                     leading: Icon(Icons.cached, color: AppColors.colorPurple),
-                    title: Text("Clear Cache"),
+                    title: Text(AppLocalizations.of(context)!.clearCache),
                     // trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
                   ),
                 ),
@@ -463,7 +440,7 @@ class _AboutFragmentState extends State<AboutFragment> {
                                 await _auth.signOut(context);
                     },
                     leading: Icon(Icons.login_outlined, color: AppColors.colorPurple),
-                    title: Text("Sign Out"),
+                    title: Text(AppLocalizations.of(context)!.signOut),
                     // trailing: Icon(Icons.keyboard_arrow_right_sharp,color: Colors.black, size: 27),
                   ),
                 ),
@@ -472,35 +449,6 @@ class _AboutFragmentState extends State<AboutFragment> {
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,),
                 ),
-
-
-                // Padding(
-                //   padding: const EdgeInsets.only(left:15.0, right: 15.0),
-                //   child: ListView.separated(
-                //     shrinkWrap: true,
-                //     physics: const NeverScrollableScrollPhysics(),
-                //     itemCount: otherItems.length,
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return SizedBox(
-                //         height: 50,
-                //         child: ListTile(
-                //           leading: Icon(
-                //             otherItems[index]['leading_icon'], color: AppColors.colorPurple,
-                //           ),
-                //           title: Text(
-                //             otherItems[index]['title'],
-                //           ),
-                //           trailing: Icon(
-                //             otherItems[index]['trailing_icon'],color: Colors.black, size: 27,
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //     separatorBuilder: (BuildContext context, int index) {
-                //       return Divider(height: 1, color: Colors.grey, indent: 15, endIndent: 10,);
-                //     },
-                //   ),
-                // ),
 
               ],
             ),

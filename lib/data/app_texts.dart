@@ -8,7 +8,7 @@ import 'package:youth_action_handbook/models/topic_model.dart';
 import 'package:youth_action_handbook/models/trending_post_model.dart';
 import 'package:youth_action_handbook/models/updates_model.dart';
 
-class AppTexts{
+class AppTextszz{
   static const String youthActionHandbook ='Youth Action Handbook';
   static const String next ='Next';
   static const String save ='Save';

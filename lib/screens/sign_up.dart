@@ -1,7 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
@@ -9,7 +8,7 @@ import 'package:youth_action_handbook/widgets/common.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -89,7 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             SizedBox(
                                 width: 170,
                                 child: Text(
-                                  'Getting Started',
+                                  AppLocalizations.of(context)!.gettingStarted,
                                   style: TextStyle(
                                       color: AppColors.colorYellow,
                                       fontSize: 40,
@@ -135,10 +134,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             const SizedBox(
                               width: 5,
                             ),
-                            const SizedBox(
+                            SizedBox(
                                 width: 100,
                                 child: Text(
-                                  'Co Founded by the European Union',
+                                  AppLocalizations.of(context)!.coFoundedByTheEuropeanUnion,
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white,
@@ -191,11 +190,11 @@ class _NameWidgetState extends State<NameWidget> {
         Column(
           children: [
             Row(
-              children: const [
+              children: [
                 SizedBox(
                     width: 200,
                     child: Text(
-                      'What is your Name?',
+                      AppLocalizations.of(context)!.whatIsYourName,
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     )),
               ],
@@ -219,7 +218,7 @@ class _NameWidgetState extends State<NameWidget> {
                             fontWeight: FontWeight.w100),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
-                          hintText: "Name",
+                          hintText: AppLocalizations.of(context)!.name,
                           prefixIcon: Icon(
                             Icons.person_outline,
                             color: AppColors.colorGreenPrimary,
@@ -240,10 +239,10 @@ class _NameWidgetState extends State<NameWidget> {
           width: 200.0,
           height: 50,
           child: ElevatedButton(
-            child: const Text(AppTexts.next),
+            child: Text(AppLocalizations.of(context)!.next),
             onPressed: () {
               if (nameController.text == null || nameController.text == '') {
-                yahSnackBar(context, 'Please enter your name');
+                yahSnackBar(context, AppLocalizations.of(context)!.pleaseEnterYourName);
               } else {
                 setState(() {
                   widget.setValue(0, nameController.text);
@@ -287,11 +286,11 @@ class _EmailWidgetState extends State<EmailWidget> {
         Column(
           children: [
             Row(
-              children: const [
+              children: [
                 SizedBox(
                     width: 200,
                     child: Text(
-                      'What is your Email?',
+                      AppLocalizations.of(context)!.whatIsYourEmail,
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     )),
               ],
@@ -315,7 +314,7 @@ class _EmailWidgetState extends State<EmailWidget> {
                             fontWeight: FontWeight.w100),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
-                          hintText: "Email",
+                          hintText: AppLocalizations.of(context)!.email,
                           prefixIcon: Icon(
                             Icons.mail_outline,
                             color: AppColors.colorGreenPrimary,
@@ -336,14 +335,14 @@ class _EmailWidgetState extends State<EmailWidget> {
           width: 200.0,
           height: 50,
           child: ElevatedButton(
-            child: Text(AppTexts.next),
+            child: Text(AppLocalizations.of(context)!.next),
             onPressed: () {
               if (emailController.text.isValidEmail()) {
                 setState(() {
                   widget.setValue(1, emailController.text);
                 });
               } else {
-                yahSnackBar(context, 'Please enter a valid email address');
+                yahSnackBar(context, AppLocalizations.of(context)!.pleaseEnteraValidEmailAddress);
               }
             },
             style: ButtonStyle(
@@ -403,11 +402,11 @@ class _CountryWidgetState extends State<CountryWidget> {
         Column(
           children: [
             Row(
-              children: const [
+              children: [
                 SizedBox(
                     width: 200,
                     child: Text(
-                      'Where are you from?',
+                      AppLocalizations.of(context)!.whereAreYouFrom,
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     )),
               ],
@@ -464,7 +463,7 @@ class _CountryWidgetState extends State<CountryWidget> {
           width: 200.0,
           height: 50,
           child: ElevatedButton(
-            child: Text(AppTexts.next),
+            child: Text(AppLocalizations.of(context)!.next),
             onPressed: () {
               widget.setValue(2, country);
             },
@@ -505,11 +504,11 @@ class _PasswordWidgetState extends State<PasswordWidget> {
         Column(
           children: [
             Row(
-              children: const [
+              children: [
                 SizedBox(
                     width: 200,
                     child: Text(
-                      'Choose a password',
+                      AppLocalizations.of(context)!.chooseaPassword,
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     )),
               ],
@@ -531,7 +530,7 @@ class _PasswordWidgetState extends State<PasswordWidget> {
                             const TextStyle(color: Colors.white, fontSize: 15),
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
-                          hintText: "Password",
+                          hintText: AppLocalizations.of(context)!.password,
                           prefixIcon: Icon(
                             Icons.lock_outlined,
                             color: AppColors.colorGreenPrimary,
@@ -550,12 +549,12 @@ class _PasswordWidgetState extends State<PasswordWidget> {
           width: 200.0,
           height: 50,
           child: ElevatedButton(
-            child: Text(AppTexts.next),
+            child: Text(AppLocalizations.of(context)!.next),
             onPressed: () {
               if (passwordController.text == '' ||
                   passwordController.text.length < 6) {
                 yahSnackBar(
-                    context, 'please pick a password longer than 6 characters');
+                    context, AppLocalizations.of(context)!.pleasePickaPasswordLongerThan6Characters);
               } else {
                 setState(() {
                   widget.setValue(3, passwordController.text);

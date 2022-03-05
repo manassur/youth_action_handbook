@@ -1,22 +1,18 @@
 
 import 'dart:io';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/user.dart';
-import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
-import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -70,7 +66,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         "leading_icon": Icons.work_outline,
         "value": appUser.organisation,
         "display_value": appUser.organisation,
-        "leading": "Organisation",
+        "leading": AppLocalizations.of(context)!.organisation,
         "name": "organisation",
         "trailing_icon": Icons.edit,
         "index":1
@@ -78,8 +74,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       {
         "leading_icon": Icons.language,
         "value": appUser.language.isEmpty? 'en' : appUser.language,
-        "display_value": (appUser.language == 'fr')? AppTexts.french : AppTexts.english,
-        "leading": "Language",
+        "display_value": (appUser.language == 'fr')? AppLocalizations.of(context)!.french : AppLocalizations.of(context)!.english,
+        "leading": AppLocalizations.of(context)!.language,
         "name": "language",
         "trailing_icon": Icons.edit,
         "index":2
@@ -87,8 +83,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
        {
         "leading_icon": Icons.female,
         "value": appUser.gender.isEmpty?  'O' : appUser.gender,
-        "display_value": (appUser.gender == 'F')? AppTexts.female : (appUser.gender == 'M')? AppTexts.male : AppTexts.other,
-        "leading": "Gender",
+        "display_value": (appUser.gender == 'F')? AppLocalizations.of(context)!.female : (appUser.gender == 'M')? AppLocalizations.of(context)!.male : AppLocalizations.of(context)!.other,
+        "leading": AppLocalizations.of(context)!.gender,
         "name": "gender",
         "trailing_icon": Icons.edit,
         "index":3
@@ -97,7 +93,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         "leading_icon": Icons.language,
         "value": appUser.country.isEmpty ?  'UG': appUser.country,
         "display_value": appUser.country.isEmpty ? CountryCode.fromCountryCode('UG').name : CountryCode.fromCountryCode(appUser.country).name,
-        "leading": "Country",
+        "leading": AppLocalizations.of(context)!.country,
         "name": "country",
         "trailing_icon": Icons.edit,
         "index":4
@@ -150,7 +146,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         
         await showDialog(context: context, builder: (BuildContext context) {
           return  SimpleDialog(
-              title:  Text("Edit " + item['leading'].toString()),
+              title:  Text(AppLocalizations.of(context)!.edit + ' ' + item['leading'].toString()),
                 contentPadding: const EdgeInsets.all(12),
                 children: [
 
@@ -160,9 +156,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           icon: item['leading_icon'],
                           initialValue: Localizations.localeOf(context).toString() ,
                           values: 
-                          const [
-                            DropdownMenuItem(child: Text(AppTexts.english),value: 'en',),
-                            DropdownMenuItem(child: Text(AppTexts.french),value: 'fr',),],
+                           [
+                            DropdownMenuItem(child: Text(AppLocalizations.of(context)!.english),value: 'en',),
+                            DropdownMenuItem(child: Text(AppLocalizations.of(context)!.french),value: 'fr',),],
 
                           setValue:  (index,value) async{
                             try{
@@ -172,7 +168,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               });
                               message = await DatabaseService(uid: appUser.uid).updateField(item['name'], value);
                             }on FirebaseException catch(e){
-                              message = e.message ?? 'An Error Occured';
+                              message = e.message ?? AppLocalizations.of(context)!.anErrorOccured;
                             }catch (e){
                               message = e.toString();
                             }
@@ -190,10 +186,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           icon: item['leading_icon'],
                           initialValue: item['value'] ,
                           values: 
-                          const [
-                            DropdownMenuItem(child: Text(AppTexts.female),value:'F',),
-                            DropdownMenuItem(child: Text(AppTexts.male),value:'M',),
-                            DropdownMenuItem(child: Text(AppTexts.other),value:'O',)
+                          [
+                            DropdownMenuItem(child: Text(AppLocalizations.of(context)!.female),value:'F',),
+                            DropdownMenuItem(child: Text(AppLocalizations.of(context)!.male),value:'M',),
+                            DropdownMenuItem(child: Text(AppLocalizations.of(context)!.other),value:'O',)
 
                           ],
 
@@ -202,7 +198,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               loading = true;
                               message = await DatabaseService(uid: appUser.uid).updateField(item['name'], value);
                             }on FirebaseException catch(e){
-                              message = e.message ?? 'An Error Occured';
+                              message = e.message ?? AppLocalizations.of(context)!.anErrorOccured;
                             }catch (e){
                               message = e.toString();
                             }
@@ -221,7 +217,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         loading = true;
                                         message = await DatabaseService(uid: appUser.uid).updateField(item['name'], value);
                                       }on FirebaseException catch(e){
-                                        message = e.message ?? 'An Error Occured';
+                                        message = e.message ?? AppLocalizations.of(context)!.anErrorOccured;
                                       }catch (e){
                                         message = e.toString();
                                       }
@@ -240,7 +236,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           loading = true;
                                           message = await DatabaseService(uid: appUser.uid).updateField(item['name'], value);
                                         }on FirebaseException catch(e){
-                                          message = e.message ?? 'An Error Occured';
+                                          message = e.message ?? AppLocalizations.of(context)!.anErrorOccured;
                                         }catch (e){
                                           message = e.toString();
                                         }
@@ -271,7 +267,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         elevation: 0,
         title:  RichText(
           text: TextSpan(
-              text: 'Edit Profile',
+              text: AppLocalizations.of(context)!.editProfile,
               style: TextStyle(
                   color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
               children: const <TextSpan>[
@@ -431,7 +427,7 @@ class _TextEditWidgetState extends State<TextEditWidget> {
           width: 200.0,
           height: 50,
           child: ElevatedButton(
-            child: const Text(AppTexts.save),
+            child: Text(AppLocalizations.of(context)!.save),
             onPressed: () {
               if (nameController.text == null || nameController.text == '') {
                 yahSnackBar(context, 'Field cannot be blank');
@@ -534,10 +530,10 @@ class _DropDownEditWidgetState extends State<DropDownEditWidget> {
           width: 200.0,
           height: 50,
           child: ElevatedButton(
-            child: const Text(AppTexts.save),
+            child: Text(AppLocalizations.of(context)!.save),
             onPressed: () {
               if (_currentValue == null || _currentValue == '') {
-                yahSnackBar(context, 'Field cannot be blank');
+                yahSnackBar(context, AppLocalizations.of(context)!.fieldCannotBeBlank);
               } else {
                 setState(() {
                   widget.setValue(0, _currentValue);
@@ -645,7 +641,7 @@ class _CountryWidgetState extends State<CountryWidget> {
           width: 200.0,
           height: 50,
           child: ElevatedButton(
-            child: const Text(AppTexts.save),
+            child: Text(AppLocalizations.of(context)!.save),
             onPressed: () {
               widget.setValue(2, country);
             },

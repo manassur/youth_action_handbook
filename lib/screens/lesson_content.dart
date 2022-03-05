@@ -7,6 +7,7 @@ import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LessonContent extends StatefulWidget {
   final Lessons? lesson;
@@ -78,7 +79,7 @@ class _LessonContentState extends State<LessonContent> {
         ),
         title:  RichText(
           text: TextSpan(
-              text: 'Lesson Content',
+              text: AppLocalizations.of(context)!.lessonContent,
               style: TextStyle(
                   color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
               children: const <TextSpan>[

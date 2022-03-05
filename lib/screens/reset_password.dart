@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/main.dart';
-import 'package:youth_action_handbook/screens/sign_up.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
@@ -48,7 +46,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                               SizedBox(
                                   width: 170,
                                   child: Text(
-                                    'Reset Password',
+                                    AppLocalizations.of(context)!.resetPassword,
                                     style: TextStyle(
                                         color: AppColors.colorYellow,
                                         fontSize: 40,
@@ -74,11 +72,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                         height: 20,
                       ),
                       Row(
-                        children: const [
+                        children: [
                           SizedBox(
                               width: 200,
                               child: Text(
-                                'Enter your Email Address',
+                                AppLocalizations.of(context)!.enterYourEmailAddress,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 25),
                               )),
@@ -98,7 +96,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                   //EMAIL
                                   controller: emailController,
                                   validator: (val1) => val1!.isEmpty
-                                      ? 'Enter Email Please'
+                                      ? AppLocalizations.of(context)!.enterYourEmailAddress
                                       : null,
                                   style: const TextStyle(
                                       color: Colors.white,
@@ -106,7 +104,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                       fontWeight: FontWeight.w100),
                                   textAlignVertical: TextAlignVertical.center,
                                   decoration: InputDecoration(
-                                    hintText: "Email",
+                                    hintText: AppLocalizations.of(context)!.email,
                                     prefixIcon: Icon(
                                       Icons.mail_outline,
                                       color: AppColors.colorGreenPrimary,
@@ -138,7 +136,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                         if (result == null) {
                                           setState(() {
                                             error =
-                                                'Please Try Again, with a valid email address';
+                                                AppLocalizations.of(context)!.pleaseTryAgainWithaValidEmailAddress;
                                             loading = false;
                                           });
                                         } else {
@@ -150,8 +148,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                                         }
                                       }
                                     },
-                                    child: const Text(
-                                        AppTexts.sendPasswordResetEmail,
+                                    child: Text(
+                                        AppLocalizations.of(context)!.sendPasswordResetEmail,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w400)),
@@ -166,7 +164,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 TextButton(
                                     onPressed: () => Navigator.pop(
                                         context, RouteNames.loginScreen),
-                                    child: const Text(AppTexts.login))
+                                    child: Text(AppLocalizations.of(context)!.login))
                               ],
                             ),
                       const SizedBox(height: 20),
@@ -177,10 +175,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                           const SizedBox(
                             width: 5,
                           ),
-                          const SizedBox(
+                          SizedBox(
                               width: 150,
                               child: Text(
-                                'Co Founded by the European Union',
+                                AppLocalizations.of(context)!.coFoundedByTheEuropeanUnion,
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,

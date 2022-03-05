@@ -1,18 +1,14 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
-import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
-import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
-import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditLoginScreen extends StatefulWidget {
   @override
@@ -37,7 +33,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
         "leading_icon": Icons.email_outlined,
         "value": appUser!.email,
         "display_value": appUser.email,
-        "leading": "Email Address",
+        "leading": AppLocalizations.of(context)!.emailAddress,
         "name": "email",
         "trailing_icon": Icons.edit,
         "index":0
@@ -47,7 +43,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
         "value": appUser.emailVerified,
         // "display_value": (appUser.emailVerified?? true)? "Yes" : "No. Verify now?",
         "display_value": appUser.emailVerified.toString(),
-        "leading": "Email Verified?",
+        "leading": AppLocalizations.of(context)!.emailVerified_,
         "name": "emailVerified",
         "trailing_icon": Icons.edit,
         "index":1
@@ -56,7 +52,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
         "leading_icon": Icons.lock_outline,
         "value": '',
         "display_value": '******',
-        "leading": "Password",
+        "leading": AppLocalizations.of(context)!.password,
         "name": "password",
         "trailing_icon": Icons.edit,
         "index":2
@@ -72,7 +68,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
         
         await showDialog(context: context, builder: (BuildContext context) {
           return  SimpleDialog(
-              title:  Text("Edit " + item['leading'].toString()),
+              title:  Text(AppLocalizations.of(context)!.edit + item['leading'].toString()),
                 contentPadding: const EdgeInsets.all(12),
                 children: loading? [const Loading()]: [
 
@@ -84,7 +80,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
                         message = await _auth.verifyEmail(password);
                         
                       }on FirebaseException catch(e){
-                        message = e.message ?? 'An Error Occured';
+                        message = e.message ?? AppLocalizations.of(context)!.anErrorOccured;
                       }catch (e){
                         message = e.toString();
                       }
@@ -104,7 +100,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
                         message = await _auth.changeEmail(password, currrentEmail);
                         
                       }on FirebaseException catch(e){
-                        message = e.message ?? 'An Error Occured';
+                        message = e.message ?? AppLocalizations.of(context)!.anErrorOccured ;
                       }catch (e){
                         message = e.toString();
                       }
@@ -124,7 +120,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
                         message = await _auth.changePassword(password, newPassword);
                         
                       }on FirebaseException catch(e){
-                        message = e.message ?? 'An Error Occured';
+                        message = e.message ?? AppLocalizations.of(context)!.anErrorOccured;
                       }catch (e){
                         message = e.toString();
                       }
@@ -155,7 +151,7 @@ class _EditLoginScreenState extends State<EditLoginScreen> {
         elevation: 0,
         title:  RichText(
           text: TextSpan(
-              text: 'Edit Login Information',
+              text: AppLocalizations.of(context)!.editLoginInformation,
               style: TextStyle(
                   color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
               children: const <TextSpan>[
@@ -245,8 +241,6 @@ class _LoginTextEditWidgetState extends State<LoginTextEditWidget> {
   final passwordController = TextEditingController();
 
   void initState() {
-    // TODO: implement initState
-
     super.initState();
     nameController.text = widget.initialValue;
     // passwordController.text = widget.initialValue;
@@ -271,7 +265,7 @@ class _LoginTextEditWidgetState extends State<LoginTextEditWidget> {
                     child: TextFormField(
                         controller: nameController,
                         readOnly: (widget.icon == Icons.mark_email_read_outlined)? true : false,
-                        obscureText: (widget.title == 'Password')? true :false,
+                        obscureText: (widget.title == AppLocalizations.of(context)!.password)? true :false,
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15,
@@ -292,7 +286,7 @@ class _LoginTextEditWidgetState extends State<LoginTextEditWidget> {
             const SizedBox(
               height: 20,
             ),
-            (widget.icon == Icons.mark_email_read_outlined)? Text('Enter password and submit to receive an email with a verification link'):const Text(AppTexts.enterCurrentPassword),
+            (widget.icon == Icons.mark_email_read_outlined)? Text(AppLocalizations.of(context)!.enterPasswordAndSubmitToReceiveAnEmailWithaVerificationLink): Text(AppLocalizations.of(context)!.enterCurrentPassword),
             Container(
                 decoration: BoxDecoration(
                   color: AppColors.colorBlueSecondary,
@@ -330,10 +324,10 @@ class _LoginTextEditWidgetState extends State<LoginTextEditWidget> {
           width: 200.0,
           height: 50,
           child: ElevatedButton(
-            child: const Text(AppTexts.save),
+            child: Text(AppLocalizations.of(context)!.save),
             onPressed: () {
               if (passwordController.text == '' || nameController.text == '') {
-                yahSnackBar(context, 'Fields cannot be blank');
+                yahSnackBar(context, AppLocalizations.of(context)!.fieldsCannotBeBlank);
               } else {
                 setState(() {
                   widget.setValue(passwordController.text, nameController.text);

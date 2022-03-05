@@ -1,26 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
-import 'package:youth_action_handbook/data/constants.dart';
-import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
-import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
-import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/forum_frame.dart';
-import 'package:youth_action_handbook/screens/induvidual_post.dart';
 import 'package:youth_action_handbook/screens/new_post.dart';
-import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
-import 'package:youth_action_handbook/widgets/open_training_card.dart';
-import 'package:youth_action_handbook/widgets/popular_items_card.dart';
-import 'package:youth_action_handbook/widgets/topic_card.dart';
 import 'package:youth_action_handbook/widgets/topic_category_card.dart';
-import 'package:youth_action_handbook/widgets/trending_post_card.dart';
-import 'package:youth_action_handbook/widgets/updates_card.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForumFragment extends StatefulWidget {
   const ForumFragment({Key? key}) : super(key: key);
@@ -31,11 +18,7 @@ class ForumFragment extends StatefulWidget {
 
 class _ForumFragmentState extends State<ForumFragment> {
   int selected = 0;
-  List<String> categoriesList =[
-    "Popular",
-  "Recommended",
-  "New"
-  ];
+  
   ScrollController? _scrollController;
   double kExpandedHeight = 120;
   bool _isLoading = false;
@@ -76,6 +59,11 @@ class _ForumFragmentState extends State<ForumFragment> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> categoriesList =[
+    AppLocalizations.of(context)!.popular,
+  AppLocalizations.of(context)!.recommended,
+  AppLocalizations.of(context)!.new_
+  ];
     return Scaffold(
       backgroundColor: AppColors.colorBluePrimary,
       body:  NestedScrollView(
@@ -116,7 +104,7 @@ class _ForumFragmentState extends State<ForumFragment> {
                       vertical: 16.0, horizontal: _horizontalTitlePadding),
                   title:   RichText(
                     text: TextSpan(
-                        text: 'Forum',
+                        text: AppLocalizations.of(context)!.forum,
                         style: TextStyle(
                             color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
                         children: const <TextSpan>[
@@ -140,31 +128,9 @@ class _ForumFragmentState extends State<ForumFragment> {
 
                     SizedBox(
                       width: 250,
-                      child: Text("Find topics you like to read, engage with communities and ask questions.",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.white),),
+                      child: Text(AppLocalizations.of(context)!.findTopicsYouLikeToReadEngageWithCommunitiesAndAskQuestions,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 14,color: Colors.white),),
                     ),
                     SizedBox(height: 25,),
-                     // Container(
-                     //    height: 40,
-                     //    decoration: BoxDecoration(
-                     //      color: AppColors.colorGreenPrimary.withOpacity(0.3),
-                     //      borderRadius: BorderRadius.circular(30.0),
-                     //    ),
-                     //    child: Padding(
-                     //        padding: EdgeInsets.all(5),
-                     //        child: TextFormField(
-                     //            style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w100),
-                     //            textAlignVertical: TextAlignVertical.center,
-                     //            decoration: InputDecoration(
-                     //              hintText: "Search Anything",
-                     //              prefixIcon: Padding(
-                     //                padding: const EdgeInsets.all(8.0),
-                     //                child: SvgPicture.asset('assets/search.svg',color: Colors.white70,width: 20,height: 20,),
-                     //              ),
-                     //              border: InputBorder.none,
-                     //              floatingLabelBehavior: FloatingLabelBehavior.never,
-                     //              hintStyle:  TextStyle(color: Colors.white70,fontSize: 14,fontWeight: FontWeight.w100),
-                     //
-                     //            )))),
                     SizedBox(height: 10,),
 
 

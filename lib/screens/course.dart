@@ -1,34 +1,24 @@
-import 'dart:io';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youth_action_handbook/bloc/courses/courses_bloc.dart';
 import 'package:youth_action_handbook/bloc/courses/courses_event.dart';
-import 'package:youth_action_handbook/bloc/courses/courses_state.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
-import 'package:youth_action_handbook/models/firestore_models/lesson_user_model.dart';
-import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/recently_viewed_lessons_model.dart';
-import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/repository/language_provider.dart';
 import 'package:youth_action_handbook/screens/individual_course.dart';
 import 'package:youth_action_handbook/screens/lesson_content.dart';
-import 'package:youth_action_handbook/screens/test.dart';
 import 'package:youth_action_handbook/services/api_service.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/language_chooser_widget.dart';
 import 'package:youth_action_handbook/widgets/open_training_card.dart';
-import 'package:youth_action_handbook/widgets/popular_items_card.dart';
-import 'package:youth_action_handbook/widgets/updates_card.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class CourseFragment extends StatefulWidget {
@@ -157,7 +147,7 @@ class _CourseFragmentState extends State<CourseFragment> {
                       vertical: 16.0, horizontal: _horizontalTitlePadding),
                 title: RichText(
                   text: TextSpan(
-                      text: 'Study',
+                      text: AppLocalizations.of(context)!.study,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -175,12 +165,12 @@ class _CourseFragmentState extends State<CourseFragment> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("it's a great day to learn something new.",
+              Text(AppLocalizations.of(context)!.itsaGreatDayToLearnSomethingNew,
                 style: TextStyle(fontWeight: FontWeight.w100,
                     fontSize: 12,
                     color: Colors.black87),),
               SizedBox(height: 25,),
-              Text("Recently viewed", style: TextStyle(
+              Text(AppLocalizations.of(context)!.recentlyViewed, style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: AppColors.colorBluePrimary,
                   fontSize: 20),),
@@ -202,7 +192,7 @@ class _CourseFragmentState extends State<CourseFragment> {
                     );
                   }
                   if (snapshot.hasError)
-                  { return Center(child: Text('Could not fetch recent lessons at this time'+snapshot.stackTrace.toString()));}
+                  { return Center(child: Text(AppLocalizations.of(context)!.couldNotLoadCoursesAtThisTime+snapshot.stackTrace.toString()));}
 
                   return ListView.builder(
                       shrinkWrap: true,
@@ -217,7 +207,7 @@ class _CourseFragmentState extends State<CourseFragment> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Course: ${snapshot.data![pos].courseName!}", style: const TextStyle(
+                              Text(AppLocalizations.of(context)!.courseWithColon +"${snapshot.data![pos].courseName!}", style: const TextStyle(
                                   fontWeight: FontWeight.w100,
                                   fontSize: 12,
                                   color: Colors.black54),),
@@ -273,11 +263,11 @@ class _CourseFragmentState extends State<CourseFragment> {
 
 
               SizedBox(height: 25,),
-              Text("My Courses", style: TextStyle(
+              Text(AppLocalizations.of(context)!.myCourses, style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: AppColors.colorBluePrimary),),
               SizedBox(height: 10,),
-              Text("Continue from where you stopped", style: TextStyle(
+              Text(AppLocalizations.of(context)!.continueFromWhereYouStopped, style: TextStyle(
                   fontWeight: FontWeight.w100,
                   fontSize: 12,
                   color: Colors.black54),),
@@ -298,12 +288,12 @@ class _CourseFragmentState extends State<CourseFragment> {
                             width: 150.0,
                             height: 50,
                             child: ElevatedButton(
-                              child: const Text('Tap to Reload'),
+                              child: Text(AppLocalizations.of(context)!.tapToReload),
                               onPressed: () {
                                 {
                                   setState(() {
                                     langProvider!.setupCourseLanguages();
-                                    yahSnackBar(context, 'Trying to Reload. If it fails, try restarting the app');
+                                    yahSnackBar(context, AppLocalizations.of(context)!.tryingToReloadIfItFailsTryRestartingTheApp);
                                   });
                                 }
                               },
@@ -342,50 +332,6 @@ class _CourseFragmentState extends State<CourseFragment> {
 
                   }),
               ),
-
-
-              // SizedBox(
-              //   height: 300,
-              //   child: BlocListener<CoursesBloc, CoursesState>(
-              //     listener: (context, state){
-              //       if ( state is CoursesLoadedState && state.message != null ) {
-              //       }
-              //       else if ( state is CoursesLoadFailureState ) {
-              //         Scaffold.of ( context ).showSnackBar ( const SnackBar (
-              //           content: Text ( "Could not load courses  at this time" ) , ) );
-              //       }
-              //     },
-              //     child: BlocBuilder<CoursesBloc, CoursesState>(
-              //       builder: (context, state) {
-              //         if ( state is CoursesInitialState ) {
-              //           return buildLoading ( );
-              //         } else if ( state is CoursesLoadingState ) {
-              //           return buildLoading ( );
-              //         } else if ( state is CoursesLoadedState ) {
-              //           return
-              //             ListView.builder(
-              //                 shrinkWrap: true,
-              //                 itemCount: state.courses!.length,
-              //                 scrollDirection: Axis.horizontal,
-              //                 itemBuilder: (ctx,pos){
-              //                   return InkWell(
-              //                       onTap: (){
-              //                         Navigator.push(context, MaterialPageRoute(builder: (context)=>
-              //                             IndividualCourseScreen(courses: state.courses![pos],)));
-              //                       },
-              //                       child: OpenTrainingCard(courseModel:state.courses![pos]));
-              //                 });
-              //         } else if ( state is CoursesLoadFailureState ) {
-              //           return buildErrorUi ("Oops! Could not load courses at this time" );
-              //         }
-              //         else {
-              //           return buildErrorUi ( "Something went wrong!" );
-              //         }
-              //       },
-              //     ),
-              //   ),
-              // ),
- 
 
             ],
           ),
