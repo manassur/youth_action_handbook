@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:youth_action_handbook/data/app_texts.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/repository/language_provider.dart';
 import 'package:youth_action_handbook/screens/dashboard.dart';
