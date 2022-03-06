@@ -5,6 +5,7 @@ import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/multiple_choice_item.dart';
 import 'package:youth_action_handbook/widgets/question_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -119,7 +120,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
              const  SizedBox(height: 10,),
               RichText(
                 text: TextSpan(
-                    text: 'Questions Can be accessed in the handbook',
+                    text: 'Answers to the questions can be found within the lesson content.',
                     style: TextStyle(
                         color: Colors.grey.shade600,
                         fontSize: 12,
@@ -147,9 +148,11 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                     });
                   },
                   controller: _controller,
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: widget.quiz!.questions!.length,
                   itemBuilder: (context, index){
                     Questions question = widget.quiz!.questions![index];
+                    bool? changeColor;
                     return Card(
                       elevation: 5,
                       color: Colors.white,
@@ -171,16 +174,39 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                                 itemCount: question.answers!.length,
                                 itemBuilder: (ctx,pos){
                                   Answers ans = question.answers![pos];
+                                  Color ansColor = AppColors.colorBluePrimary; //pass in answer color;
+                                  Color _changeColor(String id){
+                                      //TODO: Finish coloring words right
+                                      if (changeColor == true) {
+                                        if(id == question.selectedAnswerId ){
+                                          return Colors.red;
+                                        
+                                        }
+                                        if( id == question.correctAnswerId){
+                                          return Colors.green;
+                                        }
+                                      }
+                                      return AppColors.colorBluePrimary;
+                                  } 
 
                                   return GestureDetector(
                                     onTap: (){
                                       setState(() {
                                         question.selectedAnswerId=ans.id!;
+                                        if(ans.id! == question.correctAnswerId!){
+                                          Flushbar(title: 'Correct!',message: 'Correct answer',backgroundColor: Colors.green, duration: Duration(seconds: 2),flushbarPosition: FlushbarPosition.TOP,).show(context);
+                                          changeColor = true;
+                                        }else{
+                                          Flushbar(title: 'Wrong Answer ', message: 'Sorry, The correct answer is option '+ question.correctAnswerId!,backgroundColor: Colors.red, duration: Duration(seconds: 2),flushbarPosition: FlushbarPosition.TOP,).show(context);
+                                        }
+
                                       });
                                     },
                                     child: MultipleChoiceItem(
                                      answer:ans,
-                                      selectedAnswer:question.selectedAnswerId
+                                      selectedAnswer:question.selectedAnswerId,
+                                      correctAnswer: question.correctAnswerId,
+                                      changeColorfn: ()=> _changeColor(ans.id!),
                                     ),
                                   );
                                 }, separatorBuilder: (ctx,pos){
@@ -215,6 +241,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                         if(currentIndex==widget.quiz!.questions!.length-1){
                           calculateScoreAndSaveQuiz();
                         }else{
+                          
                           _controller.nextPage(duration: _kDuration, curve: _kCurve);
 
                         }
@@ -224,7 +251,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                   ),
                 ],
               ),
-
+              SizedBox(height:40),
             ],
           ),
         ),

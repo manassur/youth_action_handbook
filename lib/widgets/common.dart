@@ -33,7 +33,7 @@ class _LoadingState extends State<Loading> {
   }
 }
 
-yahSnackBar(context, e) {
+yahSnackBar(context, e, {Color? color, Color? textColor}) {
   final msg;
   if(e is String){
     msg = e;
@@ -46,10 +46,10 @@ yahSnackBar(context, e) {
   }
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      backgroundColor: AppColors.colorYellow,
+      backgroundColor: (color != null)? color :AppColors.colorYellow,
       content: Text(
         msg ?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.anErrorOccurredPleaseTryAgain,
-        style: const TextStyle(fontSize: 15.0, color: Colors.black),
+        style: TextStyle(fontSize: 15.0, color: (textColor != null)? textColor : Colors.black),
       ),
     ),
   );

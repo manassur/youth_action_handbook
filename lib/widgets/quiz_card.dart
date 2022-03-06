@@ -51,16 +51,15 @@ class _QuizzCardState extends State<QuizzCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        if(_quizScore!=-1) {
-          // means the quiz has been taken
-          // Flushbar(
-          //   title: "Quiz taken",
-          //   message: "You have already taken this quiz, but you can retake it whenever you like.",
-          //   backgroundColor: AppColors.colorYellow,
-          //   duration: Duration(seconds: 2),
-          // ).show(context);
-          yahSnackBar(context, AppLocalizations.of(context)!.youHaveAlreadyTakenThisQuiz);
-       }
+      //   if(_quizScore!=-1) {
+      //     means the quiz has been taken
+      //     Flushbar(
+      //       title: "Quiz taken",
+      //       message: "You have already taken this quiz, but you can retake it whenever you like.",
+      //       backgroundColor: AppColors.colorYellow,
+      //       duration: Duration(seconds: 2),
+      //     ).show(context);
+      //  }
       //  else{
           Navigator.push(context,
               MaterialPageRoute(builder: (context) =>
