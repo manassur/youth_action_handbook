@@ -1,5 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
@@ -18,6 +20,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final AuthService _auth = AuthService();
+  SharedPreferences? prefs;
+
 
   String email = '',
       name = '',
@@ -26,6 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       country = '',
       password = '';
   int viewIndex = 0;
+
   void setValue(int index, String value) async {
     setState(() {
       viewIndex = index + 1;
@@ -55,18 +60,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+  Future _getPrefs() async{
+    prefs = await SharedPreferences.getInstance();
+    
+  }
   @override
-  void initState() {
-    // TODO: implement initState
+  void initState(){
+    _getPrefs();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     language = Localizations.localeOf(context).toString().split("_")[0];
+    String languageCode = prefs?.getString('languageCode') ?? (language);
+    
     MediaQueryData size;
     size = MediaQuery.of(context);
     return Scaffold(
+      appBar: AppBar(systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarBrightness: Brightness.light,
+                  statusBarIconBrightness: Brightness.light,
+          statusBarColor: AppColors.colorBluePrimary,
+                ),
+                toolbarHeight: 0, elevation: 0, ),
         backgroundColor: AppColors.colorBluePrimary,
         body: Padding(
             padding: const EdgeInsets.only(left: 40, right: 40, top: 70),
@@ -86,7 +103,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Row(
                           children: [
                             SizedBox(
-                                width: 170,
+                                width: (languageCode == 'fr')? 220 :170,
                                 child: Text(
                                   AppLocalizations.of(context)!.gettingStarted,
                                   style: TextStyle(

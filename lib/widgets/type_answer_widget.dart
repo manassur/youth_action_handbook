@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TypeAnswerWidget extends StatelessWidget {
   const TypeAnswerWidget({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class TypeAnswerWidget extends StatelessWidget {
                     style: TextStyle(color: Colors.black54,fontSize: 12,fontWeight: FontWeight.w100),
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
-                      hintText: "Type Something",
+                      hintText: AppLocalizations.of(context)!.typeSomething,
 
                       border: InputBorder.none,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -44,7 +45,7 @@ class TypeAnswerWidget extends StatelessWidget {
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ))),
-                child: Text('Submit',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
+                child: Text(AppLocalizations.of(context)!.submit,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),),
                 onPressed: () {
 
                 },

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthService {
   final _auth = FirebaseAuth.instance;
@@ -120,12 +121,12 @@ class AuthService {
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.message == 'Given String is empty or null') {
-        yahSnackBar(context, "email and password can't be empty.");
+        yahSnackBar(context, AppLocalizations.of(context)!.emailAndPasswordCantBeEmpty);
       } else if (e.code == 'user-not-found') {
-        yahSnackBar(context,
-            'User not found, please enter the right email or press sign up to make a new account');
+        yahSnackBar(context, AppLocalizations.of(context)!.userNotFoundPleaseEnterTheRightEmailOrPressSignUpToMakeaNewAccount
+            );
       } else if (e.code == 'wrong-password') {
-        yahSnackBar(context, 'Wrong password or email. Please try again.');
+        yahSnackBar(context, AppLocalizations.of(context)!.wrongPasswordOrEmailPleaseTryAgain);
       } else {
         yahSnackBar(context, e.message);
       }
@@ -175,7 +176,7 @@ class AuthService {
   Future signOut(context) async {
     try {
       await _auth.signOut();
-      print('signed out of auth');
+      // print('signed out of auth');
     } catch (e) {
       yahSnackBar(context, e);
     }
@@ -189,24 +190,24 @@ class AuthService {
         email: user.email!, password: currentPassword);
 
    await user.reauthenticateWithCredential(cred).then((value) async{
-      print('reauthentication worked');
+      // print('reauthentication worked');
       await user.updatePassword(newPassword).then((_) {
-        message = 'Successfully updated password';
+        message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.successfullyUpdatedPassword;
       }).catchError((error) {
         print(error);
         if(error is FirebaseException){
-          message = error.message ?? 'Sorry, an error occured. Please Try Again';
+          message = error.message ?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }else{
-          message = 'Sorry, an error occured. Please Try Again';
+          message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }
       });
     }).catchError((error) {
-      print('reauthentication error caught');
+      // print('reauthentication error caught');
       message = 'reauthentication error caught';
         if(error is FirebaseException){
-          message = 'reauth error: ' +( error.message ?? 'Sorry, an error occured. Please Try Again');
+          message = 'reauth error: ' +( error.message ?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain);
         }else{
-          message = 'Sorry, an error occured. Please Try Again';
+          message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }
         print(error);
     });
@@ -223,22 +224,22 @@ class AuthService {
 
     await user.reauthenticateWithCredential(cred).then((value) async {
       await user.updateEmail(newEmail).then((_) {
-        message = 'Successfully updated Email';
-        print('email updated. New email :'+user.email!);
+        message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.successfullyUpdatedEmail;
+        // print('email updated. New email :'+user.email!);
       }).catchError((error) {
         print(error);
         if(error is FirebaseException){
-          message = error.message ?? 'Sorry, an error occured. Please Try Again';
+          message = error.message ?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }else{
-          message = 'Sorry, an error occured. Please Try Again';
+          message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }
       });
     }).catchError((error) {
       print(error);
          if(error is FirebaseException){
-          message = error.message ?? 'Sorry, an error occured. Please Try Again';
+          message = error.message ?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }else{
-          message = 'Sorry, an error occured. Please Try Again';
+          message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }
     });
     
@@ -257,22 +258,22 @@ class AuthService {
     await user.reauthenticateWithCredential(cred).then((value) async {
       // await user.updateEmail(newEmail).then((_) {
       await user.sendEmailVerification().then((_) {
-        message = 'Please check your email for an email with a verification link';
-        print('email verified :'+user.email!);
+        message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.pleaseCheckYourEmailForAnEmailWithaVerificationLink;
+        // print('email verified :'+user.email!);
       }).catchError((error) {
         print(error);
         if(error is FirebaseException){
-          message = error.message ?? 'Sorry, an error occured. Please Try Again';
+          message = error.message ?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }else{
-          message = 'Sorry, an error occured. Please Try Again';
+          message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }
       });
     }).catchError((error) {
       print(error);
          if(error is FirebaseException){
-          message = error.message ?? 'Sorry, an error occured. Please Try Again';
+          message = error.message ?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }else{
-          message = 'Sorry, an error occured. Please Try Again';
+          message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.sorryAnErrorOccurredPleaseTryAgain;
         }
     });
     
@@ -283,7 +284,7 @@ class AuthService {
   Future resetPasswordWithEmail(String email, context) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      yahSnackBar(context, 'Please check your email for a password reset link');
+      yahSnackBar(context, AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.pleaseCheckYourEmailForaPasswordResetLink);
     } on FirebaseException catch (e) {
       yahSnackBar(context, e.message);
     } catch (e) {
@@ -294,7 +295,7 @@ class AuthService {
   // Reset Password
 
 
-//sign in with phone functions
+//sign in with phone functions || NOT IN USE IN VERSION 1!!!
 
   Future<void> verifyPhoneNumber(
     String phoneNumber, BuildContext context, Function setData) async {

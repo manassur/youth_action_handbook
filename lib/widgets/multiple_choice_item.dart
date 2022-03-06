@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
-import 'package:youth_action_handbook/models/single_choice_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MultipleChoiceItem extends StatefulWidget {
   final Answers? answer;
@@ -28,7 +28,7 @@ class _MultipleChoiceItemState extends State<MultipleChoiceItem> {
               SizedBox(
                   child:
                   Text(
-                      'Answer',
+                      AppLocalizations.of(context)!.answer,
                       style: TextStyle(
                           color: AppColors.colorBluePrimary,
                           fontSize: 14,

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/repository/language_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguagePicker extends StatefulWidget {
   const LanguagePicker({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class _LanguagePickerState extends State<LanguagePicker> {
         //so you don't have to change MaterialApp canvasColor
         child: ListView(
           children: [
-            Center(child: Text('Change Language',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: AppColors.colorBlueSecondary),)),
+            Center(child: Text(AppLocalizations.of(context)!.changeLanguage,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: AppColors.colorBlueSecondary),)),
             SizedBox(height: 20,),
             GestureDetector(
                 onTap: (){
@@ -34,7 +35,7 @@ class _LanguagePickerState extends State<LanguagePicker> {
                         });
                   Navigator.of(context).pop();
                 },
-                child: Text('English',style: TextStyle(fontSize: 18),)),
+                child: Text(AppLocalizations.of(context)!.english,style: TextStyle(fontSize: 18),)),
            Divider(),
         GestureDetector(
           onTap: (){
@@ -43,7 +44,7 @@ class _LanguagePickerState extends State<LanguagePicker> {
                           AppWrapper.setLocale(context, Locale('fr', ""));
                         });
             Navigator.of(context).pop();
-          },child: Text('French',style: TextStyle(fontSize: 18),)),
+          },child: Text(AppLocalizations.of(context)!.french,style: TextStyle(fontSize: 18),)),
 
           ],
         ),

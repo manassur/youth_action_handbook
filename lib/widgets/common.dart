@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -13,6 +12,7 @@ import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Loading extends StatefulWidget {
   const Loading({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ yahSnackBar(context, e) {
     SnackBar(
       backgroundColor: AppColors.colorYellow,
       content: Text(
-        msg ?? 'An error occured. Please try again',
+        msg ?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.anErrorOccurredPleaseTryAgain,
         style: const TextStyle(fontSize: 15.0, color: Colors.black),
       ),
     ),
@@ -98,7 +98,7 @@ class MenuForAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:  [
                 Text(
-                  'Edit Profile',
+                  AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.editProfile,
                   style: TextStyle(color: Colors.white),
                 ),
                 // CircleAvatar(
@@ -116,7 +116,7 @@ class MenuForAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:  [
                 Text(
-                  'Edit Login Info',
+                  AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.editLoginInfo,
                   style: TextStyle(color: Colors.white),
                 ),
                 // CircleAvatar(
@@ -133,9 +133,9 @@ class MenuForAppBar extends StatelessWidget {
             value: 2,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  'Sign Out',
+                  AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.signOut,
                   style: TextStyle(color: Colors.white),
                 ),
                 SizedBox(width: 8),
@@ -216,9 +216,9 @@ class TopLangMenu extends StatelessWidget {
             value: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  'Settings',
+                  AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.settings,
                   style: TextStyle(color: Colors.white),
                 ),
                 Avatar()
@@ -230,9 +230,9 @@ class TopLangMenu extends StatelessWidget {
             value: 1,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  'Sign Out',
+                  AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.signOut,
                   style: TextStyle(color: Colors.white),
                 ),
                 SizedBox(width: 8),
@@ -260,7 +260,7 @@ launchURL(context, url) async {
   if (await canLaunch(url)) {
     await launch(url);
   } else {
-    yahSnackBar(context, "Can't Open Website");
+    yahSnackBar(context, AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.cantOpenWebsite);
     // throw 'Could not launch $url';
   }
 }

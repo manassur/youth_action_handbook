@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/main.dart';
@@ -27,6 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarBrightness: Brightness.light,
+                  statusBarIconBrightness: Brightness.light,
+          statusBarColor: AppColors.colorBluePrimary,
+                ),
+                toolbarHeight: 0, elevation: 0, ),
         backgroundColor: AppColors.colorBluePrimary,
         body: Padding(
             padding: const EdgeInsets.all(30.0),
@@ -49,21 +56,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         RichText(
                           text: TextSpan(
-                              text: AppLocalizations.of(context)!.our,
+                              text: AppLocalizations.of(context)!.our + ' ',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w200),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: AppLocalizations.of(context)!.diversity,
+                                  text: AppLocalizations.of(context)!.diversity + ' ',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700),
                                 ),
                                 TextSpan(
-                                  text: AppLocalizations.of(context)!.our,
+                                  text: AppLocalizations.of(context)!.our + ' ',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13,
@@ -288,7 +295,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 5,
                             ),
                             SizedBox(
-                                width: 100,
+                                width: 120,
                                 child: Text(
                                   AppLocalizations.of(context)!.coFoundedByTheEuropeanUnion,
                                   style: TextStyle(

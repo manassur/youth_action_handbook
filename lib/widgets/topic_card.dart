@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/firestore_models/topic_model.dart';
-import 'package:youth_action_handbook/models/popular_category_model.dart';
-import 'package:youth_action_handbook/models/topic_model.dart';
-import 'package:youth_action_handbook/models/updates_model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TopicCard extends StatelessWidget {
   final Topic? topicModel;
@@ -32,7 +30,7 @@ class TopicCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('#'+topicModel!.topic!,maxLines: 2,overflow: TextOverflow.ellipsis,style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w900,fontSize: 16*scaleFactor!),),
-          Text(topicModel!.postCount!.toString()+' Posts',style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w100))
+          Text(topicModel!.postCount!.toString()+' ' + AppLocalizations.of(context)!.posts,style: TextStyle(color:  Colors.white,fontWeight: FontWeight.w100))
 
         ],
       ));

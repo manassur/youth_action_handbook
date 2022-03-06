@@ -6,6 +6,8 @@ import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/evaluation.dart';
 import 'package:youth_action_handbook/services/database.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:youth_action_handbook/widgets/common.dart';
 
 class QuizzCard extends StatefulWidget {
   final Quiz? quiz;
@@ -51,18 +53,20 @@ class _QuizzCardState extends State<QuizzCard> {
       onTap: (){
         if(_quizScore!=-1) {
           // means the quiz has been taken
-          Flushbar(
-            title: "Quiz taken",
-            message: "You have already taken this quiz",
-            backgroundColor: AppColors.colorYellow,
-            duration: Duration(seconds: 2),
-          ).show(context);
-       }else{
+          // Flushbar(
+          //   title: "Quiz taken",
+          //   message: "You have already taken this quiz, but you can retake it whenever you like.",
+          //   backgroundColor: AppColors.colorYellow,
+          //   duration: Duration(seconds: 2),
+          // ).show(context);
+          yahSnackBar(context, AppLocalizations.of(context)!.youHaveAlreadyTakenThisQuiz);
+       }
+      //  else{
           Navigator.push(context,
               MaterialPageRoute(builder: (context) =>
                   EvaluationScreen(
                       quiz: widget.quiz, courseId: widget.courseId)));
-        }
+        // }
 
         },
       child: Container(

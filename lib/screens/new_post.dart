@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
@@ -110,24 +111,19 @@ class _NewPostScreenState extends State<NewPostScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark,
+                statusBarColor: Colors.white,
+          ), 
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios,color: AppColors.colorBluePrimary,), // set your color here
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              backgroundColor:AppColors.colorBluePrimary,
-              radius: 30,
-              child: CircleAvatar(
-                radius: 40,
-                child: Image.asset("assets/user.png"),
-              ),
-            ),
-          )
+        actions:  [
+          MenuForAppBar(),
         ],
       ),
       body: SingleChildScrollView(
@@ -296,6 +292,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 40,),
                 ],
               ),
             ),

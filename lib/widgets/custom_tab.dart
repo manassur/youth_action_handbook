@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/models/popular_category_model.dart';
-import 'package:youth_action_handbook/models/updates_model.dart';
 
 class CustomTab extends StatelessWidget {
   final String? title;

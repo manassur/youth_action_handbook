@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/firestore_models/comment_model.dart';
-import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/models/user.dart';
-import 'package:youth_action_handbook/services/database.dart';
 
 class ReplyCard extends StatefulWidget {
   final Comment? induvidualCommentModel;

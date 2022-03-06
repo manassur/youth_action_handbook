@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
@@ -39,6 +40,11 @@ class _TopicPostsState extends State<TopicPosts> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark,
+                statusBarColor: Colors.white,
+          ), 
         title: Text('#${widget.topic!.topic}',style: TextStyle(color: AppColors.colorBluePrimary,fontSize: 15,fontWeight: FontWeight.bold),),
 
         leading: IconButton(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/news_response.dart';
 import 'package:youth_action_handbook/screens/web_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdatesCard extends StatelessWidget {
   final News? newsUpdate;
@@ -60,7 +61,7 @@ class UpdatesCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    'see more',
+                    AppLocalizations.of(context)!.seeMore,
                     style: TextStyle(
                         color: AppColors.colorPurple,
                         fontSize: 13,

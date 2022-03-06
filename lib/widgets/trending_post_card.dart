@@ -1,15 +1,13 @@
-import 'dart:convert';
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
-import 'package:youth_action_handbook/models/trending_post_model.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/induvidual_post.dart';
 import 'package:youth_action_handbook/services/database.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TrendingPostsCard extends StatefulWidget {
   final Post? trendingPostModel;
@@ -72,8 +70,8 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
       isDeleted=true;
     });
     Flushbar(
-      title: "Deleted",
-      message: "Your post has been deleted",
+      title: AppLocalizations.of(context)!.deleted,
+      message: AppLocalizations.of(context)!.yourPostHasBeenDeleted,
       backgroundColor: AppColors.colorYellow,
       duration: Duration(seconds: 2),
     ).show(context);
@@ -143,7 +141,7 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
                                         color: Colors.grey,
                                       ),
                                      ListTile(
-                                       title: Text('Share'),
+                                       title: Text(AppLocalizations.of(context)!.share),
                                        trailing: Icon(Icons.share),
                                        onTap: (){
                                          Share.share(widget.trendingPostModel!.description!+"\n -from the YAH app , download it here to learn more: https://greatlakesyouth.africa/en/app/", subject: widget.trendingPostModel!.caption);
@@ -151,7 +149,7 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
                                        },
                                      ),
                                       (widget.trendingPostModel!.authorId==appUser!.uid || (appUser!.email!.endsWith('rtl.ug') && appUser!.emailVerified!)) ?       ListTile(
-                                        title: Text('Delete'),
+                                        title: Text(AppLocalizations.of(context)!.delete),
                                         trailing: Icon(Icons.delete),
                                         onTap: (){
                                         _deletePost();
@@ -185,7 +183,7 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
                     children: [
                       Icon(Icons.thumb_up_off_alt,color: Colors.grey.shade400,size:16),
                       SizedBox(width: 5,),
-                      Text(_likeCount.toString()+' Likes',style: TextStyle(color: Colors.grey.shade500,fontSize: 11),)
+                      Text(_likeCount.toString()+' ' + AppLocalizations.of(context)!.likes,style: TextStyle(color: Colors.grey.shade500,fontSize: 11),)
                     ],
                   ),
                   SizedBox(width: 30,),
@@ -193,7 +191,7 @@ class _TrendingPostsCardState extends State<TrendingPostsCard> {
                     children: [
                       Icon(Icons.chat_bubble_outline,color: Colors.grey.shade400,size: 16,),
                       SizedBox(width: 5,),
-                      Text(widget.trendingPostModel!.replyCount.toString()+' Replies',style: TextStyle(color: Colors.grey.shade500,fontSize: 11),)
+                      Text(widget.trendingPostModel!.replyCount.toString()+' '+AppLocalizations.of(context)!.replies,style: TextStyle(color: Colors.grey.shade500,fontSize: 11),)
                     ],
                   ),
                   Spacer(),

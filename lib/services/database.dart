@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/firestore_models/comment_model.dart';
-import 'package:youth_action_handbook/models/firestore_models/lesson_user_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/post_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/quiz_answers_model.dart';
 import 'package:youth_action_handbook/models/firestore_models/recently_viewed_lessons_model.dart';
@@ -15,6 +12,8 @@ import 'package:youth_action_handbook/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:youth_action_handbook/services/auth_service.dart';
 import 'package:youth_action_handbook/data/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:youth_action_handbook/main.dart';
 
 class DatabaseService {
   final String? uid;
@@ -39,10 +38,10 @@ class DatabaseService {
     await userDataCollection
         .doc(uid)
         .update({name : value}).then(
-          (val) => message = 'Success',
+          (val) => message = AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.success,
         );
     }on FirebaseException catch(e){
-      message = e.message?? 'an error occured';
+      message = e.message?? AppLocalizations.of(AppWrapper.navigatorKey.currentContext!)!.anErrorOccurredPleaseTryAgain;
     }
     return message;
   }
@@ -99,8 +98,8 @@ class DatabaseService {
         'timestamp': post.timestamp,
       });
       //show the id of the post that just got saved
-      print('post id of the new post '+ doc.id);
-      print('user id of the new post '+ post.authorId!);
+      // print('post id of the new post '+ doc.id);
+      // print('user id of the new post '+ post.authorId!);
 
     });
 

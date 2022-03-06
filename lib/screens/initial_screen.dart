@@ -17,12 +17,12 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(systemOverlayStyle: SystemUiOverlayStyle(
-        //           statusBarBrightness: Brightness.light,
-        //           statusBarIconBrightness: Brightness.light,
-        //   statusBarColor: AppColors.colorBluePrimary,
-        //         ),
-        //         toolbarHeight: 0, shadowColor: Colors.transparent, ),
+        appBar: AppBar(systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarBrightness: Brightness.light,
+                  statusBarIconBrightness: Brightness.light,
+          statusBarColor: AppColors.colorBluePrimary,
+                ),
+                toolbarHeight: 0, elevation: 0, ),
         backgroundColor: AppColors.colorBluePrimary,
         body:Padding(
           padding: const EdgeInsets.only(left:40,right:40,top:70),
@@ -44,16 +44,16 @@ class _InitialScreenState extends State<InitialScreen> {
                 ),
                 RichText(
                   text: TextSpan(
-                      text: AppLocalizations.of(context)!.our,
+                      text: AppLocalizations.of(context)!.our + ' ',
                       style: TextStyle(
                           color: Colors.white, fontSize: 13,fontWeight: FontWeight.w200),
                       children: <TextSpan>[
-                        TextSpan(text: AppLocalizations.of(context)!.diversity,
+                        TextSpan(text: AppLocalizations.of(context)!.diversity + ' ',
                             style: TextStyle(
                                 color: Colors.white, fontSize: 12,fontWeight: FontWeight.w700),
                         ),
                   TextSpan(
-                      text: AppLocalizations.of(context)!.our,
+                      text: AppLocalizations.of(context)!.our + ' ',
                       style: TextStyle(
                           color: Colors.white, fontSize: 13,fontWeight: FontWeight.w200),
                   ),
@@ -105,7 +105,7 @@ class _InitialScreenState extends State<InitialScreen> {
                         Image.asset('assets/union_logo.png'),
                         const SizedBox(width: 5,),
                         SizedBox(
-                            width: 100,
+                            width: 120,
                             child: Text(AppLocalizations.of(context)!.coFoundedByTheEuropeanUnion,style: TextStyle(fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold),))
                       ],
                     ),

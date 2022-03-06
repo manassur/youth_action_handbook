@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +8,7 @@ import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/screens/lesson_content.dart';
 import 'package:youth_action_handbook/services/database.dart';
+
 
 class LessonItemCard extends StatefulWidget {
   final Lessons? lesson;

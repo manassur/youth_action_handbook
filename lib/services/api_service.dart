@@ -1,17 +1,13 @@
 import 'dart:convert';
 import 'package:flutter_cache_manager/file.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/course_with_language_response.dart';
-import 'package:youth_action_handbook/models/firestore_models/user_courses.dart';
 import 'package:youth_action_handbook/models/news_response.dart';
-import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/repository/api_client.dart';
 import 'package:youth_action_handbook/services/database.dart';
-import 'package:provider/provider.dart';
 
 class ApiService {
   // this will fetch recommended courses
@@ -112,14 +108,14 @@ class ApiService {
     }
 
     try {
-      print('AKBR SEE THE VERSIONS:\tonline = '+onlineVersion+'\toffline = '+courseVersion);
+      // print('AKBR SEE THE VERSIONS:\tonline = '+onlineVersion+'\toffline = '+courseVersion);
       if (courseVersion == onlineVersion){
         file = await DefaultCacheManager().getSingleFile(coursesUrl);
       }else{
         DefaultCacheManager().removeFile(coursesUrl).then((value) {
           prefs.setString('courseVersion', onlineVersion);
         }).onError((error, stackTrace) {
-          print(error);
+          // print(error);
         });
         file = await DefaultCacheManager().getSingleFile(coursesUrl);  
       }
@@ -129,7 +125,6 @@ class ApiService {
       CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
       return res;
     } on Exception catch (e) {
-      print("AKBR IT FAILED!!!! error is:"+ e.toString());
       throw e;
     }
   }

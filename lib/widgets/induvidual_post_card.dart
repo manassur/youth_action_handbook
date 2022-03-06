@@ -10,6 +10,8 @@ import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:youth_action_handbook/widgets/reply_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:youth_action_handbook/main.dart';
 
 class InduvidualPostCard extends StatefulWidget {
   final Comment? induvidualCommentModel;
@@ -52,11 +54,11 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
     final filter = ProfanityFilter();
     FocusScope.of(context).unfocus();
     if (!(_captionController.text.trim().isNotEmpty)) {
-      yahSnackBar(context, "Comment cannot be empty! :(");
+      yahSnackBar(context, AppLocalizations.of(context)!.commentCannotBeEmpty_);
     }
     else if(filter.hasProfanity(_captionController.text.trim())){
       // toast that fields cannot be empty
-      yahSnackBar(context, "Sorry, profanity was detected in your text. Please edit and try submitting again.");
+      yahSnackBar(context, AppLocalizations.of(context)!.sorryProfanityWasDetectedInYourTextPleaseEditAndTrySubmittingAgain);
     }
     else{
       if (!_isLoading) {
@@ -91,7 +93,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
           setState(() {
             _isLoading = false;
           });
-          print('could not post comment at this time');
+          // print('could not post comment at this time');
         });
       }
     }
@@ -104,7 +106,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
     });
     Flushbar(
       title: "Deleted",
-      message: "Your comment has been deleted",
+      message: AppLocalizations.of(context)!.yourCommentHasBeenDeleted,
       backgroundColor: AppColors.colorYellow,
       duration: Duration(seconds: 2),
     ).show(context);
@@ -176,7 +178,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                                               color: Colors.grey,
                                             ),
                                             ListTile(
-                                              title: Text('Share'),
+                                              title: Text(AppLocalizations.of(context)!.share),
                                               trailing: Icon(Icons.share),
                                               onTap: (){
                                                 Share.share(widget.induvidualCommentModel!.caption!+"\n -from the YAH app , download it here to learn more: https://greatlakesyouth.africa/en/app/");
@@ -184,7 +186,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                                               },
                                             ),
                                             (widget.induvidualCommentModel!.authorId! == appUser!.uid || (appUser!.email!.endsWith('rtl.ug') && appUser!.emailVerified!)) ? ListTile(
-                                              title: Text('Delete'),
+                                              title: Text(AppLocalizations.of(context)!.delete),
                                               trailing: Icon(Icons.delete),
                                               onTap: (){
                                                 _deleteComment();
@@ -217,7 +219,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                             isReplyBoxOpen=!isReplyBoxOpen;
                           });
                         },
-                          child: Text('Reply',style: TextStyle(color: Color(0xFF007AFF),fontSize: 12,fontWeight: FontWeight.w900),)),
+                          child: Text(AppLocalizations.of(context)!.reply,style: TextStyle(color: Color(0xFF007AFF),fontSize: 12,fontWeight: FontWeight.w900),)),
                       SizedBox(width: 10,),
                       GestureDetector(
                           onTap: (){
@@ -244,7 +246,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                                       );
                                     }
                                     if (snapshot.hasError)
-                                    { return Center(child: Text('Could not fetch replies at this time'+snapshot.error.toString()));}
+                                    { return Center(child: Text(AppLocalizations.of(context)!.couldNotFetchRepliesAtThisTime+ ': '+snapshot.error.toString()));}
 
                                     return  ListView.builder(
                                       shrinkWrap: true,
@@ -264,7 +266,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
 
 
                           },
-                          child: const Text('View  Replies',style: TextStyle(color: Color(0xFF007AFF),fontSize: 12,fontWeight: FontWeight.w900),)),
+                          child: Text(AppLocalizations.of(context)!.viewReplies,style: TextStyle(color: Color(0xFF007AFF),fontSize: 12,fontWeight: FontWeight.w900),)),
 
                     ],
                   ),
@@ -297,7 +299,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                               style: TextStyle(color: Colors.black54,fontSize: 14,fontWeight: FontWeight.w100),
                               textAlignVertical: TextAlignVertical.center,
                               decoration: InputDecoration(
-                                hintText: "Type Something",
+                                hintText: AppLocalizations.of(context)!.typeSomething,
                                 border: InputBorder.none,
                                 floatingLabelBehavior: FloatingLabelBehavior.never,
                                 hintStyle:  TextStyle(color: Colors.black54,fontSize: 14,fontWeight: FontWeight.w100),
@@ -318,7 +320,7 @@ class _InduvidualPostCardState extends State<InduvidualPostCard> {
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30.0),
                                   ))),
-                          child: !_isLoading?Text('Send Reply',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),):
+                          child: !_isLoading?Text(AppLocalizations.of(context)!.sendReply,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white),):
                       const Padding(
                       padding: EdgeInsets.only(right: 10.0),
                       child: Center(

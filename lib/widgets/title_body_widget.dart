@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
-import 'package:youth_action_handbook/models/course_response.dart';
 
 class TitleBodyWidget extends StatelessWidget {
   final String? title;

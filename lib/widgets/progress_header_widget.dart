@@ -5,7 +5,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/user.dart';
 import 'package:youth_action_handbook/services/database.dart';
-import 'package:youth_action_handbook/widgets/common.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProgressHeaderWidget extends StatefulWidget {
   final Courses? courses;
@@ -24,12 +24,6 @@ class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
   String total = '';
   double percentDone = 0;
 
-  Future testFunc() async {
-    print('AKBR testFUNc fired!@');
-    String voids = '23';
-    return voids;
-  }
-
    Future<double> _percentageDone() async {
     
     var prefs = await SharedPreferences.getInstance();
@@ -39,12 +33,9 @@ class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
     total = lessonList.length.toString();
 
     int i = 0;
-    print('AKBR start noe');
     while(i < lessonList.length){
-      // hasViewed = await dbservice!.hasViewedLesson(lessonList[i].id!,widget.courses!.id!);
       hasViewed = prefs.getBool(widget.courses!.id!+'-'+lessonList[i].id!) ?? false;
-      // String testVar = await testFunc();
-      print('AKBR course no.'+i.toString()+' has been viewd? : '+ hasViewed.toString());
+      // print('AKBR course no.'+i.toString()+' has been viewd? : '+ hasViewed.toString());
       if(hasViewed){coursesDone = coursesDone + 1;}
       i = i+1;
     }
@@ -92,7 +83,7 @@ class _ProgressHeaderWidgetState extends State<ProgressHeaderWidget> {
                   children: <TextSpan>[
 
                     TextSpan(
-                      text: 'No. of Lessons :'+ total,
+                      text: AppLocalizations.of(context)!.noOfLessons_+ total,
                       style: TextStyle( 
                           color: AppColors.colorPurple,
                           fontSize: 14,
