@@ -10,9 +10,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 // ignore: must_be_immutable
 class WebViewScreen extends StatefulWidget {
   String link = "https://studio.rtl.ug/yah-privacy-policy"; //start here
+  String title = "Youth Action Handbook";
 
 
-  WebViewScreen({this.link= "https://studio.rtl.ug/yah-privacy-policy"});
+  WebViewScreen({this.link= "https://studio.rtl.ug/yah-privacy-policy", this.title="Youth Action Handbook"});
 
   @override
   _WebViewScreenState createState() => _WebViewScreenState();
@@ -20,6 +21,8 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   final _controller = Completer<WebViewController>();
+  bool isLoading=true;
+  final _key = UniqueKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +36,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         elevation: 0,
         title:  RichText(
           text: TextSpan(
-              text: 'Youth Action Handbook',
+              text: widget.title,
               style: TextStyle(
                   color: AppColors.colorYellow, fontSize: 20,fontWeight: FontWeight.w900),
               children: const <TextSpan>[
@@ -46,18 +49,30 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ],
       ),
 
-      body: WebView(initialUrl: widget.link, onWebViewCreated: (controller) => _controller.complete(controller)),
-            // bottomNavigationBar: Container(
-            //   // color: Theme.of(context).accentColor,
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(right:20),
-            //     child: ButtonBar(children: [
-            //       navigationButton(Icons.chevron_left, (controller) => _goback(controller!)),
-            //       navigationButton(Icons.chevron_right, (controller) => _goForward(controller!)),
-            //       ]
-            //     ),
-            //   ),
-            // ),
+      body: 
+            Stack(
+              children: [
+                WebView(
+                  initialUrl: widget.link,
+                  // onWebViewCreated: (controller) => _controller.complete(controller),
+                  key: _key,
+                  javascriptMode: JavascriptMode.unrestricted,
+                  onPageFinished: (finish) {setState(() => isLoading = false);},),
+                if(isLoading) Center( child: CircularProgressIndicator(),),
+              ],
+            ),
+
+  // bottomNavigationBar: Container(
+  //   // color: Theme.of(context).accentColor,
+  //   child: Padding(
+  //     padding: const EdgeInsets.only(right:20),
+  //     child: ButtonBar(children: [
+  //       navigationButton(Icons.chevron_left, (controller) => _goback(controller!)),
+  //       navigationButton(Icons.chevron_right, (controller) => _goForward(controller!)),
+  //       ]
+  //     ),
+  //   ),
+  // ),
     );
   }
 
