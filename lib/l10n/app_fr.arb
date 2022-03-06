@@ -197,5 +197,9 @@
   "youthActionHandbook": "Jeunes Manuel d'action",
   "youthInitiatives": "Initiatives de jeunesse",
   "trendingPosts" : "Messages à tendances",
-  "recommendedPosts" : "Messages recommandés"
+  "recommendedPosts" : "Messages recommandés",
+  "correctAnswer": "Bonne réponse",
+  "correct": "Correcte",
+  "sorryTheCorrectAnsweris_": "Désolé, la réponse correcte est l'option ",
+  "wrongAnswer": "Mauvaise réponse"
 }

@@ -197,5 +197,9 @@
   "youthActionHandbook": "Youth Action Handbook",
   "youthInitiatives": "Youth Initiatives",
   "trendingPosts" : "Trending Posts",
-  "recommendedPosts" : "Recommended Posts"
+  "recommendedPosts" : "Recommended Posts",
+  "correctAnswer": "Correct answer",
+  "correct": "Correct",
+  "sorryTheCorrectAnsweris_": "Sorry, The correct answer is option ",
+  "wrongAnswer": "Wrong Answer"
 }

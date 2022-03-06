@@ -194,10 +194,10 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                                       setState(() {
                                         question.selectedAnswerId=ans.id!;
                                         if(ans.id! == question.correctAnswerId!){
-                                          Flushbar(title: 'Correct!',message: 'Correct answer',backgroundColor: Colors.green, duration: Duration(seconds: 2),flushbarPosition: FlushbarPosition.TOP,).show(context);
+                                          Flushbar(title: AppLocalizations.of(context)!.correct,message: AppLocalizations.of(context)!.correctAnswer,backgroundColor: Colors.green, duration: Duration(seconds: 2),flushbarPosition: FlushbarPosition.TOP,).show(context);
                                           changeColor = true;
                                         }else{
-                                          Flushbar(title: 'Wrong Answer ', message: 'Sorry, The correct answer is option '+ question.correctAnswerId!,backgroundColor: Colors.red, duration: Duration(seconds: 2),flushbarPosition: FlushbarPosition.TOP,).show(context);
+                                          Flushbar(title: AppLocalizations.of(context)!.wrongAnswer, message: AppLocalizations.of(context)!.sorryTheCorrectAnsweris_+ question.correctAnswerId!,backgroundColor: Colors.red, duration: Duration(seconds: 2),flushbarPosition: FlushbarPosition.TOP,).show(context);
                                         }
 
                                       });
