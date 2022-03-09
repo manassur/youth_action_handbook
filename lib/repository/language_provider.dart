@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/course_with_language_response.dart';
@@ -60,9 +62,14 @@ class LanguageProvider extends ChangeNotifier {
       CourseWithLanguageResponse courseWithLanguageResponse = await apiService.fetchCoursesFromServer();
       _courseWithLanguageResponse= courseWithLanguageResponse;
       setLoading(false);
+    }on SocketException catch(e){
+      setHasError(true);
+      setError('Could not load courses, error: '+ e.message.toString());
+      setLoading(false);
+
     }catch(e){
       setHasError(true);
-      setError('Could not load courses, error:'+ e.toString());
+      setError('Could not load courses, error: '+ e.toString());
       setLoading(false);
 
     }

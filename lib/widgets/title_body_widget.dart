@@ -26,9 +26,9 @@ class TitleBodyWidget extends StatelessWidget {
           text: TextSpan(
               text: courses,
               style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w200),
+                  color: Colors.grey.shade700,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400),
               children: const <TextSpan>[]),
         ),
 
