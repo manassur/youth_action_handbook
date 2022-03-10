@@ -16,6 +16,26 @@ class CourseResponse {
     }
   }
 
+   CourseResponse.fromJsonNew(Map<String, dynamic> json) {
+    try {
+      if (json['items'] != null) {
+        courses = <Courses>[];
+        json['items'].forEach((v) {
+          courses!.add(Courses.fromJsonNew(v));
+        });
+      }else{
+        error = true;
+      }
+    } on Exception catch (e) {
+      print('AKBR exception in CRJNew: ' + e.toString());
+      error = true;
+      // throw e;
+    }catch(e){
+      print('AKBR ERROR in CRJNew: ' + e.toString());
+      error = true;
+    }
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data =  Map<String, dynamic>();
     data['error'] = this.error;
@@ -39,6 +59,8 @@ class Courses {
   String? icon;
   List<Lessons>? lessons;
   List<Quiz>? quiz;
+  bool? is_active;
+  bool? is_featured;
 
   Courses(
       {this.id,
@@ -52,8 +74,48 @@ class Courses {
         this.image,
         this.icon,
         this.lessons,
-        this.quiz});
+        this.quiz,
+        this.is_active,
+        this.is_featured});
 
+  Courses.fromJsonNew(Map<String, dynamic> json) {
+    try {
+      print('AKBR: trying to make courses');
+      final String baseUrl = "https://greatlakesyouth.africa"; 
+      id = json['uuid'];
+      title = json['title'];
+      description = json['title'];
+      overview = json['overview'];
+      objectives = json['objectives'];
+      approach = json['approach'];
+      references = json['references'];
+      color = int.parse(json['color'].toString().replaceAll('#', '0xff')) ;
+      image = baseUrl + (json['cover_image']['meta']['download_url']??'');
+      icon = baseUrl + (json['icon']['meta']['download_url']??'');
+      is_active = json['is_active'];
+      is_featured = json['is_featured'];
+
+      if (json['lessons'] != null) {
+        lessons = <Lessons>[];
+        json['lessons'].forEach((v) {
+          lessons!.add(new Lessons.fromJsonNew(v));
+        });
+      }
+      if (json['questions'] != null) {
+        quiz = <Quiz>[new Quiz.fromJsonNew(json)];
+        // json['questions'].forEach((v) {
+        //   quiz!.add(new Quiz.fromJson(v));
+        // });
+      }
+    }catch (e){
+      print('AKBR courseERROR: '+e.toString());
+
+    }
+  }
+
+
+
+  
   Courses.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
@@ -110,6 +172,20 @@ class Lessons {
 
   Lessons({this.id, this.title, this.lesson,this.video, this.duration});
 
+  
+  Lessons.fromJsonNew(Map<String, dynamic> json) {
+    try {
+      id = json['id'].toString();
+      title = json['title'];
+      lesson = json['content'];
+      video = json['video'];
+      duration = json['duration'];
+    } catch (e) {
+     print('AKBR lesson Error: '+ e.toString());
+    }
+
+  }
+
   Lessons.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
@@ -138,7 +214,24 @@ class Quiz {
 
   Quiz({this.id, this.title, this.duration, this.quizType, this.questions});
 
-  Quiz.fromJson(Map<String, dynamic> json) {
+  Quiz.fromJsonNew(Map<String, dynamic> json) {
+    try {
+      id = json['uuid'];
+      title = 'Quiz :' + json['title'];
+      duration = '5 minutes';
+      quizType = 'Quiz';
+      if (json['questions'] != null) {
+        questions = <Questions>[];
+        json['questions'].forEach((v) {
+          questions!.add(new Questions.fromJsonNew(v));
+        });
+      }
+    } catch (e) {
+      print('AKBR Quiz Error: '+ e.toString());
+    }
+  }
+
+   Quiz.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     duration = json['duration'];
@@ -172,6 +265,7 @@ class Questions {
   String? correctAnswerId;
   String? selectedAnswerId;
   double? mark;
+  bool? isCorrect;
   List<Answers>? answers;
 
   Questions(
@@ -183,6 +277,29 @@ class Questions {
         this.selectedAnswerId,
         this.mark,
         this.answers});
+
+    Questions.fromJsonNew(Map<String, dynamic> json) {
+    try {
+      id = json['id'].toString();
+      question = json['question'];
+      type = 'multiple_choice';
+      hint = json['hint'];
+      // correctAnswerId = ;
+      // selectedAnswerId = json['selected_answer_id'];
+      mark = json['mark'].toDouble();
+      if (json['answers'] != null) {
+        answers = <Answers>[];
+        json['answers'].forEach((v) {
+          if((v['correct']?? false)){
+            correctAnswerId = v['id'].toString();
+          }
+          answers!.add(new Answers.fromJsonNew(v));
+        });
+      }
+    }catch (e,stacktrace) {
+      print('AKBR Qtn Error: '+ e.toString() + ' at: '+ stacktrace.toString());
+    }
+  }
 
   Questions.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -219,8 +336,19 @@ class Questions {
 class Answers {
   String? id;
   String? option;
+  bool? isCorrect;
 
-  Answers({this.id, this.option});
+  Answers({this.id, this.option, this.isCorrect});
+
+   Answers.fromJsonNew(Map<String, dynamic> json) {
+    try {
+      id = json['id'].toString();
+      option = json['answer_option'];
+      isCorrect = json['correct'];
+    } catch (e) {
+      print('AKBR ansError: '+ e.toString());
+    }
+  }
 
   Answers.fromJson(Map<String, dynamic> json) {
     id = json['id'];

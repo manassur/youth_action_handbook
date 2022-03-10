@@ -13,6 +13,7 @@ class ApiService {
   // this will fetch recommended courses
   ApiClient _apiClient = ApiClient();
   var coursesUrl = 'https://dev.silbaka.com/courses-new.json';
+  var coursesUrlNew = 'https://greatlakesyouth.africa/api/v2/pages/?fields=*&locale=en&type=courses.CoursePage&format=json';
   DateTime currentTime = DateTime.now();
 
   // Future<CourseResponse> fetchCourses() async {
@@ -61,7 +62,6 @@ class ApiService {
     return result;
   }
 
-
   Future<Lessons> getCourseByCourseId(String courseId,lessonId) async {
     //TODO: CHECK TO SEE IF ENGLISH OR FRENCH CAN BE FETCHED Depneding on language 
     final file = await DefaultCacheManager().getSingleFile(coursesUrl);
@@ -85,11 +85,38 @@ class ApiService {
   }
 
 
+
+   Future newApiFetchCourses() async {
+     print('AKBR FUNCTION FIRED');
+    File file;
+
+    try {
+      print('AKBR TRY STARTED');
+      // print('AKBR SEE THE VERSIONS:\tonline = '+onlineVersion+'\toffline = '+courseVersion);
+      
+      // await DefaultCacheManager().removeFile(coursesUrlNew).then((value) async=> file = await DefaultCacheManager().getSingleFile(coursesUrlNew));
+      file = await DefaultCacheManager().getSingleFile(coursesUrlNew);
+      
+      final contents = await file.readAsString();
+
+      Map<String, dynamic> data = json.decode(contents);
+      // CourseWithLanguageResponse  res = CourseWithLanguageResponse.fromJson(data);
+      print('AKBR data: example title 1 is: '+data['items'][0]['title'].toString());
+      CourseResponse res = CourseResponse.fromJsonNew(data);
+      print('AKBR correct answer id: '+res.courses![0].quiz!.first.questions!.first.answers!.first.option .toString());
+      print('AKBR IT FINISHED');
+    } catch(e, stacktrace){
+      print('AKBR api ERROR THROWN: '+e.toString() + ' at: '+stacktrace.toString());
+    }
+  }
+
+
   Future<CourseWithLanguageResponse> fetchCoursesFromServer() async {
+    newApiFetchCourses();
     var onlineVersion;
     String courseVersion;
     File file;
-
+    
     var prefs = await SharedPreferences.getInstance();
     DateTime lastCheckTime = DateTime.parse(prefs.getString('lastCheckTime') ?? '2022-01-02 03:04:05');
     courseVersion = prefs.getString('courseVersion') ?? ('');
