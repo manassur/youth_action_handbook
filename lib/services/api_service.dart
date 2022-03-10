@@ -86,11 +86,11 @@ class ApiService {
 
 
 
-   Future newApiFetchCourses() async {
-     print('AKBR FUNCTION FIRED');
-    File file;
+   Future<CourseResponse> newApiFetchCourses() async {
 
     try {
+      print('AKBR FUNCTION FIRED');
+      File file;
       print('AKBR TRY STARTED');
       // print('AKBR SEE THE VERSIONS:\tonline = '+onlineVersion+'\toffline = '+courseVersion);
       
@@ -104,9 +104,11 @@ class ApiService {
       print('AKBR data: example title 1 is: '+data['items'][0]['title'].toString());
       CourseResponse res = CourseResponse.fromJsonNew(data);
       print('AKBR correct answer id: '+res.courses![0].quiz!.first.questions!.first.answers!.first.option .toString());
-      print('AKBR IT FINISHED');
+
+      return res;
     } catch(e, stacktrace){
       print('AKBR api ERROR THROWN: '+e.toString() + ' at: '+stacktrace.toString());
+      return CourseResponse();
     }
   }
 
