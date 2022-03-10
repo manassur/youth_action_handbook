@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/widgets/common.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 // ignore: must_be_immutable
@@ -22,9 +23,12 @@ class WebViewScreen extends StatefulWidget {
 class _WebViewScreenState extends State<WebViewScreen> {
   final _controller = Completer<WebViewController>();
   bool isLoading=true;
+  bool isError = false;
+  
   final _key = UniqueKey();
   @override
   Widget build(BuildContext context) {
+    WebViewController? _webViewController;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.colorBluePrimary,
@@ -54,11 +58,49 @@ class _WebViewScreenState extends State<WebViewScreen> {
               children: [
                 WebView(
                   initialUrl: widget.link,
-                  // onWebViewCreated: (controller) => _controller.complete(controller),
+                  onWebViewCreated: (controller) {_webViewController = controller; _controller.complete(controller);},
                   key: _key,
                   javascriptMode: JavascriptMode.unrestricted,
+                  onWebResourceError: (error){setState(() => isLoading = false);isError = true;},
                   onPageFinished: (finish) {setState(() => isLoading = false);},),
                 if(isLoading) Center( child: CircularProgressIndicator(),),
+                if(isError) Container(
+                  color: Colors.white,
+                  child: Center(child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(AppLocalizations.of(context)!.anErrorOccurredPleaseTryAgain,style: TextStyle(fontSize: 18),),
+                            SizedBox(height: 20,),
+                             SizedBox(
+                              width: 150.0,
+                              height: 50,
+                              child: ElevatedButton(
+                                child: Text(AppLocalizations.of(context)!.tapToReload),
+                                onPressed: () {
+                                  {
+                                    setState(() {
+                                      // if(_webViewController != null) _webViewController!.reload();
+
+                                      // isError = false;
+                                      // isLoading = true;
+                                      // langProvider!.setupCourseLanguages();
+                                      // yahSnackBar(context, AppLocalizations.of(context)!.tryingToReloadIfItFailsTryRestartingTheApp);
+                                    });
+                                  }
+                                },
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(
+                                        AppColors.colorGreenPrimary),
+                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ))),
+                              ),
+                            ),
+                        
+                          ],
+                        )),
+                ),
               ],
             ),
 

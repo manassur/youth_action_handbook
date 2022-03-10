@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youth_action_handbook/data/app_colors.dart';
 import 'package:youth_action_handbook/main.dart';
 import 'package:youth_action_handbook/models/user.dart';
@@ -247,17 +248,18 @@ class _AboutFragmentState extends State<AboutFragment> {
                                   :Text(projectItems[index]['app_version']),
 
                                 onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => WebViewScreen(link:projectItems[index]['page'],title: projectItems[index]['title'],)));
                                   // Navigator.pushNamed(context, projectItems[index]['page']);
                                   launchDrop() async {
                                     String url = projectItems[index]['page'];
                                     if (await canLaunch(url)) {
                                       // await launch(url, forceWebView: true, forceSafariVC: true, );
-                                      await launch(url, forceWebView: false);
+                                      await launch(url, forceWebView: true, forceSafariVC: true,);
                                     } else {
                                       yahSnackBar(context, AppLocalizations.of(context)!.cantOpenWebsite);
                                     }
                                   }
-                                  launchDrop();
+                                  // launchDrop();
                                 }
                             ),
                           ),
@@ -418,6 +420,8 @@ class _AboutFragmentState extends State<AboutFragment> {
                   padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                   child: ListTile(
                     onTap: () async{
+                        var prefs = await SharedPreferences.getInstance();
+                        prefs.setBool('notFirstLaunch',false);
                         await DefaultCacheManager().emptyCache().then((value) => yahSnackBar(context, AppLocalizations.of(context)!.appCacheCleared));
                     },
                     leading: Icon(Icons.cached, color: AppColors.colorPurple),

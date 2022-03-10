@@ -6,7 +6,7 @@ class CourseResponse {
 
   CourseResponse({this.error, this.courses});
 
-  CourseResponse.fromJson(Map<String, dynamic> json) {
+  CourseResponse.fromJsonOld(Map<String, dynamic> json) {
     error = json['error'];
     if (json['courses'] != null) {
       courses = <Courses>[];
@@ -16,21 +16,17 @@ class CourseResponse {
     }
   }
 
-   CourseResponse.fromJsonNew(Map<String, dynamic> json) {
+   CourseResponse.fromJson(Map<String, dynamic> json) {
     try {
       if (json['items'] != null) {
         courses = <Courses>[];
         json['items'].forEach((v) {
-          courses!.add(Courses.fromJsonNew(v));
+          courses!.add(Courses.fromJson(v));
         });
       }else{
         error = true;
       }
-    } on Exception catch (e) {
-      print('AKBR exception in CRJNew: ' + e.toString());
-      error = true;
-      // throw e;
-    }catch(e){
+    } catch(e){
       print('AKBR ERROR in CRJNew: ' + e.toString());
       error = true;
     }
@@ -78,7 +74,7 @@ class Courses {
         this.is_active,
         this.is_featured});
 
-  Courses.fromJsonNew(Map<String, dynamic> json) {
+  Courses.fromJson(Map<String, dynamic> json) {
     try {
       print('AKBR: trying to make courses');
       final String baseUrl = "https://greatlakesyouth.africa"; 
@@ -98,11 +94,11 @@ class Courses {
       if (json['lessons'] != null) {
         lessons = <Lessons>[];
         json['lessons'].forEach((v) {
-          lessons!.add(new Lessons.fromJsonNew(v));
+          lessons!.add(new Lessons.fromJson(v));
         });
       }
       if (json['questions'] != null) {
-        quiz = <Quiz>[new Quiz.fromJsonNew(json)];
+        quiz = <Quiz>[new Quiz.fromJson(json)];
         // json['questions'].forEach((v) {
         //   quiz!.add(new Quiz.fromJson(v));
         // });
@@ -116,7 +112,7 @@ class Courses {
 
 
   
-  Courses.fromJson(Map<String, dynamic> json) {
+  Courses.fromJsonOld(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     description = json['description'];
@@ -173,7 +169,7 @@ class Lessons {
   Lessons({this.id, this.title, this.lesson,this.video, this.duration});
 
   
-  Lessons.fromJsonNew(Map<String, dynamic> json) {
+  Lessons.fromJson(Map<String, dynamic> json) {
     try {
       id = json['id'].toString();
       title = json['title'];
@@ -186,7 +182,7 @@ class Lessons {
 
   }
 
-  Lessons.fromJson(Map<String, dynamic> json) {
+  Lessons.fromJsonOld(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     lesson = json['lesson'];
@@ -214,7 +210,7 @@ class Quiz {
 
   Quiz({this.id, this.title, this.duration, this.quizType, this.questions});
 
-  Quiz.fromJsonNew(Map<String, dynamic> json) {
+  Quiz.fromJson(Map<String, dynamic> json) {
     try {
       id = json['uuid'];
       title = 'Quiz :' + json['title'];
@@ -223,7 +219,7 @@ class Quiz {
       if (json['questions'] != null) {
         questions = <Questions>[];
         json['questions'].forEach((v) {
-          questions!.add(new Questions.fromJsonNew(v));
+          questions!.add(new Questions.fromJson(v));
         });
       }
     } catch (e) {
@@ -231,7 +227,7 @@ class Quiz {
     }
   }
 
-   Quiz.fromJson(Map<String, dynamic> json) {
+   Quiz.fromJsonOld(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     duration = json['duration'];
@@ -278,7 +274,7 @@ class Questions {
         this.mark,
         this.answers});
 
-    Questions.fromJsonNew(Map<String, dynamic> json) {
+    Questions.fromJson(Map<String, dynamic> json) {
     try {
       id = json['id'].toString();
       question = json['question'];
@@ -293,7 +289,7 @@ class Questions {
           if((v['correct']?? false)){
             correctAnswerId = v['id'].toString();
           }
-          answers!.add(new Answers.fromJsonNew(v));
+          answers!.add(new Answers.fromJson(v));
         });
       }
     }catch (e,stacktrace) {
@@ -301,7 +297,7 @@ class Questions {
     }
   }
 
-  Questions.fromJson(Map<String, dynamic> json) {
+  Questions.fromJsonOld(Map<String, dynamic> json) {
     id = json['id'];
     question = json['question'];
     type = json['type'];
@@ -340,7 +336,7 @@ class Answers {
 
   Answers({this.id, this.option, this.isCorrect});
 
-   Answers.fromJsonNew(Map<String, dynamic> json) {
+   Answers.fromJson(Map<String, dynamic> json) {
     try {
       id = json['id'].toString();
       option = json['answer_option'];
@@ -350,7 +346,7 @@ class Answers {
     }
   }
 
-  Answers.fromJson(Map<String, dynamic> json) {
+  Answers.fromJsonOld(Map<String, dynamic> json) {
     id = json['id'];
     option = json['option'];
   }

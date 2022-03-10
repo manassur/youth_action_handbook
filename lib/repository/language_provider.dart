@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youth_action_handbook/models/course_response.dart';
 import 'package:youth_action_handbook/models/course_with_language_response.dart';
 import 'package:youth_action_handbook/repository/cache_helper.dart';
@@ -56,18 +57,25 @@ class LanguageProvider extends ChangeNotifier {
   }
 
   void setupCourseLanguages() async {
+    
     try{
+      print('AKBR setup is happening');
+      var prefs = await SharedPreferences.getInstance();
+      bool notFirstLaunch = prefs.getBool('notFirstLaunch') ?? false;
+      if(_courseWithLanguageResponse == null) notFirstLaunch = false;
+      print('AKBR setup is happening 2. NotFirstLaunch is:'+notFirstLaunch.toString());
+      // print('AKBR setup is happening 2. _courseWithLanguageResponse is:'+_courseWithLanguageResponse!.en!.courses.toString());
+      if(notFirstLaunch) return;
       setHasError(false);
       setLoading(true);
+      print('AKBR setup is happening 3');
       CourseWithLanguageResponse courseWithLanguageResponse = await apiService.fetchCoursesFromServer();
       _courseWithLanguageResponse= courseWithLanguageResponse;
+      print('AKBR setup is happening 4');
+      prefs.setBool('notFirstLaunch',true);
       setLoading(false);
-    }on SocketException catch(e){
-      setHasError(true);
-      setError('Could not load courses, error: '+ e.message.toString());
-      setLoading(false);
-
-    }catch(e){
+    }catch(e, st){
+      print('AKBR steup ERROR IS HERE:'+ st.toString());
       setHasError(true);
       setError('Could not load courses, error: '+ e.toString());
       setLoading(false);

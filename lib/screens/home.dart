@@ -50,14 +50,14 @@ class _HomeFragmentState extends State<HomeFragment> {
   LanguageProvider? langProvider;
   TextEditingController? searchController;
   CourseResponse? courseResponse;
+  
+  bool showAlert = false;
 
   @override
   void initState() {
     coursesBloc= BlocProvider.of<CoursesBloc>(context);
     langProvider= Provider.of<LanguageProvider>(context,listen:false);
     langProvider!.setupCourseLanguages();
-
-    // coursesBloc!.add(FetchCoursesEvent());
 
     newsBloc= BlocProvider.of<NewsBloc>(context);
     newsBloc!.add(FetchNewsEvent());
@@ -72,7 +72,17 @@ class _HomeFragmentState extends State<HomeFragment> {
     //dbservice!.createTopic('Family');
 
     super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      Future.delayed(Duration.zero, ()async{
+      // Exists to nullify existing course cache if changes are detected
+      final ApiService apiService = ApiService();
+      showAlert = await apiService.checkForCourseUpdates();
+      if(showAlert) yahSnackBar(context, 'New Course Content Loaded');
+      });
+    });
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {

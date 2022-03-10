@@ -272,7 +272,7 @@ class _CourseFragmentState extends State<CourseFragment> {
                   fontSize: 12,
                   color: Colors.black54),),
               SizedBox(height: 10,),
-               SizedBox(
+              SizedBox(
                 height: 300,
                 child:      Consumer<LanguageProvider>(
                   builder: (context, lang, child) {
@@ -332,7 +332,7 @@ class _CourseFragmentState extends State<CourseFragment> {
 
                   }),
               ),
-
+              SizedBox(height: 20,),
             ],
           ),
         ),

@@ -179,7 +179,7 @@ class _ForumFragmentState extends State<ForumFragment> {
                         child: ForumFrame(selectedIndex: 0,)),
                       Visibility(
                           visible: selected==1,
-                          child: ForumFrame(selectedIndex: 1,)),
+                          child: ForumFrame(selectedIndex: 2,)),
                       Visibility(
                           visible: selected==2,
                           child: ForumFrame(selectedIndex: 3,)),
