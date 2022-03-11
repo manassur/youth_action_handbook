@@ -27,7 +27,6 @@ class TitleBodyWidget extends StatelessWidget {
               text: courses,
               style: TextStyle(
                   color: Colors.grey.shade700,
-                  fontSize: 16,
                   fontWeight: FontWeight.w400),
               children: const <TextSpan>[]),
         ),
