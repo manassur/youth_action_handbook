@@ -33,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   statusBarIconBrightness: Brightness.light,
           statusBarColor: AppColors.colorBluePrimary,
                 ),
+                backgroundColor: AppColors.colorBluePrimary,
                 toolbarHeight: 0, elevation: 0, ),
         backgroundColor: AppColors.colorBluePrimary,
         body: Padding(
@@ -176,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           setState(() => loading = true);
                                           dynamic result = await _auth
                                               .signInWithEmailandPassword(
-                                                  emailController.text,
+                                                  emailController.text.trim(),
                                                   passwordController.text,
                                                   context);
                                           if (result == null) {

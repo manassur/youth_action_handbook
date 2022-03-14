@@ -72,7 +72,7 @@ class _ForumFragmentState extends State<ForumFragment> {
           return [
             SliverAppBar(
                 systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarBrightness: Brightness.light,
+                  statusBarBrightness: Brightness.dark,
                   statusBarIconBrightness: Brightness.light,
           statusBarColor: AppColors.colorBluePrimary,
                 ), 

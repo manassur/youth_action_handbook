@@ -74,7 +74,7 @@ class _SearchState extends State<Search> {
       appBar: AppBar(
          backgroundColor: Colors.white,
          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.dark,
                 statusBarColor: Colors.white,
           ), 

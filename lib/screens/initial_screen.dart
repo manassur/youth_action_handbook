@@ -17,12 +17,13 @@ class _InitialScreenState extends State<InitialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarBrightness: Brightness.light,
+        appBar: AppBar(
+          backgroundColor: AppColors.colorBluePrimary,
+          systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarBrightness: Brightness.dark,
                   statusBarIconBrightness: Brightness.light,
           statusBarColor: AppColors.colorBluePrimary,
-                ),
-                toolbarHeight: 0, elevation: 0, ),
+                ),toolbarHeight:0, elevation: 0, ),
         backgroundColor: AppColors.colorBluePrimary,
         body:Padding(
           padding: const EdgeInsets.only(left:40,right:40,top:70),

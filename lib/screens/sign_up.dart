@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         name = value;
         break;
       case 1:
-        email = value;
+        email = value.trim();
         break;
       case 2:
         country = value;
@@ -78,8 +78,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     MediaQueryData size;
     size = MediaQuery.of(context);
     return Scaffold(
-      appBar: AppBar(systemOverlayStyle: SystemUiOverlayStyle(
-                  statusBarBrightness: Brightness.light,
+      appBar: AppBar(
+                backgroundColor: AppColors.colorBluePrimary,
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarBrightness: Brightness.dark,
                   statusBarIconBrightness: Brightness.light,
           statusBarColor: AppColors.colorBluePrimary,
                 ),
@@ -392,18 +394,31 @@ class CountryWidget extends StatefulWidget {
 
 class _CountryWidgetState extends State<CountryWidget> {
   String country = '';
+  int i = 0;
 
-  void _setInitialCountry() async {
+  Future _setInitialCountry() async {
+    print('AKBR setting intial country int ='+i.toString()+' and country is: '+ country);
+    i= i+1;
     if (country == '') {
+      // country = 'UG';
+      print('AKBR if was true');
       try {
+        print('Akbr try started');
         country = await getCountry();
-      } catch (e) {
+      } catch (e,stacktrace) {
+        print('AKBR ERROR IS'+ e.toString() + ' \t and st is:'+stacktrace.toString());
         country = 'UG';
       }
     }
     setState(() {
       country = country;
     });
+  }
+  @override
+  void initState()  {
+    // TODO: implement initState
+    super.initState();
+     _setInitialCountry();
   }
 
   void _onCountryChange(CountryCode countryCode) {
@@ -412,7 +427,7 @@ class _CountryWidgetState extends State<CountryWidget> {
 
   @override
   Widget build(BuildContext context) {
-    _setInitialCountry();
+   
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -594,10 +609,17 @@ class _PasswordWidgetState extends State<PasswordWidget> {
 
 // Get Initial Country
 Future<String> getCountry() async {
-  Network n = Network("http://ip-api.com/json");
-  var locationSTR = (await n.getData());
-  var locationx = jsonDecode(locationSTR);
-  return locationx["countryCode"];
+  // Network n = Network("http://ip-api.com/json");
+  try {
+    Network n = Network("http://ip-api.com/json/212.108.129.101");
+    var locationSTR = (await n.getData());
+    print('AKBR DAta IS' +locationSTR);
+    var locationx = jsonDecode(locationSTR);
+    return locationx["countryCode"];
+  } on Exception catch (e,stacktrace) {
+    print('AKBR ERROR IS'+ e.toString() + ' \t and st is:'+stacktrace.toString());
+    return 'UG';
+  }
 }
 
 //Class to use to get initial country without triggering location request

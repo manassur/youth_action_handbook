@@ -93,7 +93,7 @@ class _HomeFragmentState extends State<HomeFragment> {
       appBar: AppBar(
          backgroundColor: Colors.white,
          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.dark,
                 statusBarColor: Colors.white,
           ), 

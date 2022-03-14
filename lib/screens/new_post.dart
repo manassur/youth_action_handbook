@@ -112,7 +112,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.dark,
                 statusBarColor: Colors.white,
           ), 
